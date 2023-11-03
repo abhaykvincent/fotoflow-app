@@ -1,0 +1,476 @@
+@import './style/variables';
+@import './style/components';
+
+
+*{
+  margin: 0;
+  padding: 0;
+  color: white;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+}
+body{
+  background: $dark-2;
+
+}
+.App{
+  header{
+    position: fixed;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    top:  0px;
+    width: 100vw;
+    height: $header-height;
+    background-color: $dark-3;
+    box-shadow:  -1px 1px 4px rgba(0, 0, 0, 0.3);
+    @include boxed;
+    z-index: 10;
+    .logo{
+      width: 8px*24;
+      height: 100%;
+      background-image: url('./assets/img/fotoflow-pro-logo.png');
+      background-position: 8px*2 center;
+      background-size: 70%;
+    }
+    .search-bar{
+      .search-input{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        input{
+          width: 8px*40;
+          height: 8px*4;
+          padding: 8px;
+          background-color: $dark-2;
+          border: 1px solid $dark-1;
+          box-shadow: inset -1px 1px 2px rgba(0, 0, 0, 0.3);
+          border-radius: 8px;
+          ::placeholder{
+            text-shadow: inset -1px 1px 2px rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+    }
+    .profile-options{
+      height: 100%;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      margin-right: 8px*2;
+      .profile{
+        height: 100%;
+        display: flex;
+        justify-content: end;
+        gap: 8px;
+        align-items: center;
+        .profile-name{
+          font-weight: 600;
+        }
+        .profile-image{
+          padding: 8px*2;
+          margin:  8px*1 8px*1;
+          background-color: $dark-1;
+          border: 1px solid $dark-0;
+          border-radius: $border-radius-1 ;
+
+        }
+      }
+      .option-icon{
+        width: 8px*1.5;
+        height: 8px*2;
+        background-image: url('../src/assets/img/icons/arrow-dropdown.png');
+        background-size: 100%;
+        background-position: center center;
+        opacity: 0.5;
+      }
+    }
+  }
+  .sidebar{
+    position: fixed;
+    top:  0px;
+    width: $sidebar-width;
+    height: 100vh;
+    background-color: $dark-3;
+    @include boxed;
+    z-index: 9;
+    padding-top: $header-height ;
+    box-shadow:  -1px 1px 4px rgba(0, 0, 0, 0.3);
+    .menu-list{
+      padding: 8px;
+      .menu{
+        display: flex;
+        align-items: center;
+        gap:8px;
+        padding: 8px 8px*2;
+        margin-bottom: 8px;
+        border-radius: 8px*1;
+        border: 1px solid transparent;
+        &.selected{
+          background-color: $dark-2;
+          border: 1px solid $dark-0;
+          .icon{
+            opacity: 0.9;
+          }
+        }
+        &:hover{
+          border: 1px solid $dark-0;
+        }
+        .icon{
+          width: 8px*3;
+          height: 8px*3;
+          padding: 8px;
+          background-size:75%;
+          background-position: center center;
+          opacity: 0.5;
+        }
+        &.home .icon{
+          background-size: 90%;
+          background-image: url('./assets/img/icons/home.png');
+        }
+        &.events .icon{
+          background-image: url('./assets/img/icons/event.png');
+        }
+        &.projects .icon{
+          background-image: url('./assets/img/icons/folder.png');
+        }
+        &.store .icon{
+          background-image: url('./assets/img/icons/store.png');
+        }
+        &.settings .icon{
+          background-image: url('./assets/img/icons/settings.png');
+        }
+      }
+    }
+    .status{
+      position: fixed;
+      bottom: -4px;
+      padding: 8px;
+      padding-bottom: 0;
+      width: $sidebar-width - 4px;
+      .panel{
+        padding:8px;
+        border-radius: 8px*1 8px*1 8px*0 8px*0;
+        border: 1px solid $dark-0;
+        @include boxShadow;
+        .status-label{
+          display:flex;
+          justify-content: space-between;
+          p{
+            font-size: 0.8rem;
+            color: $gray2-default-dark;
+          }
+        }
+        progress{
+          width: 100%;
+          height: 12px;
+        }
+      }
+    }
+  }
+  main{
+    position: relative;
+    top: $header-height;
+    left: $sidebar-width;
+    width: calc(100vw - #{$sidebar-width});
+    padding: 8px 8px*2;
+    .project-info{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      justify-content: space-between;
+      padding: 8px*2;
+      .client{
+        display: flex;
+        align-items: center;
+        gap: 8px*2;
+        .type{
+
+          display: block;
+          color: $gray2-default-dark;
+          margin-top: 8px;
+        }
+      }
+      .project-options{
+        display: flex;
+        justify-content: end;
+      }
+      .client-contact{
+        margin-top: 8px;
+        p{
+        color: $gray-default-dark;
+        margin-bottom: 2px;
+        font-size: 0.9rem;
+          &.client-phone{
+            &::before{
+              content: '';
+              padding: 6px;
+              margin-right: 10px;
+              background-image: url(./assets/img/icons/phone.png);
+              background-size: 100%;
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+          }
+          &.client-email{
+            &::before{
+              content: '';
+              padding: 6px;
+              margin-right: 10px;
+              background-image: url(./assets/img/icons/email.png);
+              background-size: 100%;
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+          }
+        }
+      }
+    }
+    .collections-panel{
+      display: flex;
+      transform: translate(8px*3, 8px*2);
+      z-index: 1;
+      .collection-tab{
+        padding: 8px 8px*3;
+        margin-left: -1px;
+        padding-bottom: 8px*2;
+        padding-right: 8px*4;
+        background-color: $dark-2;
+        border-radius: 4px;
+        @include boxed;
+        @include boxShadow;
+        color: $gray2-accessible-dark ;
+        a{
+
+          color: $gray3-accessible-dark;
+        }
+        &.active{
+          border: 1px solid $gray2-default-dark;
+          z-index: 10 !important;
+          a{
+            color: white;
+          }
+          background-color: $dark-3;
+        }
+
+      }
+      .collection-tab:nth-child(n) {
+        z-index: calc(5 - var(--n, 0));
+      }
+      
+      .collection-tab:nth-child(1) {
+        --n: 1;
+      }
+      
+      .collection-tab:nth-child(2) {
+        --n: 2;
+      }
+      
+      .collection-tab:nth-child(3) {
+        --n: 3;
+      }
+      
+      .collection-tab:nth-child(4) {
+        --n: 4;
+      }
+    }
+    .project-collection{
+      position: relative;
+      padding: 8px;
+      margin: 8px;
+      background-color: $dark-3;
+      border-radius: $border-radius-1;
+      @include boxed;
+      @include boxShadow;
+      z-index: 3;
+      .header{
+        display: grid;
+        grid-template-columns: 1fr 2fr 8px*40;
+        .label{
+          margin: 8px;
+        }
+        .view-control{
+          display:flex;
+          margin: 4px;
+          font-size: 0.9rem;
+          .control-label{
+            color: $gray3-default-dark;
+            padding: 8px;
+            &.label-all-photos{
+              color: $gray2-default-dark;
+            }
+          }
+          .controls{
+            @include boxed;
+            border-radius: $border-radius-1+1;
+            display:flex;
+            .control{
+              padding: 8px 8px*2;
+              font-weight: 400;
+              border-radius: $border-radius-1;
+              &.active{
+                background-color: $dark-1;
+                border: 1px solid $dark-0;
+              }
+            }
+          }
+        }
+        .collection-empty-message{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          p{
+            text-align: center;
+            color: $gray4-default-dark;
+            border: 1px solid $dark-1;
+            padding: 4px 8px*2;
+            border-radius: 4px;
+            @include boxShadow;
+          }
+        }
+        .options{
+          display: flex;
+          justify-content: flex-end;
+          #fileInput{
+            display: none;
+          }
+        }
+      }
+      .gallary{
+
+        margin-top: 8px*2;
+        padding: 8px;
+        max-height: calc(100vh - 8px*30);
+        overflow-y: scroll;
+        .photos{
+          width: 100%;
+          display:grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          gap:8px*1;
+          .photo{
+            width: 100%;
+            padding-top: 75%;
+            background-color: $dark-1;
+            border-radius: 2px;
+            background-size: cover;
+          }
+        }
+      }
+    }
+    .no-collections{
+      padding: 8px*4;
+      margin: 8px;
+      background-color: $dark-3;
+      border-radius: $border-radius-1;
+      @include boxed;
+      @include boxShadow;
+      text-align: center;
+    }
+  }
+  .modal{
+    position: fixed;
+    top: 20vh;
+    left: 30vw;
+    width: 30vw;
+    background-color: $dark-2;
+    border-radius: $border-radius-1;
+    border: 1px solid $dark-0;
+    padding-bottom: 8px*8;
+    z-index: 20;
+    .modal-header{
+      display: grid;
+      grid-template-columns: 8px*8 auto 8px*8;
+      position: relative;
+      width: 100%;
+      height: 8px*4;
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 8px*3.5;
+      text-align: center;
+      background-color: $dark-3;
+      border-radius: $border-radius-1 $border-radius-1 0 0;
+      border-bottom: 1px solid $dark-1;
+      .modal-controls{
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin: 8px;
+        .control{
+          height: 8px;
+          width: 8px;
+          border-radius: 50%;
+          &.close{
+            background-color: $red-default-dark;
+          }
+          &.minimize{
+            background-color: $yellow-default-dark;
+          }
+          &.maximize{
+            background-color: $green-default-dark;
+          }
+        }
+      }
+    }
+    .form-section{
+      width: 8px*50;
+      margin: 8px*3 auto;
+      &.contact{
+
+        .field{
+          display: grid;
+          grid-template-columns: 8px*12 8px*33;
+        }
+      }
+      .field{
+        display: grid;
+        grid-template-columns: 8px*12 8px*33;
+        align-items: center;
+        gap: 8px*2;
+        margin: 8px*1.5 8px;
+        font-size: 0.9rem;
+        label{
+          text-align: right ;
+          color: $gray-default-dark;
+        } 
+        input{
+          background-color: $dark-3;
+          border: none;
+          font-size: 1rem;
+          border-radius: 4px;
+          height: 8px*3;
+          padding: 8px*2 8px;
+          @include boxed;
+        }
+        &:hover{
+          label{
+            color: $gray3-default-light;
+          }
+        }
+      }
+    }
+    .actions{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+      border-top: 1px solid $dark-1;
+      padding: 8px;
+    }
+  }
+  .modal-backdrop{
+    position: fixed;
+    top: 0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $dark-3;
+    z-index: 19;
+    opacity: 0.8;
+  }
+}
+
+
+

@@ -1,0 +1,129 @@
+// iOS, iPadOS system colors
+
+// Red
+$red-default-light: #ff3b30;
+$red-default-dark: #ff453a;
+$red-accessible-light: #d70015;
+$red-accessible-dark: #ff6961;
+
+// Orange
+$orange-default-light: #ff9500;
+$orange-default-dark: #ff9f0a;
+$orange-accessible-light: #c93400;
+$orange-accessible-dark: #ffb340;
+
+// Yellow
+$yellow-default-light: #ffcc00;
+$yellow-default-dark: #ffd60a;
+$yellow-accessible-light: #b25000;
+$yellow-accessible-dark: #ffd426;
+
+// Green
+$green-default-light: #34c759;
+$green-default-dark: #30d158;
+$green-accessible-light: #248a3d;
+$green-accessible-dark: #30db5b;
+
+// Mint
+$mint-default-light: #00c7be;
+$mint-default-dark: #66d4cf;
+$mint-accessible-light: #0c817b;
+$mint-accessible-dark: #66d4cf;
+
+// Teal
+$teal-default-light: #30b0c7;
+$teal-default-dark: #40c8e0;
+$teal-accessible-light: #008299;
+$teal-accessible-dark: #5de6ff;
+
+// Cyan
+$cyan-default-light: #32adf0;
+$cyan-default-dark: #64d2ff;
+$cyan-accessible-light: #0071a4;
+$cyan-accessible-dark: #70d7ff;
+
+// Blue
+$blue-default-light: #007aff;
+$blue-default-dark: #0c84ff;
+$blue-accessible-light: #0040dd;
+$blue-accessible-dark: #409cff;
+
+// Indigo
+$indigo-default-light: #5856d6;
+$indigo-default-dark: #5e5ce6;
+$indigo-accessible-light: #3634a3;
+$indigo-accessible-dark: #7d7aff;
+
+// Purple
+$purple-default-light: #af52de;
+$purple-default-dark: #bf5af2;
+$purple-accessible-light: #8944ab;
+$purple-accessible-dark: #da8fff;
+
+// Pink
+$pink-default-light: #ff2d55;
+$pink-default-dark: #ff375f;
+$pink-accessible-light: #d30f45;
+$pink-accessible-dark: #ff6482;
+
+// Brown
+$brown-default-light: #a5845e;
+$brown-default-dark: #ac8e68;
+$brown-accessible-light: #7f6545;
+$brown-accessible-dark: #b59469;
+
+// Gray
+$gray-default-light: #8e8e93;
+$gray-default-dark: #8e8e93;
+$gray-accessible-light: #6c6c70;
+$gray-accessible-dark: #aeaeae;
+
+// Gray (2)
+$gray2-default-light: #aeaeae;
+$gray2-default-dark: #636366;
+$gray2-accessible-light: #8e8e93;
+$gray2-accessible-dark: #7c7c80;
+
+// Gray (3)
+$gray3-default-light: #c7c7cc;
+$gray3-default-dark: #48484a;
+$gray3-accessible-light: #aeaeae;
+$gray3-accessible-dark: #545456;
+
+// Gray (4)
+$gray4-default-light: #d1d1d6;
+$gray4-default-dark: #3a3a3c;
+$gray4-accessible-light: #bcbcbe;
+$gray4-accessible-dark: #444446;
+
+// Gray (5)
+$gray5-default-light: #e5e5ea;
+$gray5-default-dark: #2c2c2e;
+$gray5-accessible-light: #d8d8dc;
+$gray5-accessible-dark: #363638;
+
+// Gray (6)
+$gray6-default-light: #f2f2f7;
+$gray6-default-dark: #1c1c1e;
+$gray6-accessible-light: #ebebf0;
+$gray6-accessible-dark: #242426;
+
+$dark-0: #535353;
+$dark-1:#2B2B2B;
+$dark-2:#1F1F1F;
+$dark-3:#181818;
+
+
+
+$header-height: 8px*8;
+$sidebar-width: 8px*24;
+
+$border-radius-1: 8px*1;
+
+
+@mixin boxed{
+    border: 1px solid $dark-1;
+  }
+@mixin boxShadow{
+    box-shadow:  -1px 1px 6px rgba(0, 0, 0, 0.2);
+  }

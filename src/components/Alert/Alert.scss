@@ -1,0 +1,36 @@
+@import '../../style/variables';
+.alert {
+    position: fixed;
+    top: 8px*10;
+    left: 50vw;
+    transform: translate(-50%,-8px*15);
+    padding: 8px*1 8px*2;
+    border-radius: 4px;
+    text-align: center;
+    transition-duration: 0.1s;
+    z-index: 9;
+    opacity: 0;
+    color: white;
+  }
+  
+  .alert.show {
+    transform: translate(-50%,0);
+    transition-duration: 0.4s;
+    opacity: 1;
+  }
+  
+  .alert.success {
+    background-color: $green-accessible-light;
+    border: 1px solid $green-default-light;
+  }
+  
+  .alert.error {
+    background-color: $red-accessible-light;
+    border: 1px solid $red-default-light;
+  }
+  
+  .alert.warning {
+    background-color: $orange-accessible-light;
+    border: 1px solid $orange-default-light;
+  }
+  

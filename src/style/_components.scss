@@ -1,0 +1,23 @@
+@import './variables';
+.button{
+    display: inline-block;
+    padding: 4px 8px*2;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    height: 8px*3.5;
+    margin: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    &.primary{
+        background-color: $green-accessible-light;
+    }
+    &.secondary{
+        background-color: $dark-1;
+        border: 1px solid $dark-0
+    }
+    &.disabled {
+        
+        opacity: 0.2;
+        cursor: not-allowed;
+    }
+}

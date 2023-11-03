@@ -1,0 +1,119 @@
+@import '../../style/variables';
+
+.home{
+    .welcome-section{
+        padding: 8px*2;    
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: space-between;
+        .welcome-message{
+            .actions{
+                display: flex;
+                justify-content: end;
+            }
+        }
+        .actions{
+            display: flex;
+            justify-content: end;
+        }
+        
+
+    }
+    .section{
+        padding: 8px;
+        .section-heading{
+            font-weight: 400;
+            padding: 8px*1 0;
+            margin-left: 8px;
+            margin-top: 8px*2;
+            margin-bottom: 8px*2;
+            border-bottom: 1px solid $dark-1;
+            color: $gray3-default-light;
+            a{
+                font-size: 0.9rem;
+                font-weight: 400;
+                float: right;
+                color: $green-default-dark;
+                text-decoration: underline;
+                margin: 0 8px*1;
+            }
+        }
+        .projects{
+            padding: 0 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 8px*2;
+            width: 100%;
+            overflow-x: scroll;
+            .project{
+                width: 100%;
+                padding: 8px*1;
+                display: grid;
+                grid-template-columns: auto 8px*12;
+                background-color: $dark-3;
+                border-radius: $border-radius-1;
+                @include boxShadow;
+                @include boxed;
+                .project-details{
+                    display: grid;
+                    gap: 4px;
+        
+                    margin: 8px;
+                    .project-type{
+                    line-height: 8px*2.5;
+                    font-weight: 400;
+                    font-size: 0.8rem;
+                    color: $gray3-default-dark;
+                    }
+                }
+                .project-options{
+                    display: flex;
+                    align-items: end;
+                    justify-content: end;
+                    .pin{
+                        opacity: 0.5;
+                        .pin-label{
+                            font-size: 0.9rem;
+                            display: inline-block;
+                            padding: 4px 0;
+                            margin: 4px;
+                            border-radius: 4px;
+                            color: $gray2-default-dark;
+                        }
+                        .pin-number{
+                            font-size: 0.9rem;
+                            display: inline-block;
+                            background-color: $dark-1;
+                            padding: 4px 8px;
+                            margin: 4px;
+                            border-radius: 4px;
+                            border: 1px solid $dark-0;
+                        }
+                    }
+                }
+            }
+            
+            &.completed{
+                h3::after{
+                    font-size: 0.9rem;
+                    font-weight: 400;
+                    margin-left: 8px*1;
+                    content: 'Client Approved';
+                    color: $gray3-default-dark;
+                }
+                .project{
+                    grid-template-columns: auto 8px*16;
+
+                    .project-options{
+                        align-items: center;
+                    }
+                }
+            }
+        }
+        &.approval-pending{
+            .project-options{
+                display:grid !important;
+            }
+        }
+    }
+}
