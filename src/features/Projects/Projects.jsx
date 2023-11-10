@@ -7,14 +7,17 @@ import AddProjectModal from '../../components/Modal/AddProject';
 
   
 
-function Projects({projects,addProject}) {
+function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
     // Modal
     const [modal, setModal] = useState({
         createProject: false
     })
     const openModal = () => setModal({ createProject: true });
     const closeModal = () => setModal({ createProject: false });
-
+    
+    useEffect(()=>{
+        setBreadcrumbs(['Home'])
+    },[setBreadcrumbs])
 
     return (
         <main className="projects">
@@ -26,33 +29,41 @@ function Projects({projects,addProject}) {
                 >Create Project</div>
                 </div>
             </div>
-            <div className="projects-list">
-                {projects.map((project, index) => (
+            { projects?.length > 0 ? 
+                <div className="projects-list">
 
-                    <Link to={`/project/${project.id}`} className="project" key={index}>
-                        <div className="project-details">
-                            <h4 className="project-title">{project.name}</h4>
-                            <p className="project-type">{project.type}</p>
-                        </div>
-                        <div className="project-info">
-                            <div className="collection-count"><b>{project.collections.length}</b> Collections</div>
-                            <div className="photos-count"><b>1209</b> Photos</div>
-                            <div className="selected-count"><b>257</b> Selected</div>
-                        </div>
-                        <div className="project-options">
+                    {projects.map((project, index) => (
+                        <Link to={`/project/${project.id}`} className="project" key={index}>
+                            <div className="project-details">
+                                <h4 className="project-title">{project.name}</h4>
+                                <p className="project-type">{project.type}</p>
+                            </div>
                             {
-                                project.pin?
-                                <div className="pin">
-                                    <p className='pin-label'>PIN</p>
-                                    <p className='pin-number'> {project.pin}</p>
-                                </div>:''
+                            project.collections.length===0?
+                            <div className="empty-message">
+                                <p>No collections created</p>
+                            </div> :
+                            <div className="project-info">
+                                <div className="collection-count"><b>{project.collections.length}</b> Collections</div>
+                                <div className="photos-count"><b>1209</b> Photos</div>
+                                <div className="selected-count"><b>257</b> Selected</div>
+                            </div>
                             }
-                        </div>
-                    </Link>
-                
+                            <div className="project-options">
+                                {
+                                    project.pin?
+                                    <div className="pin">
+                                        <p className='pin-label'>PIN</p>
+                                        <p className='pin-number'> {project.pin}</p>
+                                    </div>:''
+                                }
+                            </div>
+                        </Link>
+                    
                 ))}
-            </div>
-            <AddProjectModal visible={modal.createProject} onClose={closeModal} onSubmit={addProject} />
+                </div>
+            : <div className="no-items">Create a project</div>}
+            <AddProjectModal visible={modal.createProject} onClose={closeModal} onSubmit={addProject} showAlert={showAlert} />
         </main>
     );
 }

@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "fotoflow-dev"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

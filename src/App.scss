@@ -89,6 +89,30 @@ body{
       }
     }
   }
+  .breadcrumbs{
+    display: flex;
+    position: fixed;
+    top: $header-height + 8px*2;
+    left: $sidebar-width +8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover{
+      background-color: $dark-3;
+    }
+    .back-button{
+      padding: 8px*1;
+      background-image: url('./assets/img/icons/back.png');
+      background-size: auto 90%;
+      background-position: center;
+      margin-right: 8px*1;
+    }
+    .crumb{
+      display: flex;
+      margin-right: 8px*1;
+      color: $green-accessible-light;
+    }
+  }
   .sidebar{
     position: fixed;
     top:  0px;
@@ -173,10 +197,10 @@ body{
   }
   main{
     position: relative;
-    top: $header-height;
+    top: $header-height + 8px*4;
     left: $sidebar-width;
     width: calc(100vw - #{$sidebar-width});
-    padding: 8px 8px*2;
+    padding: 0 8px*2;
     .project-info{
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -196,6 +220,7 @@ body{
       .project-options{
         display: flex;
         justify-content: end;
+        align-items: end;
       }
       .client-contact{
         margin-top: 8px;
@@ -317,19 +342,6 @@ body{
             }
           }
         }
-        .collection-empty-message{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          p{
-            text-align: center;
-            color: $gray4-default-dark;
-            border: 1px solid $dark-1;
-            padding: 4px 8px*2;
-            border-radius: 4px;
-            @include boxShadow;
-          }
-        }
         .options{
           display: flex;
           justify-content: flex-end;
@@ -358,15 +370,6 @@ body{
           }
         }
       }
-    }
-    .no-collections{
-      padding: 8px*4;
-      margin: 8px;
-      background-color: $dark-3;
-      border-radius: $border-radius-1;
-      @include boxed;
-      @include boxShadow;
-      text-align: center;
     }
   }
   .modal{
@@ -469,6 +472,30 @@ body{
     background-color: $dark-3;
     z-index: 19;
     opacity: 0.8;
+  }
+  .no-items{
+    padding: 8px*4;
+    margin: 8px;
+    background-color: $dark-3;
+    border-radius: $border-radius-1;
+    @include boxed;
+    @include boxShadow;
+    text-align: center;
+  }
+
+  .empty-message{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p{
+      font-size: 0.8rem;
+      text-align: center;
+      color: $gray4-default-dark;
+      border: 1px solid $dark-1;
+      padding: 4px 8px*2;
+      border-radius: 4px;
+      @include boxShadow;
+    }
   }
 }
 

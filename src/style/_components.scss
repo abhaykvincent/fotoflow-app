@@ -12,8 +12,20 @@
         background-color: $green-accessible-light;
     }
     &.secondary{
+        background-color: $dark-2;
+        border: 1px solid $gray4-default-dark;
+    }
+    &.tertiary{
         background-color: $dark-1;
-        border: 1px solid $dark-0
+        border: 1px solid $dark-0;
+    }
+    &.warnning{
+        background-color: $dark-1;
+        padding: 4px 8px;
+        border: 1px solid $gray4-default-dark;
+        &:hover{
+            border: 1px solid $red-default-dark;
+        }
     }
     &.disabled {
         

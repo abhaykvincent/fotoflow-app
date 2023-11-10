@@ -23,6 +23,9 @@
     "storage": {
       "port": 9199
     },
+    "firestore": {
+      "port": 8081
+    },
     "ui": {
       "enabled": true
     },

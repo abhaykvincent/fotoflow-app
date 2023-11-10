@@ -10,7 +10,7 @@ const Alert = ({ type, message, show, setAlert }) => {
       setTimeout(() => {
         setVisible(false);
         setAlert( '', '', false);
-      }, 1000); // Hide after 1 second
+      }, 1500); // Hide after 1 second
     }
   }, [show]);
 
@@ -18,7 +18,8 @@ const Alert = ({ type, message, show, setAlert }) => {
 
   return (
     <div className={alertClass}>
-      {message}
+
+        <div dangerouslySetInnerHTML={{ __html: message }} />
     </div>
   );
 };

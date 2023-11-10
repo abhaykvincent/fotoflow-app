@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 function AddCollectionModal({ project, visible, onClose, onSubmit }) {
   const [CollectionData, setCollectionData] = useState({
-    id:'',
     name: 'Wedding Eve',
     status: 'empty',
     imagesUrl: []
@@ -15,8 +14,7 @@ function AddCollectionModal({ project, visible, onClose, onSubmit }) {
       }));
   };
   const handleSubmit = () => {
-    let id=convertToSlug(CollectionData.name)
-    onSubmit(project.id,{...CollectionData,id});
+    onSubmit(project.id,CollectionData);
     onClose();
   };
 

@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <header>
-      <div className="logo">Your Logo</div>
+      <div className="logo"></div>
       <div className="search-bar">
         <div className="search-input">
           <input

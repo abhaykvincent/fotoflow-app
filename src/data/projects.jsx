@@ -13,7 +13,7 @@ const dummyProjects = [
           name:'Engagement',
           status:"empty",
           imagesUrl: []
-        }/* , {name:'Wedding Eve'}, {name:'Wedding Day'} */] // Add an empty array to this project
+        }/* , {name:'Wedding Eve'}, {name:'Wedding Day'} */]
     },
     /* { 
       id: 'ethan-and-emma', 

@@ -1,6 +1,7 @@
 // firebase.js
 import { initializeApp } from "firebase/app";
 import { getStorage, connectStorageEmulator } from "firebase/storage";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore"; // Import Firestore related functions
 
 const firebaseConfig = {
     apiKey: "AIzaSyDmAGZJTd1xSofgYgyQeGOYP2dSiLE646U",
@@ -13,10 +14,15 @@ const firebaseConfig = {
 };
 const EMULATOR_HOST = "127.0.0.1";
 const EMULATOR_PORT = 9199;
-initializeApp(firebaseConfig);
-const storage = getStorage();
-connectStorageEmulator(storage, EMULATOR_HOST, EMULATOR_PORT);
-// If you need to use the emulator, you can add the emulator connection code here.
-// connectStorageEmulator(storage, EMULATOR_HOST, EMULATOR_PORT);
+const EMULATOR_FIRESTORE_PORT = 8081;
+// App
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+const db = getFirestore(app); 
 
-export { storage };
+// Emulator
+connectStorageEmulator(storage, EMULATOR_HOST, EMULATOR_PORT);
+connectFirestoreEmulator(db, EMULATOR_HOST, EMULATOR_FIRESTORE_PORT);
+  
+  
+export { storage,db };

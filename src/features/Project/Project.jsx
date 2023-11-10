@@ -6,14 +6,9 @@ import { fetchImageUrls,handleUpload } from '../../utils/storageOperations';
 import AddCollectionModal from '../../components/Modal/AddCollection';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 
-export default function Project({ projects,  addCollection, setIsUploading, setTotalUploadProgress}) {
+export default function Project({ projects,  addCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress}) {
   // Route Params
-  let { id,collectionId } = useParams();
-
-  // Data
-  const project = projects.find((p) => p.id === id);
-  let collection = findCollectionById( project, project.collections.length > 0 ? collectionId || project.collections[0].id:null);
-  // Modal
+  let { id,collectionId } = useParams();// Modal
   const [modal, setModal] = useState({createCollection: false})
   const openModal = () => setModal({ createCollection: true });
   const closeModal = () => setModal({ createCollection: false });
@@ -27,10 +22,20 @@ export default function Project({ projects,  addCollection, setIsUploading, setT
     setFiles(selectedFiles);
     setImageUrls(selectedFiles)
   };
+
   // Fetch Images
   useEffect(() => {
       fetchImageUrls(id, collectionId, setImageUrls);
   }, [collectionId]);
+
+  useEffect(()=>{
+    setBreadcrumbs(['Projects'])
+},[setBreadcrumbs])
+  
+  if(!projects) return
+  // Data
+  const project = projects.find((p) => p.id === id);
+  let collection = findCollectionById( project, project.collections.length > 0 ? collectionId || project.collections[0].id:null);
   
 // Components
   const RenderCollectionsPanel = () => {
@@ -68,7 +73,7 @@ export default function Project({ projects,  addCollection, setIsUploading, setT
                     </div>
                     <div className="control-label label-selected-photos">247 Photos</div>
                   </div>:
-                  <div className="collection-empty-message">
+                  <div className="empty-message">
                     <p>Import shoot photos to upload </p>
                   </div>
                 }
@@ -103,18 +108,21 @@ export default function Project({ projects,  addCollection, setIsUploading, setT
           <div className="type">{project.type}</div>
         </div>
         <div className="project-options">
-          <div className="button secondary add-collection"
-          onClick={openModal}
-          >Add Collection</div>
           <div className="button primary disabled share">Share</div>
+          <div className="button warnning" onClick={()=>deleteProject(id)}>Delete</div>
         </div>
         <div className="client-contact">
           <p className="client-phone">{project.phone}</p>
           <p className="client-email">{project.email}</p>
         </div>
+        <div className="project-options">
+          <div className="button secondary add-collection"
+          onClick={openModal}
+          >Add Collection</div>
+        </div>
       </div>
       {project.collections.length === 0 ? (
-        <div className="no-collections">Create a collection</div>
+        <div className="no-items no-collections">Create a collection</div>
       ) : (
         <div className="project-collections">
           <RenderCollectionsPanel/>
