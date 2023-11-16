@@ -58,13 +58,13 @@ body{
     .profile-options{
       height: 100%;
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
       margin-right: 8px*2;
       .profile{
         height: 100%;
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         gap: 8px;
         align-items: center;
         .profile-name{
@@ -93,7 +93,7 @@ body{
     display: flex;
     position: fixed;
     top: $header-height + 8px*2;
-    left: $sidebar-width +8px;
+    left: $sidebar-width + 8px;
     padding: 4px 8px;
     border-radius: 4px;
     cursor: pointer;
@@ -201,6 +201,11 @@ body{
     left: $sidebar-width;
     width: calc(100vw - #{$sidebar-width});
     padding: 0 8px*2;
+    &.project-page{
+      opacity: 0;
+      transform: translateY(-8px*2);
+      animation: project-page-reveal 0.4s ease-out forwards;
+    }
     .project-info{
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -219,8 +224,8 @@ body{
       }
       .project-options{
         display: flex;
-        justify-content: end;
-        align-items: end;
+        justify-content: flex-end;
+        align-items: flex-end;
       }
       .client-contact{
         margin-top: 8px;
@@ -258,17 +263,17 @@ body{
       transform: translate(8px*3, 8px*2);
       z-index: 1;
       .collection-tab{
-        padding: 8px 8px*3;
+        display: flex;
+        gap: 8px*1;
+        padding: 4px 4px 8px*1.5 8px*1.5;
         margin-left: -1px;
-        padding-bottom: 8px*2;
-        padding-right: 8px*4;
         background-color: $dark-2;
         border-radius: 4px;
         @include boxed;
         @include boxShadow;
-        color: $gray2-accessible-dark ;
+        color: $gray4-accessible-dark ;
         a{
-
+          padding: 4px;
           color: $gray3-accessible-dark;
         }
         &.active{
@@ -278,6 +283,19 @@ body{
             color: white;
           }
           background-color: $dark-3;
+        }
+        .delete-collection{
+          border-radius: 4px;
+          color: $gray3-accessible-dark;
+          border: 1px solid transparent;
+          padding: 2px 8px;
+          cursor: pointer;
+          &:hover{
+
+            background-color: $dark-1;
+            color: $gray-accessible-dark;
+            border: 1px solid $red-default-dark;
+          }
         }
 
       }
@@ -372,6 +390,8 @@ body{
       }
     }
   }
+  .modal-container{
+  }
   .modal{
     position: fixed;
     top: 20vh;
@@ -462,12 +482,27 @@ body{
       border-top: 1px solid $dark-1;
       padding: 8px;
     }
+    &.delete-project{
+      .modal-body{
+        text-align: center;
+        padding: 8px*2;
+        .message{
+          margin-bottom: 8px;
+        }
+        .note{
+          color: $gray3-default-dark;
+          strong{
+            color: $gray2-default-dark;
+          }
+        }
+      }
+    }
   }
   .modal-backdrop{
     position: fixed;
     top: 0;
     left:0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-color: $dark-3;
     z-index: 19;
@@ -481,6 +516,7 @@ body{
     @include boxed;
     @include boxShadow;
     text-align: center;
+    color: $gray3-default-dark;
   }
 
   .empty-message{
@@ -499,5 +535,37 @@ body{
   }
 }
 
+@keyframes project-page-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px*2);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
+
+
+.gallary{
+
+  margin-top: 8px*2;
+  padding: 8px;
+  max-height: calc(100vh - 8px*30);
+  overflow-y: scroll;
+  .photos{
+    width: 100%;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap:8px*1;
+    .photo{
+      width: 100%;
+      padding-top: 75%;
+      background-color: $dark-1;
+      border-radius: 2px;
+      background-size: cover;
+    }
+  }
+}

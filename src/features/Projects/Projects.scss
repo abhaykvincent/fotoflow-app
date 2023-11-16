@@ -7,7 +7,7 @@
     padding: 8px*2;
     .actions{
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
     }
 }
 
@@ -66,7 +66,7 @@
         }
         .project-options{
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
             .pin{
                 opacity: 0.5;
                 padding: 0 2px;
@@ -109,5 +109,21 @@
                 }
             }
         }
+        &.delete-caution{
+            border: 1px solid $red-default-dark;
+            background-color:$dark-1;
+            animation: delete-caution 0.6s ease-in forwards;
+        }
+    }
+}
+@keyframes delete-caution {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
     }
 }

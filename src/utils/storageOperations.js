@@ -1,8 +1,10 @@
 import {
-    uploadBytesResumable,
+    uploadBytes,
     getDownloadURL,
     list,
+    listAll,
     ref,
+    deleteObject
   } from "firebase/storage";
   import { storage } from '../firebase/app';
   
@@ -29,28 +31,12 @@ import {
     console.log('Fetching images FINISHED');
   };
   
-  export const uploadFileWithProgress = (id, collectionId, file, onProgress) => {
+  export const uploadFile = (id, collectionId, file) => {
     const storageRef = ref(storage, `${id}/${collectionId}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-  
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        onProgress(progress);
-      },
-      (error) => {
-        console.error("Error uploading file:", error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at:", downloadURL);
-        }
-      );
-    });
+    uploadBytes(storageRef, file);
   };
   
-  export const handleUpload = (files, setIsUploading, setTotalUploadProgress, fetchImageUrls, imageCache, collectionId) => {
+  export const handleUpload = (files, id, collectionId, setIsUploading, setTotalUploadProgress, fetchImageUrls, imageCache) => {
     console.log('handling upload');
   
     if (files.length === 0) {
@@ -59,17 +45,11 @@ import {
     }
   
     let filesUploaded = 0;
-    setIsUploading(true);
     const uploadPromises = files.map((file) => {
-      return new Promise((resolve) => {
-        uploadFileWithProgress(file, (progress) => {
-          if (progress === 100) {
-            filesUploaded++;
-            setTotalUploadProgress((filesUploaded / files.length) * 100);
-            resolve();
-          }
-        });
-      });
+        return uploadFile( id, collectionId, file);
+        console.log(file)
+        filesUploaded++;
+        setTotalUploadProgress((filesUploaded / files.length) * 100);
     });
   
     Promise.all(uploadPromises)
@@ -77,12 +57,47 @@ import {
         console.log('ends Uploading');
         setTotalUploadProgress(100);
         setIsUploading(false);
-        fetchImageUrls().then((collectionImageUrls) => {
-          imageCache.current[collectionId] = collectionImageUrls;
-        });
       })
       .catch((error) => {
         console.error('Error during uploads:', error);
       });
+  };
+
+  export const deleteCollectionFromStorage = async (id, collectionId) => {
+    const storageRef = ref(storage, `${id}/${collectionId}`);
+    const listResult = await list(storageRef);
+
+    for (const item of listResult.items) {
+        await deleteObject(item);
+    }
+  }
+
+  // stoage is in format project/collection/image
+  export const deleteProjectFromStorage = async (projectId) => {
+    try {
+      const projectRef = ref(storage, projectId);
+      const projectList = await list(projectRef);
+  
+      // Iterate through projectList prefixes (collections)
+      for (const collectionRef of projectList.prefixes) {
+        const collectionList = await list(collectionRef);
+  
+        // Iterate through images in each collection
+        for (const imageRef of collectionList.items) {
+          await deleteObject(imageRef);
+          console.log('Image deleted successfully.');
+        }
+  
+        // Delete the collection directory after deleting its contents
+        await deleteObject(collectionRef);
+        console.log('Collection directory deleted successfully.');
+      }
+  
+      // Delete the project directory after deleting its contents
+      await deleteObject(projectRef);
+      console.log('Project directory deleted successfully.');
+    } catch (error) {
+      console.error('Error deleting images:', error);
+    }
   };
   

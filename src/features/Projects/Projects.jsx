@@ -33,7 +33,7 @@ function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
                 <div className="projects-list">
 
                     {projects.map((project, index) => (
-                        <Link to={`/project/${project.id}`} className="project" key={index}>
+                        <Link to={`/project/${project.id}`} className={`project ${project.id}`} key={index}>
                             <div className="project-details">
                                 <h4 className="project-title">{project.name}</h4>
                                 <p className="project-type">{project.type}</p>

@@ -1,7 +1,8 @@
 
 import { db } from "../app";
-import { collection, doc, getDocs, setDoc, deleteDoc, updateDoc, arrayUnion} from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, setDoc, deleteDoc, updateDoc, arrayUnion} from "firebase/firestore";
 import generateRandomString from "../../utils/generateRandomString";
+import { deleteCollectionFromStorage, deleteProjectFromStorage } from "../../utils/storageOperations";
 
 export const fetchProjects = async () => {
     const projectsCollection = collection(db, 'projects');
@@ -23,7 +24,10 @@ export const addProject = async ({ name, type, ...optionalData }) => {
     const projectData = {id,name, type, ...optionalData,collections:[] };
     const projectsCollection = collection(db, 'projects');
     return setDoc(doc(projectsCollection, id), projectData)
-    .then(() => projectData )
+    .then((dta) => {
+        console.log(dta)
+        return projectData
+    } )
     .catch(error => {
         console.error('Error adding project:', error.message);
         throw error;
@@ -41,17 +45,24 @@ export const deleteProjectFromFirestore = async (projectId) => {
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
   
-    return deleteDoc(projectDoc)
-      .then(() => {
+    try {
+      const docSnapshot = await getDoc(projectDoc);
+  
+      if (docSnapshot.exists()) {
+        await deleteDoc(projectDoc);
         console.log('Project deleted successfully.');
-      })
-      .catch((error) => {
-        console.error('Error deleting project:', error.message);
-        throw error;
-      });
+        deleteProjectFromStorage(projectId);
+      } else {
+        console.log('Document does not exist.');
+        // Handle the case where the document doesn't exist
+        throw new Error('Project does not exist.');
+      }
+    } catch (error) {
+      console.error('Error deleting project:', error.message);
+      throw error;
+    }
   };
   
-
 // COLLECTION
 
 export const addCollectionToFirestore = async (projectId,collectionData) => {
@@ -75,6 +86,37 @@ export const addCollectionToFirestore = async (projectId,collectionData) => {
     });
 };
 
+export const deleteCollectionFromFirestore = async (projectId, collectionId) => {
+    if (!projectId || !collectionId) {
+        throw new Error('Project ID and Collection ID are required for deletion.');
+    }
+
+    const projectsCollection = collection(db, 'projects');
+    const projectDoc = doc(projectsCollection, projectId);
+
+    try {
+        const projectSnapshot = await getDoc(projectDoc);
+
+        if (projectSnapshot.exists()) {
+            const projectData = projectSnapshot.data();
+            const updatedCollections = projectData.collections.filter(
+                (collection) => collection.id !== collectionId
+            );
+
+            await updateDoc(projectDoc, { collections: updatedCollections });
+            console.log('Collection deleted successfully.');
+            deleteCollectionFromStorage(projectId, collectionId);
+        } else {
+            console.log('Project document does not exist.');
+            throw new Error('Project does not exist.');
+        }
+    } catch (error) {
+        console.error('Error deleting collection:', error.message);
+        throw error;
+    }
+};
+
+
 const updateCollection = async (collectionId, updatedData) => {
     try {
         if (!collectionId) {
@@ -88,18 +130,3 @@ const updateCollection = async (collectionId, updatedData) => {
         throw error;
     }
 };
-
-const deleteCollection = async (collectionId) => {
-    try {
-        if (!collectionId) {
-            throw new Error('Collection ID is required.');
-        }
-
-        await db.collection('collections').doc(collectionId).delete();
-        console.log('Collection deleted successfully');
-    } catch (error) {
-        console.error('Error deleting collection:', error.message);
-        throw error;
-    }
-};
-

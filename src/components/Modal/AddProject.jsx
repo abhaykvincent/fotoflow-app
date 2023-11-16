@@ -28,7 +28,6 @@ function AddProjectModal({ showAlert,visible, onClose, onSubmit }) {
           .catch((error) => {
               console.error('Error creating project:', error);
               showAlert('error', 'error')
-              debugger
               // Handle error scenarios, e.g., show an error message
           });
   };

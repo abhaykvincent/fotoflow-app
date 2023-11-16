@@ -21,16 +21,41 @@
   
   .alert.success {
     background-color: $green-accessible-light;
-    border: 1px solid $green-default-light;
   }
   
   .alert.error {
     background-color: $red-accessible-light;
     border: 1px solid $red-default-light;
+    opacity: 0.5;
+
+    animation: shake 0.5s ease-in-out;
+    animation-delay: 0.15s;
   }
   
   .alert.warning {
     background-color: $orange-accessible-light;
     border: 1px solid $orange-default-light;
+  }
+  
+
+  @keyframes shake {
+    0% {
+      transform: translate(calc(-50%));
+    }
+    20% {
+      transform: translate(calc(-50% + -5px));
+    }
+    40% {
+      transform: translate(calc(-50% + 5px));
+    }
+    60% {
+      transform: translate(calc( -50% + -5px));
+    }
+    80% {
+      transform: translate(calc( -50% + 5px));
+    }
+    100% {
+      transform: translate(-50%);
+    }
   }
   

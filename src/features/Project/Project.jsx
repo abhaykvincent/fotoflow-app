@@ -5,8 +5,9 @@ import { fetchImageUrls,handleUpload } from '../../utils/storageOperations';
 
 import AddCollectionModal from '../../components/Modal/AddCollection';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
+import DeleteConfirmationModal from '../../components/Modal/DeleteProject';
 
-export default function Project({ projects,  addCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress}) {
+export default function Project({ projects,  addCollection,handleDeleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress}) {
   // Route Params
   let { id,collectionId } = useParams();// Modal
   const [modal, setModal] = useState({createCollection: false})
@@ -22,6 +23,14 @@ export default function Project({ projects,  addCollection, deleteProject,setBre
     setFiles(selectedFiles);
     setImageUrls(selectedFiles)
   };
+  const[confirmDeleteProject,setConfirmDeleteProject] = useState(false)
+  const onDeleteConfirmClose = () => {
+    setConfirmDeleteProject(false)
+  }
+  const onDeleteConfirm = () => {
+    deleteProject(id);
+  }
+
 
   // Fetch Images
   useEffect(() => {
@@ -38,7 +47,7 @@ export default function Project({ projects,  addCollection, deleteProject,setBre
   let collection = findCollectionById( project, project.collections.length > 0 ? collectionId || project.collections[0].id:null);
   
 // Components
-  const RenderCollectionsPanel = () => {
+  const CollectionsPanel = () => {
     return (
       <div className="collections-panel">
         {
@@ -48,13 +57,16 @@ export default function Project({ projects,  addCollection, deleteProject,setBre
               className={`collection-tab ${collection.id === collectionId || (!collectionId && index === 0) ? 'active' : ''}`}
             >
               <Link to={`/project/${project.id}/${collection.id}`}>{collection.name}</Link>
+              <div className="delete-collection"
+                onClick={()=>{handleDeleteCollection(project.id,collection.id)}}
+              >X</div>
             </div>
           ))
         }
       </div>
     );
   };
-  const RenderProjectCollection = () => {
+  const CollectionImages = () => {
     return (
       <div className="project-collection">
         <div className="header">
@@ -86,7 +98,7 @@ export default function Project({ projects,  addCollection, deleteProject,setBre
                   <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
                     onClick={()=>{
                       setIsPhotosImported(false);
-                      handleUpload();
+                      handleUpload(files, id, collectionId, setIsUploading, setTotalUploadProgress);
                     }}
                     >Upload Images</div>
                 </div>
@@ -101,15 +113,21 @@ export default function Project({ projects,  addCollection, deleteProject,setBre
   };
 
   return (
-    <main>
+    <main className='project-page'>
       <div className="project-info">
         <div className="client">
           <h1>{project.name}</h1>
           <div className="type">{project.type}</div>
         </div>
         <div className="project-options">
-          <div className="button primary disabled share">Share</div>
-          <div className="button warnning" onClick={()=>deleteProject(id)}>Delete</div>
+          <a className="button primary disabled share"
+          href={`/share/${id}`}
+          // new tab
+          target="_blank"
+          >Share</a>
+          <div className="button warnning" onClick={()=>{
+            setConfirmDeleteProject(true)
+          }}>Delete</div>
         </div>
         <div className="client-contact">
           <p className="client-phone">{project.phone}</p>
@@ -125,11 +143,12 @@ export default function Project({ projects,  addCollection, deleteProject,setBre
         <div className="no-items no-collections">Create a collection</div>
       ) : (
         <div className="project-collections">
-          <RenderCollectionsPanel/>
-          <RenderProjectCollection/>
+          <CollectionsPanel/>
+          <CollectionImages/>
         </div>
       )}
       <AddCollectionModal project={project} visible={modal.createCollection} onClose={closeModal} onSubmit={addCollection}  />
+      {confirmDeleteProject ?<DeleteConfirmationModal onDeleteConfirm={onDeleteConfirm} onClose={onDeleteConfirmClose}/>:''}
     </main>
   )
   }

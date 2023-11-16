@@ -9,12 +9,12 @@
         .welcome-message{
             .actions{
                 display: flex;
-                justify-content: end;
+                justify-content: flex-end;
             }
         }
         .actions{
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
         }
         
 
@@ -68,8 +68,8 @@
                 }
                 .project-options{
                     display: flex;
-                    align-items: end;
-                    justify-content: end;
+                    align-items: flex-end;
+                    justify-content: flex-end;
                     .pin{
                         opacity: 0.5;
                         .pin-label{
