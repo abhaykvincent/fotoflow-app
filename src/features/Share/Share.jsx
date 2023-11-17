@@ -10,6 +10,7 @@ export default function ShareProject({projects}) {
 // if co collectionIs is passed, use the first collectionId
     collectionId  = collectionId || projects?.find(project => project.id === projectId)?.collections[0]?.id
     console.log(projectId, collectionId)
+    
   //let collection = findCollectionById( project, project.collections.length > 0 ? collectionId || project.collections[0].id:null);
   // Fetch Images based on projectId and collectionId
   useEffect(() => {
@@ -39,13 +40,13 @@ export default function ShareProject({projects}) {
     );
   };
   return (
-    <main className="share-project">
+    <div className="share-project">
         <h1>Shared Project</h1>
         <div className="shared-collection">
         <h2>Selected Collection Images</h2>
         <CollectionsPanel/>
         <ImageGallery imageUrls={imageUrls} />
         </div>
-    </main>
+    </div>
   );
 }

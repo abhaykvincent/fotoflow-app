@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Route, Routes, useNavigate } from 'react-router-dom';
+import {Route, Routes, useNavigate, } from 'react-router-dom';
 import './App.scss';
 import Sidebar from './components/Sidebar/Sidebar';
 import Project from './features/Project/Project';
@@ -10,9 +10,16 @@ import Alert from './components/Alert/Alert';
 import Header from './components/Header/Header';
 import { addCollectionToFirestore, deleteCollectionFromFirestore, deleteProjectFromFirestore, fetchProjects } from './firebase/functions/firestore';
 import ShareProject from './features/Share/Share';
+import LoginModal from './features/Login/Login';
+import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 
 function App() {
   const navigate = useNavigate();
+
+  // console url from use params
+  console.log(window.location.href)
+  //check if the url has "share"
+  const isShareUrl = window.location.href.includes('share')
   // Projects
   const [projects, setProjects] = useState();
   useEffect(() => {
@@ -107,27 +114,26 @@ const handleDeleteCollection = (projectId, collectionId) => {
   useEffect(() => {
     console.log(projects)
   }, [projects]);
+  const [authenticated,setAuthenticated] = useState(false)
 
   return (
     <div className="App">
-      <Header/>
-      <div className="breadcrumbs">
-        {
-          breadcrumbs.map((crumb, index) => (
-            <div className="crumb">
-              <div className="back-button"></div>
-              {crumb}
-            </div>
-          ))
-        }
-        
-      </div>
-      <Sidebar isUploading={isUploading} totalUploadProgress={totalUploadProgress}/>
-  
+      { !authenticated && !isShareUrl ? <LoginModal {...{setAuthenticated}}/> : ''}
+      { authenticated ?
+        <>
+          <Header/>
+          <Breadcrumbs breadcrumbs={breadcrumbs} />
+          <Sidebar isUploading={isUploading} totalUploadProgress={totalUploadProgress}/>
+        </> : ''
+      }
       <Routes>
-        <Route exact path="/" element={<Home/>}/>
-        <Route path="/project/:id/:collectionId?" element={<Project {...{ projects,addCollection,handleDeleteCollection,deleteProject,setIsUploading,setTotalUploadProgress,setBreadcrumbs }} />}/>
-        <Route path="/projects" element={<Projects {...{ projects,addProject,showAlert,setBreadcrumbs }} />}/>
+        { authenticated ? 
+          <>
+            <Route exact path="/" element={<Home/>}/>
+            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects,addCollection,handleDeleteCollection,deleteProject,setIsUploading,setTotalUploadProgress,setBreadcrumbs }} />}/>
+            <Route path="/projects" element={<Projects {...{ projects,addProject,showAlert,setBreadcrumbs }} />}/>
+          </> : ''
+        }
         <Route path="/share/:projectId/:collectionId?" element={<ShareProject {...{ projects }} />}/>
       </Routes>
 
