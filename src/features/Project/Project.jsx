@@ -7,7 +7,7 @@ import AddCollectionModal from '../../components/Modal/AddCollection';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import DeleteConfirmationModal from '../../components/Modal/DeleteProject';
 
-export default function Project({ projects,  addCollection,handleDeleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress}) {
+export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress}) {
   // Route Params
   let { id,collectionId } = useParams();// Modal
   const [modal, setModal] = useState({createCollection: false})
@@ -48,6 +48,11 @@ export default function Project({ projects,  addCollection,handleDeleteCollectio
   
 // Components
   const CollectionsPanel = () => {
+    const handleDeleteCollection = (projectId, collectionId) => {
+        if (window.confirm('Are you sure you want to delete this collection?')) {
+            deleteCollection(projectId, collectionId);
+        }
+    };
     return (
       <div className="collections-panel">
         {
