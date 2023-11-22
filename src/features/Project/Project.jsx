@@ -7,7 +7,7 @@ import AddCollectionModal from '../../components/Modal/AddCollection';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import DeleteConfirmationModal from '../../components/Modal/DeleteProject';
 
-export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress}) {
+export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress,updateCollectionImages}) {
   // Route Params
   let { id,collectionId } = useParams();// Modal
   const [modal, setModal] = useState({createCollection: false})
@@ -31,11 +31,12 @@ export default function Project({ projects,  addCollection, deleteCollection, de
     deleteProject(id);
   }
 
-
+  const [page,setPage]=useState(1);
+  const [size,setSize]=useState(15);
   // Fetch Images
   useEffect(() => {
-      fetchImageUrls(id, collectionId, setImageUrls);
-  }, [collectionId]);
+      fetchImageUrls(id, collectionId, setImageUrls, page, size);
+  }, [collectionId,page]);
 
   useEffect(()=>{
     setBreadcrumbs(['Projects'])
@@ -68,10 +69,15 @@ export default function Project({ projects,  addCollection, deleteCollection, de
             </div>
           ))
         }
+
+        <div className="button secondary add-collection"
+          onClick={openModal}
+          >Add Collection</div>
       </div>
     );
   };
   const CollectionImages = () => {
+
     return (
       <div className="project-collection">
         <div className="header">
@@ -103,16 +109,34 @@ export default function Project({ projects,  addCollection, deleteCollection, de
                   <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
                     onClick={()=>{
                       setIsPhotosImported(false);
-                      handleUpload(files, id, collectionId, setIsUploading, setTotalUploadProgress);
+                      handleUpload(files, id, collectionId,setImageUrls,updateCollectionImages).then((d)=>{console.log(d)})
                     }}
                     >Upload Images</div>
                 </div>
 
         </div>
         {
-          imageUrls.length > 0?
+          imageUrls.length > 0 ?
           <ImageGallery isPhotosImported={isPhotosImported} imageUrls={imageUrls} />:''
         }
+        <div className="pagination">
+          <div className={`button ${page===1?'disabled':'primary'} previous`}
+            onClick={
+              ()=>{
+                if(page>1)
+                  setPage(page-1)
+              }
+            }
+          >Previous</div>
+          <div className="button primary next"
+            onClick={
+              ()=>{
+                setPage(page+1)
+              }
+            }
+          >Next</div>
+
+        </div>
       </div>
     );
   };
@@ -139,13 +163,15 @@ export default function Project({ projects,  addCollection, deleteCollection, de
           <p className="client-email">{project.email}</p>
         </div>
         <div className="project-options">
-          <div className="button secondary add-collection"
-          onClick={openModal}
-          >Add Collection</div>
         </div>
       </div>
       {project.collections.length === 0 ? (
+        <>  
+          <div className="button secondary add-collection"
+                onClick={openModal}
+                >Add Collection</div>
         <div className="no-items no-collections">Create a collection</div>
+        </>
       ) : (
         <div className="project-collections">
           <CollectionsPanel/>

@@ -22,13 +22,15 @@ import {
 } from './firebase/functions/firestore';
 
 function App() {
+  
   const navigate = useNavigate();
-  const [authenticated,setAuthenticated] = useState(false)
+  const [authenticated,setAuthenticated] = useState(true)
   // Breadcrumbs
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   // Alert
   const [alert, setAlert] = useState({ type: '', message: '', show: false });
   const showAlert = (type, message) => setAlert({ type, message, show: true });
+
   // Core Data
   const [projects, setProjects] = useState();
   useEffect(() => {
@@ -95,10 +97,32 @@ function App() {
         showAlert('error', `Error deleting collection: ${error.message}`);
       });
   };
+  // update project with uploaded images info into collections
+
+  const updateCollectionImages = (projectId, collectionId, images) => {
+    
+    debugger
+    const updatedProjects = projects.map((project) => {
+      if (project.id === projectId) {
+        const updatedCollections = project.collections.map((collection) => {
+          if (collection.id === collectionId) {
+            console.log(images)
+            const updatedImages = [...collection.images, ...images];
+            return { ...collection, images: updatedImages };
+          }
+          return collection;
+        });
+        return { ...project, collections: updatedCollections };
+      }
+      return project;
+    });
+    console.log(updatedProjects)
+    setProjects(updatedProjects);
+  }
 
   return (
     <div className="App">
-      {authenticated ? (
+      {authenticated && !window.location.href.includes('share') ? (
         <>
           <Header />
           <Sidebar />
@@ -112,7 +136,7 @@ function App() {
         { authenticated ? 
           <>
             <Route exact path="/" element={<Home/>}/>
-            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject, setBreadcrumbs }} />}/>
+            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,updateCollectionImages, setBreadcrumbs }} />}/>
             <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert, setBreadcrumbs }} />}/>
           </> : ''
         }
@@ -124,4 +148,4 @@ function App() {
 }
 
 export default App;
-// line Complexity  146 -> 133 ->
+// line Complexity  146 -> 133 -> 127

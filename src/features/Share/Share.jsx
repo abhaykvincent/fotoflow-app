@@ -15,7 +15,7 @@ export default function ShareProject({projects}) {
   // Fetch Images based on projectId and collectionId
   useEffect(() => {
     console.log(projectId, collectionId)
-    fetchImageUrls(projectId, collectionId, setImageUrls);
+    fetchImageUrls(projectId, collectionId, setImageUrls,1,15);
   }, [projectId, collectionId]);
 
   if(!projects) return
