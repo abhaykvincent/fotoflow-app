@@ -124,7 +124,7 @@ function App() {
   return (
     <div className="App">
       <UploadImages />
-      {authenticated && !window.location.href.includes('share') ? (
+      {/* {authenticated && !window.location.href.includes('share') ? (
         <>
           <Header />
           <Sidebar />
@@ -144,7 +144,7 @@ function App() {
         }
         <Route path="/share/:projectId/:collectionId?" element={<ShareProject {...{ projects }} />}/>
       </Routes>
-      
+       */}
     </div>
   );
 }
