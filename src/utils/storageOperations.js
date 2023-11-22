@@ -67,6 +67,7 @@ export const fetchImageInfo = async (id, collectionId) => {
       uploadBytes(storageRef, file)
         .then((data) => {
           filesUploaded++;
+          console.log(data);
           resolve(data); // Resolve the promise on successful upload
         })
         .catch((err) => {
@@ -76,37 +77,38 @@ export const fetchImageInfo = async (id, collectionId) => {
     });
   };
   
-  export const handleUpload = async (files, id, collectionId, setImageUrls, updateCollectionImages, batchSize = 3) => {
-    console.log(`Uploading ${files.length} files`);
-  
+  export const handleUpload = async (files, id, collectionId, setImageUrls, updateCollectionImages, batchSize =1) => {
     if (files.length === 0) {
       console.error("No files selected for upload.");
       return;
     }
   
-    const totalFiles = files.length;
-    let currentIndex = 0;
+    try {
+      let currentIndex = 0;
+      const totalFiles = files.length;
+      console.log(`Uploading ${files.length} files`);
+      while (currentIndex < totalFiles) {
+        const currentBatch = files;
+        const uploadPromises = currentBatch.map(file => uploadFile(id, collectionId, file));
   
-    while (currentIndex < totalFiles) {
-      const currentBatch = files.slice(currentIndex, currentIndex + batchSize);
-      const uploadPromises = currentBatch.map(file => uploadFile(id, collectionId, file));
-  
-      try {
-        const results = await Promise.all(uploadPromises);
-        console.log('Batch uploaded successfully:', results.length, 'files');
-  
-        currentIndex += batchSize;
-  
-        // Perform necessary actions after each batch upload
-        // For example, update the image URLs or perform other operations
-        const imageInfoList = await fetchImageInfo(id, collectionId);
-        await fetchImageUrls(id, collectionId, setImageUrls, 1, 15);
-        await updateCollectionImages(id, collectionId, imageInfoList);
-      } catch (error) {
-        console.error('Error during batch uploads:', error);
-        // Handle errors as needed
-        // You might choose to retry failed uploads or implement a different error handling strategy
+        try {
+          await Promise.all(uploadPromises);
+          currentIndex += batchSize;
+          console.log(`Uploaded ${currentIndex} files out of ${totalFiles}`);
+        } catch (uploadError) {
+          console.error('Error during batch upload:', uploadError);
+        }
       }
+  
+      console.log('All files uploaded successfully!');
+  
+      // Fetch and update image information after all uploads are completed
+      /* const imageInfoList = await fetchImageInfo(id, collectionId);
+      await fetchImageUrls(id, collectionId, setImageUrls, 1, 15);
+      await updateCollectionImages(id, collectionId, imageInfoList); */
+    } catch (error) {
+      console.error('Error during batch uploads:', error);
+      throw error;
     }
   };
   
