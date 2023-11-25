@@ -20,6 +20,7 @@ import {
   deleteProjectFromFirestore, 
   deleteCollectionFromFirestore, 
 } from './firebase/functions/firestore';
+import UploadImages from './firebase/test/StorageTest';
 
 function App() {
   
@@ -101,12 +102,12 @@ function App() {
 
   const updateCollectionImages = (projectId, collectionId, images) => {
     
-    debugger
     const updatedProjects = projects.map((project) => {
       if (project.id === projectId) {
         const updatedCollections = project.collections.map((collection) => {
           if (collection.id === collectionId) {
             console.log(images)
+            console.log(collection)
             const updatedImages = [...collection.images, ...images];
             return { ...collection, images: updatedImages };
           }
@@ -122,6 +123,7 @@ function App() {
 
   return (
     <div className="App">
+      {/* <UploadImages /> */}
       {authenticated && !window.location.href.includes('share') ? (
         <>
           <Header />

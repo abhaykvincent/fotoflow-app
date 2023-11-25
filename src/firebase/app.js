@@ -20,6 +20,7 @@ const EMULATOR_AUTH_PORT = 9099; // Define the authentication emulator port
 
 // App
 const app = initializeApp(firebaseConfig);
+
 const storage = getStorage(app);
 const db = getFirestore(app); 
 const auth = getAuth(app); // Initialize Auth module
