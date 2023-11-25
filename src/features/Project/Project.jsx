@@ -109,7 +109,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
                   <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
                     onClick={()=>{
                       setIsPhotosImported(false);
-                      handleUpload(files, id, collectionId,setImageUrls,updateCollectionImages)
+                      handleUpload(files, id, collectionId)
                     }}
                     >Upload Images</div>
                 </div>
