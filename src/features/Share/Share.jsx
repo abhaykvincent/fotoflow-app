@@ -17,7 +17,7 @@ export default function ShareProject() {
   const [imageUrls, setImageUrls] = useState([]);
 
   const [page,setPage]=useState(1);
-  const [size,setSize]=useState(15);
+  const [size,setSize]=useState(30);
   // Fetch Images
 // if co collectionIs is passed, use the first collectionId
   console.log(project)
