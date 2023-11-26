@@ -6,6 +6,7 @@ import { fetchImageUrls,handleUpload } from '../../utils/storageOperations';
 import AddCollectionModal from '../../components/Modal/AddCollection';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import DeleteConfirmationModal from '../../components/Modal/DeleteProject';
+import CollectionsPanel from '../../components/Project/Collections/CollectionsPanel';
 
 export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress,updateCollectionImages}) {
   const navigate = useNavigate();
@@ -80,35 +81,7 @@ const UnavailableCollectionUI = () => {
     navigate(`/project/${id}`);
     return;
   }
-// Components
-  const CollectionsPanel = () => {
-    const handleDeleteCollection = (projectId, collectionId) => {
-        if (window.confirm('Are you sure you want to delete this collection?')) {
-            deleteCollection(projectId, collectionId);
-        }
-    };
-    return (
-      <div className="collections-panel">
-        {
-          project.collections.map((collection, index) => (
-            <div
-              key={collection.id}
-              className={`collection-tab ${collection.id === collectionId || (!collectionId && index === 0) ? 'active' : ''}`}
-            >
-              <Link to={`/project/${project.id}/${collection.id}`}>{collection.name}</Link>
-              <div className="delete-collection"
-                onClick={()=>{handleDeleteCollection(project.id,collection.id)}}
-              >X</div>
-            </div>
-          ))
-        }
 
-        <div className="button secondary add-collection"
-          onClick={openModal}
-          >Add Collection</div>
-      </div>
-    );
-  };
   const CollectionImages = () => {
 
     return (
@@ -221,6 +194,3 @@ const UnavailableCollectionUI = () => {
     </main>
   )
   }
-
-  
-  
