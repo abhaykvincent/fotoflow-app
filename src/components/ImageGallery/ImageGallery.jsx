@@ -5,10 +5,10 @@ const ImageGallery = ({ imageUrls }) => {
     <div className="gallary">
       <div className="photos">
         {
-          imageUrls &&
           imageUrls.map((fileUrl, index) => (
             <div className="photo" key={index} style={{ backgroundImage: `url(${fileUrl})` }} alt={`File ${index}`}></div>
           ))}
+        
       </div>
     </div>
   );

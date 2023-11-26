@@ -4,6 +4,7 @@ function AddCollectionModal({ project, visible, onClose, onSubmit }) {
   const [CollectionData, setCollectionData] = useState({
     name: 'Wedding Eve',
     status: 'empty',
+    images: [],
     imagesUrl: []
   });
   const handleInputChange = (event) => {

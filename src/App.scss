@@ -5,18 +5,20 @@
 *{
   margin: 0;
   padding: 0;
-  color: white;
   background-repeat: no-repeat;
   box-sizing: border-box;
 }
 a{
   text-decoration: none;
+  color: inherit;
 }
 body{
   background: $dark-2;
 
 }
 .App{
+
+  color: white;
   header{
     position: fixed;
     display:grid;
@@ -93,7 +95,7 @@ body{
     display: flex;
     position: fixed;
     top: $header-height + 8px*2;
-    left: $sidebar-width + 8px;
+    left: $sidebar-width + 8px*3;
     padding: 4px 8px;
     border-radius: 4px;
     cursor: pointer;
@@ -197,7 +199,7 @@ body{
   }
   main{
     position: relative;
-    top: $header-height + 8px*4;
+    top: $header-height + 8px*5;
     left: $sidebar-width;
     width: calc(100vw - #{$sidebar-width});
     padding: 0 8px*2;
@@ -265,7 +267,7 @@ body{
       .collection-tab{
         display: flex;
         gap: 8px*1;
-        padding: 4px 4px 8px*1.5 8px*1.5;
+        padding: 4px 8px*1.5 8px*1.5 8px*1.5;
         margin-left: -1px;
         background-color: $dark-2;
         border-radius: 4px;
@@ -276,15 +278,8 @@ body{
           padding: 4px;
           color: $gray3-accessible-dark;
         }
-        &.active{
-          border: 1px solid $gray2-default-dark;
-          z-index: 10 !important;
-          a{
-            color: white;
-          }
-          background-color: $dark-3;
-        }
         .delete-collection{
+          display: none;;
           border-radius: 4px;
           color: $gray3-accessible-dark;
           border: 1px solid transparent;
@@ -296,6 +291,19 @@ body{
             color: $gray-accessible-dark;
             border: 1px solid $red-default-dark;
           }
+        }
+        &.active{
+          padding: 4px 4px 8px*1.5 8px*1.5;
+          .delete-collection{
+            display: flex;
+          }
+
+          border: 1px solid $gray2-default-dark;
+          z-index: 10 !important;
+          a{
+            color: white;
+          }
+          background-color: $dark-3;
         }
 
       }
@@ -387,6 +395,10 @@ body{
             background-size: cover;
           }
         }
+      }
+      .pagination{
+        display: flex;
+        justify-content: center;
       }
     }
   }

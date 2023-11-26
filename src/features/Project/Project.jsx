@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { findCollectionById } from '../../utils/CollectionQuery';
 import { fetchImageUrls,handleUpload } from '../../utils/storageOperations';
 
@@ -7,7 +7,8 @@ import AddCollectionModal from '../../components/Modal/AddCollection';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import DeleteConfirmationModal from '../../components/Modal/DeleteProject';
 
-export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress}) {
+export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress,updateCollectionImages}) {
+  const navigate = useNavigate();
   // Route Params
   let { id,collectionId } = useParams();// Modal
   const [modal, setModal] = useState({createCollection: false})
@@ -31,21 +32,54 @@ export default function Project({ projects,  addCollection, deleteCollection, de
     deleteProject(id);
   }
 
-
+  const [page,setPage]=useState(1);
+  const [size,setSize]=useState(15);
   // Fetch Images
   useEffect(() => {
-      fetchImageUrls(id, collectionId, setImageUrls);
-  }, [collectionId]);
+    
+      fetchImageUrls(id, collectionId, setImageUrls, page, size);
+  }, [id,collectionId,page]);
 
   useEffect(()=>{
     setBreadcrumbs(['Projects'])
 },[setBreadcrumbs])
-  
-  if(!projects) return
-  // Data
+const [isCollectionAvailable, setIsCollectionAvailable] = useState(true);
+const UnavailableCollectionUI = () => {
+  return (
+    <div className="unavailable-collection">
+      <h2>Collection is currently unavailable.</h2>
+      <p>Please try again later.</p>
+    </div>
+  );
+};
+
+  // If no projects are available, return early
+  if (!projects) return;
+
+  // Find the project with the given id
   const project = projects.find((p) => p.id === id);
-  let collection = findCollectionById( project, project.collections.length > 0 ? collectionId || project.collections[0].id:null);
-  
+
+  // If the project is not found, redirect to the projects page and return
+  if (!project) {
+    navigate('/projects');
+    return;
+  }
+
+  // Determine the collectionId to use
+  const defaultCollectionId = project.collections.length > 0 ? project.collections[0].id : null;
+  const targetCollectionId = collectionId || defaultCollectionId;
+  if(!collectionId){
+    navigate(`/project/${id}/${targetCollectionId}`);
+  }
+
+  // Find the collection by id
+  let collection = findCollectionById(project, targetCollectionId);
+
+  // If the collection is not found, redirect to the project page and return
+  if (!collection) {
+    navigate(`/project/${id}`);
+    return;
+  }
 // Components
   const CollectionsPanel = () => {
     const handleDeleteCollection = (projectId, collectionId) => {
@@ -68,12 +102,21 @@ export default function Project({ projects,  addCollection, deleteCollection, de
             </div>
           ))
         }
+
+        <div className="button secondary add-collection"
+          onClick={openModal}
+          >Add Collection</div>
       </div>
     );
   };
   const CollectionImages = () => {
+
     return (
       <div className="project-collection">
+        {
+          isCollectionAvailable ? '' : <UnavailableCollectionUI />
+        }
+        
         <div className="header">
           <div className="label"><h3>{collection.name}</h3></div>
     
@@ -101,18 +144,37 @@ export default function Project({ projects,  addCollection, deleteCollection, de
                   >Import Images</label>
                   <input id='fileInput' type="file" multiple onChange={handleFileInputChange} />
                   <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
-                    onClick={()=>{
+                    onClick={async()=>{
                       setIsPhotosImported(false);
-                      handleUpload(files, id, collectionId, setIsUploading, setTotalUploadProgress);
+                      let uploadedImages=await handleUpload(files, id, collectionId)
+                      console.log(uploadedImages)
                     }}
                     >Upload Images</div>
                 </div>
 
         </div>
         {
-          imageUrls.length > 0?
+          imageUrls.length > 0 ?
           <ImageGallery isPhotosImported={isPhotosImported} imageUrls={imageUrls} />:''
         }
+        <div className="pagination">
+          <div className={`button ${page===1?'disabled':'primary'} previous`}
+            onClick={
+              ()=>{
+                if(page>1)
+                  setPage(page-1)
+              }
+            }
+          >Previous</div>
+          <div className="button primary next"
+            onClick={
+              ()=>{
+                setPage(page+1)
+              }
+            }
+          >Next</div>
+
+        </div>
       </div>
     );
   };
@@ -139,13 +201,15 @@ export default function Project({ projects,  addCollection, deleteCollection, de
           <p className="client-email">{project.email}</p>
         </div>
         <div className="project-options">
-          <div className="button secondary add-collection"
-          onClick={openModal}
-          >Add Collection</div>
         </div>
       </div>
       {project.collections.length === 0 ? (
+        <>  
+          <div className="button secondary add-collection"
+                onClick={openModal}
+                >Add Collection</div>
         <div className="no-items no-collections">Create a collection</div>
+        </>
       ) : (
         <div className="project-collections">
           <CollectionsPanel/>
