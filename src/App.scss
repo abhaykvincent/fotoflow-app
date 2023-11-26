@@ -95,7 +95,7 @@ body{
     display: flex;
     position: fixed;
     top: $header-height + 8px*2;
-    left: $sidebar-width + 8px;
+    left: $sidebar-width + 8px*3;
     padding: 4px 8px;
     border-radius: 4px;
     cursor: pointer;
@@ -199,7 +199,7 @@ body{
   }
   main{
     position: relative;
-    top: $header-height + 8px*4;
+    top: $header-height + 8px*5;
     left: $sidebar-width;
     width: calc(100vw - #{$sidebar-width});
     padding: 0 8px*2;
