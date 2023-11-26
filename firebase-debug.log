@@ -3176,3 +3176,179 @@ INFO: Detected non-HTTP/2 connection.
 [debug] [2023-11-26T16:26:22.634Z] Nov. 26, 2023 9:56:22 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
  {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 9:56:22 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:40:13.648Z] ----------------------------------------------------------------------
+[debug] [2023-11-26T16:40:13.651Z] Command:       /usr/local/bin/node /usr/local/bin/firebase emulators:start
+[debug] [2023-11-26T16:40:13.652Z] CLI Version:   11.16.1
+[debug] [2023-11-26T16:40:13.653Z] Platform:      darwin
+[debug] [2023-11-26T16:40:13.653Z] Node Version:  v14.18.0
+[debug] [2023-11-26T16:40:13.655Z] Time:          Sun Nov 26 2023 22:10:13 GMT+0530 (India Standard Time)
+[debug] [2023-11-26T16:40:13.655Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-11-26T16:40:13.660Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-11-26T16:40:13.820Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-11-26T16:40:13.821Z] > authorizing via signed-in user (fotoflow.web@gmail.com)
+[debug] [2023-11-26T16:40:14.083Z] java version "11.0.18" 2023-01-17 LTS
+Java(TM) SE Runtime Environment 18.9 (build 11.0.18+9-LTS-195)
+Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.18+9-LTS-195, mixed mode)
+
+[debug] [2023-11-26T16:40:14.101Z] Parsed Java major version: 11
+[info] i  emulators: Starting emulators: auth, functions, firestore, hosting, storage {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, hosting, storage"}}
+[debug] [2023-11-26T16:40:15.573Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-26T16:40:15.574Z] [auth] Authentication Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-26T16:40:15.574Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-26T16:40:15.574Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-26T16:40:15.575Z] [hosting] Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-26T16:40:15.575Z] [storage] Storage Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-26T16:40:15.575Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8081}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[warn] ⚠  emulators: It seems that you are running multiple instances of the emulator suite for project fotoflow-dev. This may result in unexpected behavior. 
+[debug] [2023-11-26T16:40:15.588Z] [hub] writing locator at /var/folders/k4/9hzxkms1151bb4ljdjxjrtvr0000gn/T/hub-fotoflow-dev.json
+[debug] [2023-11-26T16:40:15.823Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-26T16:40:15.823Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-26T16:40:15.824Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8081}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: database, pubsub {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mdatabase, pubsub\u001b[22m"}}
+[warn] ⚠  Your requested "node" version "16" doesn't match your global version "14". Using node@14 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Your requested \"node\" version \"16\" doesn't match your global version \"14\". Using node@14 from host."}}
+[debug] [2023-11-26T16:40:15.838Z] defaultcredentials: writing to file /Users/abhayvincent/.config/firebase/fotoflow_web_gmail.com_application_default_credentials.json
+[debug] [2023-11-26T16:40:15.842Z] Setting GAC to /Users/abhayvincent/.config/firebase/fotoflow_web_gmail.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to /Users/abhayvincent/.config/firebase/fotoflow_web_gmail.com_application_default_credentials.json"}}
+[debug] [2023-11-26T16:40:15.844Z] > refreshing access token with scopes: []
+[debug] [2023-11-26T16:40:15.845Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-11-26T16:40:15.845Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-11-26T16:40:18.650Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-11-26T16:40:18.650Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-11-26T16:40:18.696Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev/adminSdkConfig [none]
+[debug] [2023-11-26T16:40:18.748Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2023-11-26T16:40:18.749Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2023-11-26T16:40:23.876Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev/adminSdkConfig 200
+[debug] [2023-11-26T16:40:23.876Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev/adminSdkConfig {"projectId":"fotoflow-dev","storageBucket":"fotoflow-dev.appspot.com","locationId":"us-central"}
+[warn] ⚠  firestore: Did not find a Cloud Firestore rules file specified in a firebase.json config file. {"metadata":{"emulator":{"name":"firestore"},"message":"Did not find a Cloud Firestore rules file specified in a firebase.json config file."}}
+[warn] ⚠  firestore: The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration. {"metadata":{"emulator":{"name":"firestore"},"message":"The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration."}}
+[debug] [2023-11-26T16:40:23.916Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-11-26T16:40:23.916Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2023-11-26T16:40:23.916Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","/Users/abhayvincent/.cache/firebase/emulators/cloud-firestore-emulator-v1.15.1.jar","--host","127.0.0.1","--port",8081,"--websocket_port",9150,"--project_id","fotoflow-dev","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"/Users/abhayvincent/.cache/firebase/emulators/cloud-firestore-emulator-v1.15.1.jar\",\"--host\",\"127.0.0.1\",\"--port\",8081,\"--websocket_port\",9150,\"--project_id\",\"fotoflow-dev\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[debug] [2023-11-26T16:40:25.474Z] Nov. 26, 2023 10:10:25 P.M. com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
+INFO: Started WebSocket server on ws://127.0.0.1:9150
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:10:25 P.M. com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\nINFO: Started WebSocket server on ws://127.0.0.1:9150\n"}}
+[debug] [2023-11-26T16:40:25.503Z] API endpoint: http:// {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://"}}
+[debug] [2023-11-26T16:40:25.503Z] 127.0.0.1:8081
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8081
+
+Dev App Server is now running.
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"127.0.0.1:8081\nIf you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\n\n   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8081\n\nDev App Server is now running.\n\n"}}
+[info] ✔  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2023-11-26T16:40:33.124Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-11-26T16:40:34.308Z] Temp file directory for storage emulator: /var/folders/k4/9hzxkms1151bb4ljdjxjrtvr0000gn/T/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: /var/folders/k4/9hzxkms1151bb4ljdjxjrtvr0000gn/T/firebase/storage/blobs"}}
+[debug] [2023-11-26T16:40:34.315Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fotoflow-dev/sites 
+[debug] [2023-11-26T16:40:35.648Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fotoflow-dev/sites 200
+[debug] [2023-11-26T16:40:35.649Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fotoflow-dev/sites {"sites":[{"name":"projects/fotoflow-dev/sites/fotoflow-dev","defaultUrl":"https://fotoflow-dev.web.app","appId":"1:180761954293:web:2756c328ad6f8d792e82bc","type":"DEFAULT_SITE"}]}
+[debug] [2023-11-26T16:40:35.649Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev/webApps/1:180761954293:web:2756c328ad6f8d792e82bc/config [none]
+[debug] [2023-11-26T16:40:36.979Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev/webApps/1:180761954293:web:2756c328ad6f8d792e82bc/config 200
+[debug] [2023-11-26T16:40:36.979Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev/webApps/1:180761954293:web:2756c328ad6f8d792e82bc/config {"projectId":"fotoflow-dev","appId":"1:180761954293:web:2756c328ad6f8d792e82bc","storageBucket":"fotoflow-dev.appspot.com","locationId":"us-central","apiKey":"AIzaSyDmAGZJTd1xSofgYgyQeGOYP2dSiLE646U","authDomain":"fotoflow-dev.firebaseapp.com","messagingSenderId":"180761954293","measurementId":"G-HMJWHV4W3X"}
+[debug] [2023-11-26T16:40:37.009Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev [none]
+[debug] [2023-11-26T16:40:37.590Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev 200
+[debug] [2023-11-26T16:40:37.590Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fotoflow-dev {"projectId":"fotoflow-dev","projectNumber":"180761954293","displayName":"FotoFlow","name":"projects/fotoflow-dev","resources":{"hostingSite":"fotoflow-dev","storageBucket":"fotoflow-dev.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_fa2d9d0d-5b29-4192-9fae-8ae9d3d8d9a6"}
+[info] i  hosting[fotoflow-dev]: Serving hosting files from: build {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mbuild\u001b[22m"}}
+[info] ✔  hosting[fotoflow-dev]: Local server: http://127.0.0.1:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://127.0.0.1:5000\u001b[22m\u001b[24m"}}
+[debug] [2023-11-26T16:40:37.676Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-11-26T16:40:37.676Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-11-26T16:40:37.676Z] Starting Emulator UI with command {"binary":"node","args":["/Users/abhayvincent/.cache/firebase/emulators/ui-v1.11.1/server/server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/abhayvincent/.cache/firebase/emulators/ui-v1.11.1/server/server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-11-26T16:40:37.799Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2023-11-26T16:40:37.799Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[info] i  functions: Watching "/Users/abhayvincent/Abhay's Drive/WEB/Apps/FotoFlow/Code/fotoflow-v1/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/Users/abhayvincent/Abhay's Drive/WEB/Apps/FotoFlow/Code/fotoflow-v1/functions\" for Cloud Functions..."}}
+[debug] [2023-11-26T16:40:37.952Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2023-11-26T16:40:41.254Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2023-11-26T16:40:41.254Z] Building nodejs source
+[debug] [2023-11-26T16:40:41.254Z] Analyzing nodejs backend spec
+[debug] [2023-11-26T16:40:41.257Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-11-26T16:40:41.452Z] Serving at port 9005
+
+[debug] [2023-11-26T16:40:41.524Z] Got response from /__/functions.yaml {"endpoints":{},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-11-26T16:40:41.529Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: . {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: ."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬─────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:4000/auth      │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Functions      │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Firestore      │ 127.0.0.1:8081 │ http://127.0.0.1:4000/firestore │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Hosting        │ 127.0.0.1:5000 │ n/a                             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Storage        │ 127.0.0.1:9199 │ http://127.0.0.1:4000/storage   │
+└────────────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500, 9150
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2023-11-26T16:41:19.138Z] Nov. 26, 2023 10:11:19 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:11:19 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:41:20.213Z] Nov. 26, 2023 10:11:20 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:11:20 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:41:20.239Z] Nov. 26, 2023 10:11:20 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:11:20 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:41:41.829Z] Nov. 26, 2023 10:11:41 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:11:41 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:41:41.854Z] Nov. 26, 2023 10:11:41 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:11:41 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:41:41.863Z] Nov. 26, 2023 10:11:41 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:11:41 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:42:20.528Z] Nov. 26, 2023 10:12:20 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:12:20 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:42:20.534Z] Nov. 26, 2023 10:12:20 P.M. com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose
+INFO: channel closed
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:12:20 P.M. com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreListenHandler onClose\nINFO: channel closed\n"}}
+[debug] [2023-11-26T16:42:42.022Z] Nov. 26, 2023 10:12:42 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:12:42 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:42:42.545Z] Nov. 26, 2023 10:12:42 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:12:42 P.M. io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-11-26T16:42:42.550Z] Nov. 26, 2023 10:12:42 P.M. com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
+INFO: channel closed
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov. 26, 2023 10:12:42 P.M. com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose\nINFO: channel closed\n"}}
