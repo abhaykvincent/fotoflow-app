@@ -13,10 +13,10 @@ import { arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
 export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageSize) => {
     console.log(`Fetching images for page ${page}`);
     const storageRef = ref(storage, `${id}/${collectionId}`);
-    setImageUrls([]); // Clear the imageUrls array
-    const collectionImageUrls = [];
 
     try {
+        setImageUrls([]); // Clear the imageUrls array
+    
         // Calculate starting and ending indexes based on the page and page size
         const startAt = (page - 1) * pageSize;
         const endAt = startAt + pageSize;
