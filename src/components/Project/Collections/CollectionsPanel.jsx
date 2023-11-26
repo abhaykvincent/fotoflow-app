@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 export default function CollectionsPanel({ project, collectionId, deleteCollection, openModal }) {
     const handleDeleteCollection = (projectId, collectionId) => {
       if (window.confirm('Are you sure you want to delete this collection?')) {

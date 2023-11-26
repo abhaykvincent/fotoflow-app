@@ -185,7 +185,7 @@ const UnavailableCollectionUI = () => {
         </>
       ) : (
         <div className="project-collections">
-          <CollectionsPanel/>
+          <CollectionsPanel project={{...project, collectionId, deleteCollection, openModal}} />
           <CollectionImages/>
         </div>
       )}
