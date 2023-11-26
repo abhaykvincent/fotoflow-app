@@ -5,18 +5,20 @@
 *{
   margin: 0;
   padding: 0;
-  color: white;
   background-repeat: no-repeat;
   box-sizing: border-box;
 }
 a{
   text-decoration: none;
+  color: inherit;
 }
 body{
   background: $dark-2;
 
 }
 .App{
+
+  color: white;
   header{
     position: fixed;
     display:grid;

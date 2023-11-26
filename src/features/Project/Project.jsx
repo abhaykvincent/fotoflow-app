@@ -107,9 +107,10 @@ export default function Project({ projects,  addCollection, deleteCollection, de
                   >Import Images</label>
                   <input id='fileInput' type="file" multiple onChange={handleFileInputChange} />
                   <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
-                    onClick={()=>{
+                    onClick={async()=>{
                       setIsPhotosImported(false);
-                      handleUpload(files, id, collectionId)
+                      let uploadedImages=await handleUpload(files, id, collectionId)
+                      console.log(uploadedImages)
                     }}
                     >Upload Images</div>
                 </div>
