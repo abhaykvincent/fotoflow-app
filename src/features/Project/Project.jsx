@@ -36,7 +36,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   const [size,setSize]=useState(15);
   // Fetch Images
   useEffect(() => {
-    
+      if(!id, !collectionId) return
       fetchImageUrls(id, collectionId, setImageUrls, page, size);
   }, [id,collectionId,page]);
 
