@@ -15,6 +15,21 @@ export const fetchProjects = async () => {
 
     return projectsData
 };
+export const fetchProject = async (projectId) => {
+    const projectsCollection = collection(db, 'projects');
+    const projectDoc = doc(projectsCollection, projectId);
+    const projectSnapshot = await getDoc(projectDoc);
+
+    if (projectSnapshot.exists()) {
+        return {
+            id: projectSnapshot.id,
+            ...projectSnapshot.data()
+        };
+    } else {
+        throw new Error('Project does not exist.');
+    }
+};
+
   
 export const addProject = async ({ name, type, ...optionalData }) => {
     if (!name || !type) {

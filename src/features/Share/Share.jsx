@@ -1,26 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchImageUrls } from '../../utils/storageOperations';
-import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import { findCollectionById } from '../../utils/CollectionQuery';
+import './Share.scss';
+import { fetchProject } from '../../firebase/functions/firestore';
+import ShareGallery from '../../components/ImageGallery/ShareGallery';
 
-export default function ShareProject({projects}) {
+export default function ShareProject() {
+  // set body color to white
+  useEffect(() => {
+    document.body.style.backgroundColor = 'white';
+  }, []);
+  // Get project from fetchProject and store in state
   let  { projectId, collectionId } = useParams();
+  const [project, setProject] = useState();
   const [imageUrls, setImageUrls] = useState([]);
+
+  const [page,setPage]=useState(1);
+  const [size,setSize]=useState(15);
+  // Fetch Images
 // if co collectionIs is passed, use the first collectionId
-    collectionId  = collectionId || projects?.find(project => project.id === projectId)?.collections[0]?.id
+  console.log(project)
+    collectionId  = collectionId || project?.collections[0]?.id
     console.log(projectId, collectionId)
     
   //let collection = findCollectionById( project, project.collections.length > 0 ? collectionId || project.collections[0].id:null);
   // Fetch Images based on projectId and collectionId
   useEffect(() => {
     console.log(projectId, collectionId)
-    fetchImageUrls(projectId, collectionId, setImageUrls,1,15);
-  }, [projectId, collectionId]);
+    const fetchProjectData = async () => {
+      try {
+        const projectData = await fetchProject(projectId);
+        setProject(projectData);
+      } catch (error) {
+        console.error('Failed to fetch project:', error);
+      }
+    };
 
-  if(!projects) return
-  // Data
-  const project = projects.find((p) => p.id === projectId); 
+    fetchProjectData();
+    fetchImageUrls(projectId, collectionId, setImageUrls, page, size);
+  }, [projectId, collectionId,page]);
+  useEffect(() => {
+    setPage(1)
+  }, [collectionId]);
+
+  if(!project) return
   
   // Collections panel
   const CollectionsPanel = () => {
@@ -41,11 +65,44 @@ export default function ShareProject({projects}) {
   };
   return (
     <div className="share-project">
-        <h1>Shared Project</h1>
-        <div className="shared-collection">
-        <h2>Selected Collection Images</h2>
+      <div className="project-header"
+      style={
+        { 
+          backgroundImage: 
+            `url(${imageUrls[0]?imageUrls[Math.floor(Math.random()*(imageUrls.length))]:''})`
+        }}
+      >
+        <div className="project-info">
+
+        <h1 className='projet-name'>{project.name}</h1>
+        <p>10th October, 2023</p>
         <CollectionsPanel/>
-        <ImageGallery imageUrls={imageUrls} />
+        </div>
+        <div className="banner" >
+
+        </div>
+      </div>
+        <div className="shared-collection">
+          <ShareGallery images={imageUrls} />
+
+        <div className="pagination">
+          <div className={`button ${page===1?'disabled':'primary'} previous`}
+            onClick={
+              ()=>{
+                if(page>1)
+                  setPage(page-1)
+              }
+            }
+          >Previous</div>
+          <div className="button primary next"
+            onClick={
+              ()=>{
+                setPage(page+1)
+              }
+            }
+          >Next</div>
+
+        </div>
         </div>
     </div>
   );
