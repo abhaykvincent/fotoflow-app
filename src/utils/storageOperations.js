@@ -13,9 +13,10 @@ import { arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
 export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageSize) => {
     console.log(`Fetching images for page ${page}`);
     const storageRef = ref(storage, `${id}/${collectionId}`);
-    const collectionImageUrls = [];
 
     try {
+        setImageUrls([]); // Clear the imageUrls array
+    
         // Calculate starting and ending indexes based on the page and page size
         const startAt = (page - 1) * pageSize;
         const endAt = startAt + pageSize;
@@ -27,12 +28,10 @@ export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageS
             if (currentIndex >= startAt && currentIndex < endAt) {
                 await new Promise((resolve) => setTimeout(resolve, 10)); // Add a delay of 500 milliseconds
                 const downloadURL = await getDownloadURL(item);
-                collectionImageUrls.push(downloadURL);
-                setImageUrls(collectionImageUrls);
+                setImageUrls((prev) => [...prev, downloadURL]);
             }
 
             currentIndex++;
-
             // Break the loop once endAt is reached
             if (currentIndex === endAt) break;
         }
