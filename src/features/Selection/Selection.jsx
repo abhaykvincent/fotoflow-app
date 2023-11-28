@@ -5,6 +5,7 @@ import { findCollectionById } from '../../utils/CollectionQuery';
 import './Selection.scss';
 import { fetchProject } from '../../firebase/functions/firestore';
 import SelectionGallery from '../../components/ImageGallery/SelectionGallery';
+import { addSelectedImagesToFirestore } from '../../firebase/functions/firestore';
 
 export default function Selection() {
   // set body color to white
@@ -12,19 +13,16 @@ export default function Selection() {
     document.body.style.backgroundColor = 'white';
   }, []);
   // Get project from fetchProject and store in state
-  let  { projectId, collectionId } = useParams();
+  let { projectId, collectionId } = useParams();
   const [project, setProject] = useState();
   const [imageUrls, setImageUrls] = useState([]);
+  const [selectedImages, setSelectedImages] = useState(new Set());
 
   const [page,setPage]=useState(1);
   const [size,setSize]=useState(30);
-  // Fetch Images
-// if co collectionIs is passed, use the first collectionId
-  console.log(project)
-    collectionId  = collectionId || project?.collections[0]?.id
-    console.log(projectId, collectionId)
-    
-  //let collection = findCollectionById( project, project.collections.length > 0 ? collectionId || project.collections[0].id:null);
+
+  // if no collectionIs is passed, use the first collectionId
+  collectionId  = collectionId || project?.collections[0]?.id
   // Fetch Images based on projectId and collectionId
   useEffect(() => {
     console.log(projectId, collectionId)
@@ -45,6 +43,7 @@ export default function Selection() {
   }, [collectionId]);
 
   if(!project) return
+
   
   // Collections panel
   const CollectionsPanel = () => {
@@ -63,6 +62,15 @@ export default function Selection() {
       </div>
     );
   };
+  // inside Selection component
+  const handleAddSelectedImages = async () => {
+    try {
+      await addSelectedImagesToFirestore(projectId, collectionId, selectedImages);
+      // handle success (e.g. show a success message)
+    } catch (error) {
+      // handle error (e.g. show an error message)
+    }
+  };
   return (
     <div className="share-project">
       <div className="project-header"
@@ -79,7 +87,7 @@ export default function Selection() {
         </div>
       </div>
         <div className="shared-collection">
-          <SelectionGallery images={imageUrls} />
+          <SelectionGallery images={imageUrls} {...{selectedImages,setSelectedImages}} />
 
         <div className="pagination">
           <div className={`button ${page===1?'disabled':'primary'} previous`}
@@ -93,6 +101,8 @@ export default function Selection() {
           <div className="button primary next"
             onClick={
               ()=>{
+                handleAddSelectedImages(selectedImages)
+                console.log(selectedImages)
                 setPage(page+1)
               }
             }

@@ -165,9 +165,11 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
             const projectData = projectSnapshot.data();
             const updatedCollections = projectData.collections.map((collection) => {
                 if (collection.id === collectionId) {
+                    // Ensure selectedImages is an array before trying to spread it
+                    const selectedImages = Array.isArray(collection.selectedImages) ? collection.selectedImages : [];
                     return {
                         ...collection,
-                        selectedImages: [...collection.selectedImages, ...images]
+                        selectedImages: [...selectedImages, ...images]
                     };
                 }
                 return collection;
@@ -184,6 +186,3 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
         throw error;
     }
 }
-
-
-

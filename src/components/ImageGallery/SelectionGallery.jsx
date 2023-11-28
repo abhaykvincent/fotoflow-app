@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-const SelectionGallery = ({ images }) => {
-  const [selectedImages, setSelectedImages] = useState(new Set());
+const SelectionGallery = ({ images ,selectedImages,setSelectedImages}) => {
 
   const handleImageClick = (fileUrl, event) => {
     const newSelectedImages = new Set(selectedImages);
