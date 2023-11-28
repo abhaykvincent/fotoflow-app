@@ -102,11 +102,46 @@
       grid-template-columns: 1fr 1fr 1fr;
       gap:8px*1;
       .photo{
+        position: relative;
         width: 100%;
         padding-top: 75%;
         background-color: $light-0;
         border-radius: 2px;
         background-size: cover;
+        border: 2px solid transparent;
+
+        &:hover input[type="checkbox"] {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+      input[type="checkbox"] {
+        opacity: 0.5;
+        position:absolute;
+        top: 8px;
+        left: 8px;
+        appearance: none;
+        width: 8px*3;
+        height: 8px*3;
+        border-radius: 50%;
+        border: 2px solid rgb(255, 255, 255);
+        background: rgba(255, 255, 255, 0.353) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="rgba(255, 255, 255, 0)"><path d="M1 7 L5 11 L13 1" stroke-width="2" stroke="white" fill="transparent"/></svg>') no-repeat center;
+        outline: none;
+        cursor: pointer;
+        transform: scale(1);
+        background-size: 50%;
+        transition-duration: 0.1s;
+        transition-timing-function: ease-out;
+        box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.2);
+      }
+      
+      input[type="checkbox"]:checked {
+        opacity: 1;
+        background: $blue-default-light url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="white"><path d="M1 7 L5 11 L13 1" stroke-width="2" stroke="white" fill="transparent"/></svg>') no-repeat center;
+        background-size: 50%;
+        border-color: $blue-accessible-dark;
+        transform: scale(1.1);
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+      }
       }
     }
   }
