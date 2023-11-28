@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchImageUrls } from '../../utils/storageOperations';
 import { findCollectionById } from '../../utils/CollectionQuery';
-import './';
+import './Selection.scss';
 import { fetchProject } from '../../firebase/functions/firestore';
 import ShareGallery from '../../components/ImageGallery/ShareGallery';
 
