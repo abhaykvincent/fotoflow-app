@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchImageUrls } from '../../utils/storageOperations';
 import { findCollectionById } from '../../utils/CollectionQuery';
-import './Selection.scss';
+import './';
 import { fetchProject } from '../../firebase/functions/firestore';
-import Selection from '../../components/Selection/Selection';
+import ShareGallery from '../../components/ImageGallery/ShareGallery';
 
 export default function Selection() {
   // set body color to white

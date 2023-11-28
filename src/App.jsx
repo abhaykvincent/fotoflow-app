@@ -21,6 +21,7 @@ import {
   deleteCollectionFromFirestore, 
 } from './firebase/functions/firestore';
 import UploadImages from './firebase/test/StorageTest';
+import Selection from './features/Selection/Selection';
 
 function App() {
   
@@ -143,7 +144,7 @@ function App() {
           </> : ''
         }
         <Route path="/share/:projectId/:collectionId?" element={<ShareProject {...{ projects }} />}/>
-        <Route path="/selection/:projectId/:collectionId?" element={<ImageSelection {...{ projects }} />}/>
+        <Route path="/selection/:projectId/:collectionId?" element={<Selection {...{ projects }} />}/>
       </Routes>
       
     </div>
