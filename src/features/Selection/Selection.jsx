@@ -64,8 +64,9 @@ export default function Selection() {
   };
   // inside Selection component
   const handleAddSelectedImages = async () => {
+    const selectedImagesArray = Array.from(selectedImages);
     try {
-      await addSelectedImagesToFirestore(projectId, collectionId, selectedImages);
+      await addSelectedImagesToFirestore(projectId, collectionId, selectedImagesArray);
       // handle success (e.g. show a success message)
     } catch (error) {
       // handle error (e.g. show an error message)

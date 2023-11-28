@@ -165,24 +165,36 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
             const projectData = projectSnapshot.data();
             const updatedCollections = projectData.collections.map((collection) => {
                 if (collection.id === collectionId) {
-                    // Ensure selectedImages is an array before trying to spread it
-                    const selectedImages = Array.isArray(collection.selectedImages) ? collection.selectedImages : [];
+                    // Update the status of the corresponding image in the uploadedImages array
+
+                    const updatedImages = collection.uploadedFiles.map((image) => {
+
+                    console.log(image);
+                    
+                        if (images.includes(image.url)) {
+                            return {
+                                ...image,
+                                status: 'selected'
+                            };
+                        }
+                        return image;
+                    });
                     return {
                         ...collection,
-                        selectedImages: [...selectedImages, ...images]
+                        uploadedFiles: updatedImages
                     };
                 }
                 return collection;
             });
 
             await updateDoc(projectDoc, { collections: updatedCollections });
-            console.log('Selected images added to collection successfully.');
+            console.log('Selected images status updated successfully.');
         } else {
             console.log('Project document does not exist.');
             throw new Error('Project does not exist.');
         }
     } catch (error) {
-        console.error('Error adding selected images to collection:', error.message);
+        console.error('Error updating image status:', error.message);
         throw error;
     }
 }
