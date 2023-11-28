@@ -69,7 +69,7 @@ export default function ShareProject() {
       style={
         { 
           backgroundImage: 
-            `url(${imageUrls[0]?imageUrls[Math.floor(Math.random()*(imageUrls.length))]:''})`
+            `url(${imageUrls[0]?imageUrls[0]:''})`
         }}
       >
         <div className="project-info">
