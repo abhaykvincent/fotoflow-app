@@ -63,11 +63,8 @@ export default function Project({ projects,  addCollection, deleteCollection, de
           <div className="type">{project.type}</div>
         </div>
         <div className="project-options">
-          <a className="button primary disabled share"
-          href={`/share/${id}`}
-          // new tab
-          target="_blank"
-          >Share</a>
+          <a className="button primary share" href={`/share/${id}`} target="_blank">Share</a>
+          <a className="button primary selection" href={`/selection/${id}`} target="_blank">Selection</a>
           <div className="button warnning" onClick={()=>{
             setConfirmDeleteProject(true)
           }}>Delete</div>

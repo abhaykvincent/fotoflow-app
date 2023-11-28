@@ -66,11 +66,7 @@ export default function Selection() {
   return (
     <div className="share-project">
       <div className="project-header"
-      style={
-        { 
-          backgroundImage: 
-            `url(${imageUrls[0]?imageUrls[0]:''})`
-        }}
+      style={{ backgroundImage: `url(${imageUrls[0]?imageUrls[0]:''})`}}
       >
         <div className="project-info">
 

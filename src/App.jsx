@@ -99,8 +99,7 @@ function App() {
         showAlert('error', `Error deleting collection: ${error.message}`);
       });
   };
-  // update project with uploaded images info into collections
-
+  const shareOrSelection = window.location.href.includes('share') || window.location.href.includes('selection' )
   const updateCollectionImages = (projectId, collectionId, images) => {
     
     const updatedProjects = projects.map((project) => {
@@ -125,7 +124,7 @@ function App() {
   return (
     <div className="App">
       {/* <UploadImages /> */}
-      {authenticated && !window.location.href.includes('share') ? (
+      {authenticated && (!shareOrSelection)? (
         <>
           <Header />
           <Sidebar />
@@ -133,7 +132,7 @@ function App() {
           <Breadcrumbs breadcrumbs={breadcrumbs} />
         </>
       ) : (
-        <>{ !window.location.href.includes('share') && <LoginModal {...{ setAuthenticated }} />}</>
+        <>{!shareOrSelection && <LoginModal {...{ setAuthenticated }} />}</>
       )}
       <Routes>
         { authenticated ? 
