@@ -56,7 +56,7 @@ export default function Selection() {
               key={collection.id}
               className={`collection-tab ${collection.id === collectionId || (!collectionId && index === 0) ? 'active' : ''}`}
             >
-              <Link to={`/share/${project.id}/${collection.id}`}>{collection.name}</Link>
+              <Link to={`/selection/${project.id}/${collection.id}`}>{collection.name}</Link>
             </div>
           ))
         }
