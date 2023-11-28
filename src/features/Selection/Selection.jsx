@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { fetchImageUrls } from '../../utils/storageOperations';
 import { fetchProject, addSelectedImagesToFirestore } from '../../firebase/functions/firestore';
@@ -22,19 +22,20 @@ export default function Selection() {
   // Fetch project and image URLs
   useEffect(() => {
     fetchProjectData();
-  }, [projectId, collectionId, page]);
+  }, [projectId]);
 
-  // Reset page when collectionId changes
-  useEffect(() => {
-    setPage(1)
-  }, [collectionId]);
-
-  // Update images when project changes
+  // Update images when project or collectionId changes
   useEffect(() => {
     if(!project) return
-    setImages(project?.collections.find((collection)=>collection.id===collectionId)?.uploadedFiles.slice((page-1)*size,page*size))
-  }, [project]);
+    const newImages = project?.collections.find((collection)=>collection.id===collectionId)?.uploadedFiles;
+    setImages(newImages);
+    setPage(1)
+  }, [project, collectionId]);
 
+  // Paginate images
+  const paginatedImages = useMemo(() => {
+    return images.slice((page-1)*size,page*size);
+  }, [images, page]);
 
   // Fetch project data
   const fetchProjectData = async () => {
@@ -48,9 +49,8 @@ export default function Selection() {
 
   // Handle add selected images
   const handleAddSelectedImages = async () => {
-    const selectedImagesArray = Array.from(selectedImages);
     try {
-      await addSelectedImagesToFirestore(projectId, collectionId, selectedImagesArray);
+      await addSelectedImagesToFirestore(projectId, collectionId, [...selectedImages]);
       // handle success (e.g. show a success message)
     } catch (error) {
       // handle error (e.g. show an error message)
@@ -84,7 +84,7 @@ export default function Selection() {
         <div className="banner" />
       </div>
       <div className="shared-collection">
-        <SelectionGallery images={images} {...{selectedImages,setSelectedImages,setSelectedImagesInCollection}} />
+        <SelectionGallery images={paginatedImages} {...{selectedImages,setSelectedImages,setSelectedImagesInCollection}} />
         <div className="pagination">
           <div className={`button ${page===1?'disabled':'primary'} previous`} onClick={() => page > 1 && setPage(page-1)}>Previous</div>
           <div className="button primary next" onClick={() => handleNextClick()}>Next</div>
