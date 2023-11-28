@@ -7,7 +7,7 @@ const ImageGallery = React.memo(({ imageUrls }) => {
     <div className="gallary">
       <div className="photos">
         {dummyUrls.map((fileUrl, index) => (
-          <div className="photo" key={index} style={{ backgroundImage: `url(${fileUrl})` }} alt={`File ${index}`}></div>
+          <div className={fileUrl!=='dummyurl'?`photo`:'photo dummy'} key={index} style={fileUrl!=='dummyurl'? { backgroundImage: `url(${fileUrl})` }:{}} alt={`File ${index}`}></div>
         ))}
       </div>
     </div>
