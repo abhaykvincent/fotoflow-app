@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 
-const SelectionGallery = ({ images ,selectedImages,setSelectedImages}) => {
+const SelectionGallery = ({ images ,selectedImages,setSelectedImages,setSelectedImagesInCollection}) => {
 
   const handleImageClick = (fileUrl, event) => {
     const newSelectedImages = new Set(selectedImages);
     if (selectedImages.has(fileUrl)) {
       newSelectedImages.delete(fileUrl);
+      setSelectedImagesInCollection((prev) => prev.filter((image) => image !== fileUrl));
     } else {
       newSelectedImages.add(fileUrl);
+      setSelectedImagesInCollection((prev) => [...prev, fileUrl]);
     }
     setSelectedImages(newSelectedImages);
+    //push fileUrl to selectedImagesInCollection
     if (event) event.stopPropagation();
   };
 
@@ -23,12 +26,12 @@ const SelectionGallery = ({ images ,selectedImages,setSelectedImages}) => {
               key={index} 
               style={{ backgroundImage: `url(${fileUrl.url})` }} 
               alt={`File ${index}`} 
-              onClick={() => handleImageClick(fileUrl)}
+              onClick={() => handleImageClick(fileUrl.url)}
             >
               <input 
                 type="checkbox" 
-                checked={selectedImages.has(fileUrl)} 
-                onChange={(event) => handleImageClick(fileUrl, event)} 
+                checked={selectedImages.has(fileUrl.url)} 
+                onChange={(event) => handleImageClick(fileUrl.url, event)} 
               />
             </div>
           ))
