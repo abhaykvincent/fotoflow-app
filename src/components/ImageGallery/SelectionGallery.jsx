@@ -21,7 +21,7 @@ const SelectionGallery = ({ images ,selectedImages,setSelectedImages}) => {
             <div 
               className="photo" 
               key={index} 
-              style={{ backgroundImage: `url(${fileUrl})` }} 
+              style={{ backgroundImage: `url(${fileUrl.url})` }} 
               alt={`File ${index}`} 
               onClick={() => handleImageClick(fileUrl)}
             >
