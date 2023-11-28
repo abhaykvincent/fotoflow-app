@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const ShareGallery = ({ images }) => {
+const SelectionGallery = ({ images }) => {
   return (
     <div className="gallary">
       <div className="photos">
@@ -14,4 +14,4 @@ const ShareGallery = ({ images }) => {
   );
 };
 
-export default ShareGallery;
+export default SelectionGallery;
