@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const SelectionGallery = ({ images ,selectedImages,setSelectedImages,setSelectedImagesInCollection}) => {
-
-  const handleImageClick = (fileUrl, event) => {
+const SelectionGallery = ({ images, selectedImages, setSelectedImages, setSelectedImagesInCollection }) => {
+  const handleImageClick = (fileUrl) => {
     const newSelectedImages = new Set(selectedImages);
     if (selectedImages.has(fileUrl)) {
       newSelectedImages.delete(fileUrl);
@@ -12,30 +11,26 @@ const SelectionGallery = ({ images ,selectedImages,setSelectedImages,setSelected
       setSelectedImagesInCollection((prev) => [...prev, fileUrl]);
     }
     setSelectedImages(newSelectedImages);
-    //push fileUrl to selectedImagesInCollection
-    if (event) event.stopPropagation();
   };
 
   return (
     <div className="gallary">
       <div className="photos">
-        {
-          images.map((fileUrl, index) => (
-            <div 
-              className="photo" 
-              key={index} 
-              style={{ backgroundImage: `url(${fileUrl.url})` }} 
-              alt={`File ${index}`} 
-              onClick={() => handleImageClick(fileUrl.url)}
-            >
-              <input 
-                type="checkbox" 
-                checked={selectedImages.has(fileUrl.url)} 
-                onChange={(event) => handleImageClick(fileUrl.url, event)} 
-              />
-            </div>
-          ))
-        }
+        {images.map((fileUrl, index) => (
+          <div
+            className="photo"
+            key={index}
+            style={{ backgroundImage: `url(${fileUrl.url})` }}
+            aria-label={`File ${index}`}
+            onClick={() => handleImageClick(fileUrl.url)}
+          >
+            <input
+              type="checkbox"
+              checked={selectedImages.has(fileUrl.url)}
+              onChange={() => handleImageClick(fileUrl.url)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
