@@ -22,7 +22,6 @@ export default function Project({ projects,  addCollection, deleteCollection, de
     deleteProject(id);
   }
 
-
   useEffect(()=>{
     setBreadcrumbs(['Projects'])
   },[setBreadcrumbs])
@@ -94,7 +93,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
         </div>
       )}
       <AddCollectionModal project={project} visible={modal.createCollection} onClose={closeModal} onSubmit={addCollection}  />
-      {confirmDeleteProject ?<DeleteConfirmationModal onDeleteConfirm={onDeleteConfirm} onClose={onDeleteConfirmClose}/>:''}
+      {confirmDeleteProject ? <DeleteConfirmationModal onDeleteConfirm={onDeleteConfirm} onClose={onDeleteConfirmClose}/>:''}
     </main>
   )
   }
