@@ -4,7 +4,7 @@ import { fetchImageUrls } from '../../utils/storageOperations';
 import { findCollectionById } from '../../utils/CollectionQuery';
 import './Selection.scss';
 import { fetchProject } from '../../firebase/functions/firestore';
-import ShareGallery from '../../components/ImageGallery/ShareGallery';
+import SelectionGallery from '../../components/ImageGallery/SelectionGallery';
 
 export default function Selection() {
   // set body color to white
@@ -79,7 +79,7 @@ export default function Selection() {
         </div>
       </div>
         <div className="shared-collection">
-          <ShareGallery images={imageUrls} />
+          <SelectionGallery images={imageUrls} />
 
         <div className="pagination">
           <div className={`button ${page===1?'disabled':'primary'} previous`}
