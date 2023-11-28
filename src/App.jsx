@@ -143,6 +143,7 @@ function App() {
           </> : ''
         }
         <Route path="/share/:projectId/:collectionId?" element={<ShareProject {...{ projects }} />}/>
+        <Route path="/selection/:projectId/:collectionId?" element={<ImageSelection {...{ projects }} />}/>
       </Routes>
       
     </div>
