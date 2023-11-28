@@ -19,7 +19,7 @@ export default function Selection() {
   const [selectedImages, setSelectedImages] = useState(new Set());
 
   const [page,setPage]=useState(1);
-  const [size,setSize]=useState(30);
+  const [size,setSize]=useState(15);
 
   // if no collectionIs is passed, use the first collectionId
   collectionId  = collectionId || project?.collections[0]?.id
