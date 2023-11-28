@@ -376,26 +376,6 @@ body{
           }
         }
       }
-      .gallary{
-
-        margin-top: 8px*2;
-        padding: 8px;
-        max-height: calc(100vh - 8px*30);
-        overflow-y: scroll;
-        .photos{
-          width: 100%;
-          display:grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-          gap:8px*1;
-          .photo{
-            width: 100%;
-            padding-top: 75%;
-            background-color: $dark-1;
-            border-radius: 2px;
-            background-size: cover;
-          }
-        }
-      }
       .pagination{
         display: flex;
         justify-content: center;
@@ -575,9 +555,33 @@ body{
     .photo{
       width: 100%;
       padding-top: 75%;
-      background-color: $dark-1;
+      //add a loading animation with linear-gradient
+      //background: linear-gradient(90deg, $dark-3 20%, $dark-2 40%,$dark-2 60%, $dark-3 80%);
+      
+      background-color: $dark-2;
       border-radius: 2px;
       background-size: cover;
+      &.dummy{
+
+      animation: image-loading 0.5s linear infinite alternate;
+      // add incrementing delay to each dummy image
+     
+      }
     }
   }
 }
+// linear-gradient(90deg, $dark-3 0%, $dark-2 50%, $dark-3 100%);
+// make a moving background with linear-gradient
+
+
+  @keyframes image-loading {
+      
+  0% {
+    background-color: $dark-3;
+  }
+  100% {
+    background-color: $dark-2;
+  }
+  }
+
+
