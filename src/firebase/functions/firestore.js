@@ -4,6 +4,26 @@ import { collection, doc, getDocs, getDoc, setDoc, deleteDoc, updateDoc, arrayUn
 import generateRandomString from "../../utils/generateRandomString";
 import { deleteCollectionFromStorage, deleteProjectFromStorage } from "../../utils/storageOperations";
 
+
+// Data Structure
+/* { 
+    id: 'alex-and-mia', 
+    name: 'Alex and Mia', 
+    type: 'Wedding', 
+    pin: 6554, 
+    email: 'alex.mia@gmail.com', 
+    phone: '555-123-4567',
+    status: '',
+    collections: [
+      {
+        id:'engagement',
+        name:'Engagement',
+        status:"empty",
+        imagesUrl: [],
+        selectedImages
+  },
+} */
+//Fetches
 export const fetchProjects = async () => {
     const projectsCollection = collection(db, 'projects');
     const querySnapshot = await getDocs(projectsCollection);
@@ -31,6 +51,7 @@ export const fetchProject = async (projectId) => {
 };
 
   
+// Project Operations
 export const addProject = async ({ name, type, ...optionalData }) => {
     if (!name || !type) {
     throw new Error('Project name and type are required.');
@@ -48,10 +69,6 @@ export const addProject = async ({ name, type, ...optionalData }) => {
         throw error;
     });
 };
-
-const updateProject = async (projectId, updatedData) => {
-};
-
 export const deleteProjectFromFirestore = async (projectId) => {
     if (!projectId) {
       throw new Error('Project ID is required for deletion.');
@@ -78,7 +95,7 @@ export const deleteProjectFromFirestore = async (projectId) => {
     }
   };
   
-// COLLECTION
+// Collection Operations
 
 export const addCollectionToFirestore = async (projectId,collectionData) => {
     const {name,status} =collectionData;
@@ -131,17 +148,42 @@ export const deleteCollectionFromFirestore = async (projectId, collectionId) => 
     }
 };
 
+// Collection Image Operations
+// add array of images to collection as selectedImages
+export const addSelectedImagesToFirestore = async (projectId, collectionId, images) => {
+    if (!projectId || !collectionId || !images) {
+        throw new Error('Project ID, Collection ID, and Images are required.');
+    }
 
-const updateCollection = async (collectionId, updatedData) => {
+    const projectsCollection = collection(db, 'projects');
+    const projectDoc = doc(projectsCollection, projectId);
+
     try {
-        if (!collectionId) {
-            throw new Error('Collection ID is required.');
-        }
+        const projectSnapshot = await getDoc(projectDoc);
 
-        await db.collection('collections').doc(collectionId).update(updatedData);
-        console.log('Collection updated successfully');
+        if (projectSnapshot.exists()) {
+            const projectData = projectSnapshot.data();
+            const updatedCollections = projectData.collections.map((collection) => {
+                if (collection.id === collectionId) {
+                    return {
+                        ...collection,
+                        selectedImages: [...collection.selectedImages, ...images]
+                    };
+                }
+                return collection;
+            });
+
+            await updateDoc(projectDoc, { collections: updatedCollections });
+            console.log('Selected images added to collection successfully.');
+        } else {
+            console.log('Project document does not exist.');
+            throw new Error('Project does not exist.');
+        }
     } catch (error) {
-        console.error('Error updating collection:', error.message);
+        console.error('Error adding selected images to collection:', error.message);
         throw error;
     }
-};
+}
+
+
+
