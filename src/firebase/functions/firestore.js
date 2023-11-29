@@ -166,25 +166,33 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
             const updatedCollections = projectData.collections.map((collection) => {
                 if (collection.id === collectionId) {
                     // Update the status of the corresponding image in the uploadedImages array
-                    // if within the page and size use slice to get the images
-                    const updatedImages = collection.uploadedFiles.slice((page-1)*size,page*size).map((image) => {
-
-
-                        if (images.includes(image.url)) {
-                            console.log('found');
-                            console.log(image);
-                            return {
-                                ...image,
-                                status: 'selected'
-                            };
-                        }
-                        else{
-                            return {
-                                ...image,
-                                status: ''
-                            };
-                        }
+                    const updatedImages = collection.uploadedFiles.map((image) => {
+                        if (page && size) {
+                            const startIndex = (page - 1) * size;
+                            const endIndex = page * size;
+                            if (collection.uploadedFiles.indexOf(image) >= startIndex && collection.uploadedFiles.indexOf(image) < endIndex) {
+                                if (images.includes(image.url)) {
+                                    console.log('found');
+                                    return {
+                                        ...image,
+                                        status: 'selected'
+                                    };
+                                } else {
+                                    return {
+                                        ...image,
+                                        status: ''
+                                    };
+                                }
+                            }
+                            else{
+                                return {
+                                    ...image,
+                                    status: ''
+                                };
+                            }
+                        } 
                     });
+                    console.log(updatedImages);
                     return {
                         ...collection,
                         uploadedFiles: updatedImages

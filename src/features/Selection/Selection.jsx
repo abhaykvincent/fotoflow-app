@@ -29,12 +29,14 @@ export default function Selection() {
     if(!project) return
     const newImages = project?.collections.find((collection)=>collection.id===collectionId)?.uploadedFiles;
     setImages(newImages);
+    console.log('page',newImages)
     setPage(1)
   }, [project, collectionId]);
 
   // Paginate images
   const paginatedImages = useMemo(() => {
-    return images.slice((page-1)*size,page*size);
+    let imagesTemp = images
+    return imagesTemp.slice((page-1)*size,page*size);
   }, [images, page]);
 
   // Fetch project data
