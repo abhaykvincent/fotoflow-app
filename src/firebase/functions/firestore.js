@@ -32,6 +32,21 @@ export const fetchProject = async (projectId) => {
         throw new Error('Project does not exist.');
     }
 };
+export const fetchImages = async (projectId,collectionId) => {
+    const projectsCollection = collection(db, 'projects');
+    const projectDoc = doc(projectsCollection, projectId);
+    const projectSnapshot = await getDoc(projectDoc);
+
+    if (projectSnapshot.exists()) {
+        const projectData = projectSnapshot.data();
+        //find collection with collectionId
+        const collection = projectData.collections.find((collection) => collection.id === collectionId);
+
+        return collection.uploadedFiles
+    } else {
+        throw new Error('Project does not exist.');
+    }
+}
 
   
 // Project Operations
