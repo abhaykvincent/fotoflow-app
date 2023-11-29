@@ -5,24 +5,7 @@ import generateRandomString from "../../utils/generateRandomString";
 import { deleteCollectionFromStorage, deleteProjectFromStorage } from "../../utils/storageOperations";
 
 
-// Data Structure
-/* { 
-    id: 'alex-and-mia', 
-    name: 'Alex and Mia', 
-    type: 'Wedding', 
-    pin: 6554, 
-    email: 'alex.mia@gmail.com', 
-    phone: '555-123-4567',
-    status: '',
-    collections: [
-      {
-        id:'engagement',
-        name:'Engagement',
-        status:"empty",
-        imagesUrl: [],
-        selectedImages
-  },
-} */
+
 //Fetches
 export const fetchProjects = async () => {
     const projectsCollection = collection(db, 'projects');
@@ -150,7 +133,7 @@ export const deleteCollectionFromFirestore = async (projectId, collectionId) => 
 
 // Collection Image Operations
 // add array of images to collection as selectedImages
-export const addSelectedImagesToFirestore = async (projectId, collectionId, images) => {
+export const addSelectedImagesToFirestore = async (projectId, collectionId, images,page,size) => {
     if (!projectId || !collectionId || !images) {
         throw new Error('Project ID, Collection ID, and Images are required.');
     }
@@ -166,19 +149,33 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
             const updatedCollections = projectData.collections.map((collection) => {
                 if (collection.id === collectionId) {
                     // Update the status of the corresponding image in the uploadedImages array
-
                     const updatedImages = collection.uploadedFiles.map((image) => {
-
-                    console.log(image);
-                    
-                        if (images.includes(image.url)) {
-                            return {
-                                ...image,
-                                status: 'selected'
-                            };
-                        }
-                        return image;
+                        if (page && size) {
+                            const startIndex = (page - 1) * size;
+                            const endIndex = page * size;
+                            if (collection.uploadedFiles.indexOf(image) >= startIndex && collection.uploadedFiles.indexOf(image) < endIndex) {
+                                if (images.includes(image.url)) {
+                                    console.log('found');
+                                    return {
+                                        ...image,
+                                        status: 'selected'
+                                    };
+                                } else {
+                                    return {
+                                        ...image,
+                                        status: ''
+                                    };
+                                }
+                            }
+                            else{
+                                return {
+                                    ...image,
+                                    status: ''
+                                };
+                            }
+                        } 
                     });
+                    console.log(updatedImages);
                     return {
                         ...collection,
                         uploadedFiles: updatedImages
