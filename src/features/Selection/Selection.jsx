@@ -36,6 +36,7 @@ export default function Selection() {
   // Paginate images
   const paginatedImages = useMemo(() => {
     let imagesTemp = images
+    console.log('images',images)
     return imagesTemp.slice((page-1)*size,page*size);
   }, [images, page]);
 

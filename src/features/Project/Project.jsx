@@ -48,6 +48,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   const targetCollectionId = collectionId || defaultCollectionId;
   if(!collectionId){
     navigate(`/project/${id}/${targetCollectionId}`);
+    return
   }
 
   // Find the collection by id
@@ -91,7 +92,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
       ) : (
         <div className="project-collections">
           <CollectionsPanel {...{project, collectionId, deleteCollection, openModal}}/>
-          <CollectionImages  {...{ id, collectionId,collection, projectImages }} />
+          <CollectionImages  {...{ id, collectionId,collection }} />
         </div>
       )}
       <AddCollectionModal project={project} visible={modal.createCollection} onClose={closeModal} onSubmit={addCollection}  />
