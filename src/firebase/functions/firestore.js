@@ -5,24 +5,7 @@ import generateRandomString from "../../utils/generateRandomString";
 import { deleteCollectionFromStorage, deleteProjectFromStorage } from "../../utils/storageOperations";
 
 
-// Data Structure
-/* { 
-    id: 'alex-and-mia', 
-    name: 'Alex and Mia', 
-    type: 'Wedding', 
-    pin: 6554, 
-    email: 'alex.mia@gmail.com', 
-    phone: '555-123-4567',
-    status: '',
-    collections: [
-      {
-        id:'engagement',
-        name:'Engagement',
-        status:"empty",
-        imagesUrl: [],
-        selectedImages
-  },
-} */
+
 //Fetches
 export const fetchProjects = async () => {
     const projectsCollection = collection(db, 'projects');

@@ -41,6 +41,7 @@ export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageS
 
     console.log('Fetching images FINISHED');
 };
+
 export const fetchImageInfo = async (id, collectionId) => {
   const storageRef = ref(storage, `${id}/${collectionId}`);
   const imageInfoList = [];
