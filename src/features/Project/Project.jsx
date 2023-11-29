@@ -6,6 +6,7 @@ import AddCollectionModal from '../../components/Modal/AddCollection';
 import DeleteConfirmationModal from '../../components/Modal/DeleteProject';
 import CollectionsPanel from '../../components/Project/Collections/CollectionsPanel';
 import CollectionImages from '../../components/Project/Collections/CollectionImages';
+import { fetchImages } from '../../firebase/functions/firestore';
 
 export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress,updateCollectionImages}) {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   const [modal, setModal] = useState({createCollection: false})
   const openModal = () => setModal({ createCollection: true });
   const closeModal = () => setModal({ createCollection: false });
+  const [projectImages, setProjectImages] = useState([]);
   const[confirmDeleteProject,setConfirmDeleteProject] = useState(false)
   const onDeleteConfirmClose = () => {
     setConfirmDeleteProject(false)
@@ -21,6 +23,8 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   const onDeleteConfirm = () => {
     deleteProject(id);
   }
+
+
 
   useEffect(()=>{
     setBreadcrumbs(['Projects'])
@@ -38,11 +42,13 @@ export default function Project({ projects,  addCollection, deleteCollection, de
     return;
   }
 
+
   // Determine the collectionId to use
   const defaultCollectionId = project.collections.length > 0 ? project.collections[0].id : null;
   const targetCollectionId = collectionId || defaultCollectionId;
   if(!collectionId){
     navigate(`/project/${id}/${targetCollectionId}`);
+    return
   }
 
   // Find the collection by id
