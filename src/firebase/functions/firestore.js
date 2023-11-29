@@ -150,7 +150,7 @@ export const deleteCollectionFromFirestore = async (projectId, collectionId) => 
 
 // Collection Image Operations
 // add array of images to collection as selectedImages
-export const addSelectedImagesToFirestore = async (projectId, collectionId, images) => {
+export const addSelectedImagesToFirestore = async (projectId, collectionId, images,page,size) => {
     if (!projectId || !collectionId || !images) {
         throw new Error('Project ID, Collection ID, and Images are required.');
     }
@@ -166,18 +166,24 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
             const updatedCollections = projectData.collections.map((collection) => {
                 if (collection.id === collectionId) {
                     // Update the status of the corresponding image in the uploadedImages array
+                    // if within the page and size use slice to get the images
+                    const updatedImages = collection.uploadedFiles.slice((page-1)*size,page*size).map((image) => {
 
-                    const updatedImages = collection.uploadedFiles.map((image) => {
 
-                    console.log(image);
-                    
                         if (images.includes(image.url)) {
+                            console.log('found');
+                            console.log(image);
                             return {
                                 ...image,
                                 status: 'selected'
                             };
                         }
-                        return image;
+                        else{
+                            return {
+                                ...image,
+                                status: ''
+                            };
+                        }
                     });
                     return {
                         ...collection,
