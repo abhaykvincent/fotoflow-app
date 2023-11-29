@@ -1,27 +1,59 @@
 import React, {useState, useEffect} from 'react';
 import { fetchImageUrls, handleUpload } from '../../../utils/storageOperations';
 import ImageGallery from '../../ImageGallery/ImageGallery';
+import { fetchImages } from '../../../firebase/functions/firestore';
 
- const CollectionImages = ({ id, collectionId,collection }) => {
+const CollectionImages = ({ id, collectionId,collection }) => {
+    // Files
+    const [files, setFiles] = useState([]);
+    const [collectionImages, setCollectionImages] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
+    const [isPhotosImported, setIsPhotosImported] = useState(false);
+    const [showAllPhotos,setShowAllPhotos]=useState(true);
+    const [page,setPage]=useState(1);
+    const [size,setSize]=useState(15);
+    // add project images when started from fetchImages
+    useEffect(()=>{
+        //get images from 
+        fetchImages(id,collectionId)
+        .then((images)=>{
+            setCollectionImages(images)
+        })
+        .catch((error)=>{
+        console.log(error)
+        })
+    },[])
+    // Fetch Images
+    useEffect(() => {
+        if(!id, !collectionId) return
+        // slice with page and size
+        let start=(page-1)*size;
+            let end=page*size;
+            let images=collectionImages.slice(start,end)
+        setImageUrls(images)
+    }, [id,collectionId,page]);
 
-  // Files
-  const [files, setFiles] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
-  const [isPhotosImported, setIsPhotosImported] = useState(false);
-  const [page,setPage]=useState(1);
-  const [size,setSize]=useState(15);
-  // Fetch Images
-  useEffect(() => {
-      if(!id, !collectionId) return
-      fetchImageUrls(id, collectionId, setImageUrls, page, size);
-  }, [id,collectionId,page]);
+    useEffect(() => {
+        if(showAllPhotos){
+            let start=(page-1)*size;
+            let end=page*size;
+            let images=collectionImages.slice(start,end)
+        setImageUrls(images)
+        }
+        else{
+        // loop through collectionImages and if image status is selected update imageUrls
+        let selectedImages=collectionImages.filter((image)=>image.status==='selected')
+        console.log(selectedImages)
+        setImageUrls(selectedImages)
+        }
+    }, [showAllPhotos]);
 
-  const handleFileInputChange = (event) => {
-    const selectedFiles = Array.from(event.target.files);
-    setIsPhotosImported(true)
-    setFiles(selectedFiles);
-    setImageUrls(selectedFiles)
-  };
+    const handleFileInputChange = (event) => {
+        const selectedFiles = Array.from(event.target.files);
+        setIsPhotosImported(true)
+        setFiles(selectedFiles);
+        setImageUrls(selectedFiles)
+    };
     return (
         <div className="project-collection">
             <div className="header">
@@ -33,8 +65,8 @@ import ImageGallery from '../../ImageGallery/ImageGallery';
                             <div className="control-label label-all-photos">569 Photos</div>
                             <div className="control-wrap">
                                 <div className="controls">
-                                    <div className="control active">All photos</div>
-                                    <div className="control">Selected </div>
+                                    <div className={`control ${showAllPhotos ? 'active' : ''}`} onClick={() => setShowAllPhotos(true)}>All photos</div>
+                                    <div className={`control ${!showAllPhotos ? 'active' : ''}`} onClick={() => setShowAllPhotos(false)}>Selected</div>
                                 </div>
                                 <div className={`active`}></div>
                             </div>
