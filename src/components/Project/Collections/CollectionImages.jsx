@@ -3,7 +3,7 @@ import { fetchImageUrls, handleUpload } from '../../../utils/storageOperations';
 import ImageGallery from '../../ImageGallery/ImageGallery';
 import { fetchImages } from '../../../firebase/functions/firestore';
 
-const CollectionImages = ({ id, collectionId,collection }) => {
+const CollectionImages = ({ id, collectionId,collection,showAlert }) => {
 // Files
 const [files, setFiles] = useState([]);
 const [collectionImages, setCollectionImages] = useState([]);
@@ -91,7 +91,7 @@ return (
                     <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
                         onClick={async()=>{
                             setIsPhotosImported(false);
-                            let uploadedImages=await handleUpload(files, id, collectionId)
+                            let uploadedImages=await handleUpload(files, id, collectionId,showAlert)
                             console.log(uploadedImages)
                         }}
                         >Upload Images</div>

@@ -138,7 +138,7 @@ function App() {
         { authenticated ? 
           <>
             <Route exact path="/" element={<Home/>}/>
-            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,updateCollectionImages, setBreadcrumbs }} />}/>
+            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,updateCollectionImages, setBreadcrumbs,showAlert }} />}/>
             <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert, setBreadcrumbs }} />}/>
           </> : ''
         }

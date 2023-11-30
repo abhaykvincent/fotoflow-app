@@ -8,7 +8,7 @@ import CollectionsPanel from '../../components/Project/Collections/CollectionsPa
 import CollectionImages from '../../components/Project/Collections/CollectionImages';
 import { fetchImages } from '../../firebase/functions/firestore';
 
-export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs, setIsUploading, setTotalUploadProgress,updateCollectionImages}) {
+export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setBreadcrumbs,showAlert}) {
   const navigate = useNavigate();
   // Route Params
   let { id,collectionId } = useParams();// Modal
@@ -92,7 +92,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
       ) : (
         <div className="project-collections">
           <CollectionsPanel {...{project, collectionId, deleteCollection, openModal}}/>
-          <CollectionImages  {...{ id, collectionId,collection }} />
+          <CollectionImages  {...{ id, collectionId,collection,showAlert}} />
         </div>
       )}
       <AddCollectionModal project={project} visible={modal.createCollection} onClose={closeModal} onSubmit={addCollection}  />
