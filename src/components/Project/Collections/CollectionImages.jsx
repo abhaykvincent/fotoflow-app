@@ -91,9 +91,8 @@ return (
                     <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
                         onClick={async()=>{
                             setIsPhotosImported(false);
-                            let uploadedImages=await handleUpload(files, id, collectionId)
+                            let uploadedImages=await handleUpload(files, id, collectionId,showAlert)
                             console.log(uploadedImages)
-                            showAlert('success', 'All files uploaded successfully!')
                         }}
                         >Upload Images</div>
                 </div>
