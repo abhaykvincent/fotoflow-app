@@ -29,12 +29,15 @@ export default function Selection() {
     if(!project) return
     const newImages = project?.collections.find((collection)=>collection.id===collectionId)?.uploadedFiles;
     setImages(newImages);
+    console.log('page',newImages)
     setPage(1)
   }, [project, collectionId]);
 
   // Paginate images
   const paginatedImages = useMemo(() => {
-    return images.slice((page-1)*size,page*size);
+    let imagesTemp = images
+    console.log('images',images)
+    return imagesTemp.slice((page-1)*size,page*size);
   }, [images, page]);
 
   // Fetch project data
@@ -42,6 +45,16 @@ export default function Selection() {
     try {
       const projectData = await fetchProject(projectId);
       setProject(projectData);
+      // get all images url with status 'selected' from projectData as set
+      const selectedImagesInFirestore = new Set();
+      projectData.collections.forEach((collection) => {
+        collection.uploadedFiles.forEach((image) => {
+          if (image.status === 'selected') {
+            selectedImagesInFirestore.add(image.url);
+          }
+        });
+      });
+      setSelectedImages(selectedImagesInFirestore)
     } catch (error) {
       console.error('Failed to fetch project:', error);
     }
@@ -50,7 +63,8 @@ export default function Selection() {
   // Handle add selected images
   const handleAddSelectedImages = async () => {
     try {
-      await addSelectedImagesToFirestore(projectId, collectionId, [...selectedImages]);
+      console.log('selectedImagesInCollection',selectedImagesInCollection)
+      await addSelectedImagesToFirestore(projectId, collectionId, [...selectedImages],page,size);
       // handle success (e.g. show a success message)
     } catch (error) {
       // handle error (e.g. show an error message)
@@ -94,7 +108,7 @@ export default function Selection() {
   );
 
   function handleNextClick() {
-    handleAddSelectedImages(selectedImages)
+    handleAddSelectedImages()
     selectedImages.forEach((image) => selectedImagesInCollection.push(image))
     setPage(page+1)
   }

@@ -41,6 +41,7 @@ export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageS
 
     console.log('Fetching images FINISHED');
 };
+
 export const fetchImageInfo = async (id, collectionId) => {
   const storageRef = ref(storage, `${id}/${collectionId}`);
   const imageInfoList = [];
@@ -142,8 +143,8 @@ export const fetchImageInfo = async (id, collectionId) => {
        
     });
   };
-  
-  export const handleUpload = async (files, id, collectionId, retries=2) => {
+
+  export const handleUpload = async (files, id, collectionId, showAlert,retries=2) => {
       let uploadPromises = [];
     console.log('%c '+files.length+' files to upload','color:yellow')
       files.forEach((file) => {
@@ -171,10 +172,11 @@ export const fetchImageInfo = async (id, collectionId) => {
               // addUploadedFilesToFirestore
               addUploadedFilesToFirestore(id, collectionId, uploadedFiles)
               .then(() => {
-                  console.log('Uploaded files added to project successfully.');
+                  showAlert('success', 'All files uploaded successfully!')
               })
               .catch((error) => {
                   console.error('Error adding uploaded files to project:', error.message);
+                  showAlert('error', error.message)
                   throw error;
               });
               return uploadedFiles;
