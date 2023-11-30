@@ -3,7 +3,7 @@ import { fetchImageUrls, handleUpload } from '../../../utils/storageOperations';
 import ImageGallery from '../../ImageGallery/ImageGallery';
 import { fetchImages } from '../../../firebase/functions/firestore';
 
-const CollectionImages = ({ id, collectionId,collection }) => {
+const CollectionImages = ({ id, collectionId,collection,showAlert }) => {
 // Files
 const [files, setFiles] = useState([]);
 const [collectionImages, setCollectionImages] = useState([]);
@@ -93,6 +93,7 @@ return (
                             setIsPhotosImported(false);
                             let uploadedImages=await handleUpload(files, id, collectionId)
                             console.log(uploadedImages)
+                            showAlert('success', 'All files uploaded successfully!')
                         }}
                         >Upload Images</div>
                 </div>
