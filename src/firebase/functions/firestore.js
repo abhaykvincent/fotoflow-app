@@ -163,34 +163,21 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
             const projectData = projectSnapshot.data();
             const updatedCollections = projectData.collections.map((collection) => {
                 if (collection.id === collectionId) {
-                    // Update the status of the corresponding image in the uploadedImages array
                     const updatedImages = collection.uploadedFiles.map((image) => {
                         if (page && size) {
                             const startIndex = (page - 1) * size;
                             const endIndex = page * size;
                             if (collection.uploadedFiles.indexOf(image) >= startIndex && collection.uploadedFiles.indexOf(image) < endIndex) {
                                 if (images.includes(image.url)) {
-                                    console.log('found');
                                     return {
                                         ...image,
                                         status: 'selected'
                                     };
-                                } else {
-                                    return {
-                                        ...image,
-                                        status: ''
-                                    };
                                 }
                             }
-                            else{
-                                return {
-                                    ...image,
-                                    status: ''
-                                };
-                            }
                         } 
+                        return image; // return the image as is if it's not in the current page range or not included in the selected images
                     });
-                    console.log(updatedImages);
                     return {
                         ...collection,
                         uploadedFiles: updatedImages

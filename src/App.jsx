@@ -12,15 +12,13 @@ import Project from './features/Project/Project';
 import Projects from './features/Projects/Projects';
 import LoginModal from './features/Login/Login';
 import ShareProject from './features/Share/Share';
-// Data and Firebase functions
-import dummyProjects from './data/projects';
+//Firebase functions
 import { 
   fetchProjects,
   addCollectionToFirestore, 
   deleteProjectFromFirestore, 
   deleteCollectionFromFirestore, 
 } from './firebase/functions/firestore';
-import UploadImages from './firebase/test/StorageTest';
 import Selection from './features/Selection/Selection';
 
 function App() {
