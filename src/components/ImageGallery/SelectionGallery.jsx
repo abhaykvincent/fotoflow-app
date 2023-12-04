@@ -2,7 +2,11 @@ import React from 'react';
 
 const SelectionGallery = ({ images, selectedImages, setSelectedImages, setSelectedImagesInCollection }) => {
   const handleImageClick = (fileUrl) => {
+    console.log("Clicked image URL: ", fileUrl);
+
     const newSelectedImages = new Set(selectedImages);
+    console.log("Selected images before click: ", Array.from(newSelectedImages));
+
     if (selectedImages.has(fileUrl)) {
       newSelectedImages.delete(fileUrl);
       setSelectedImagesInCollection((prev) => prev.filter((image) => image !== fileUrl));
@@ -10,7 +14,9 @@ const SelectionGallery = ({ images, selectedImages, setSelectedImages, setSelect
       newSelectedImages.add(fileUrl);
       setSelectedImagesInCollection((prev) => [...prev, fileUrl]);
     }
+
     setSelectedImages(newSelectedImages);
+    console.log("Selected images after click: ", Array.from(newSelectedImages));
   };
 
   return (
