@@ -9,7 +9,17 @@ import {
 import { getDoc } from "firebase/firestore";
   import { db, storage } from '../firebase/app';
 import { arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
-  
+
+/**
+ * Fetches image URLs from a specific storage location based on the provided parameters.
+ * 
+ * @param {string} id - The ID of the storage location.
+ * @param {string} collectionId - The ID of the collection within the storage location.
+ * @param {function} setImageUrls - A function to set the fetched image URLs.
+ * @param {number} page - The page number to fetch images from.
+ * @param {number} pageSize - The number of images to fetch per page.
+ * @returns {Promise<void>} - A promise that resolves once the image URLs are fetched.
+ */
 export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageSize) => {
     console.log(`Fetching images for page ${page}`);
     const storageRef = ref(storage, `${id}/${collectionId}`);
@@ -61,8 +71,6 @@ export const fetchImageInfo = async (id, collectionId) => {
       }
   return imageInfoList;
 };
-  
-  let filesUploaded = 0;
 
   export const uploadFile = (id, collectionId, file) => {
   
