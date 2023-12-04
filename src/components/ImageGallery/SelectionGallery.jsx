@@ -1,41 +1,43 @@
-import React from 'react';
-
+import React, { useCallback, memo } from 'react';
 const SelectionGallery = ({ images, selectedImages, setSelectedImages, setSelectedImagesInCollection }) => {
-  const handleImageClick = (fileUrl) => {
+  const handleImageClick = useCallback((fileUrl) => {
     console.log("Clicked image URL: ", fileUrl);
 
-    const newSelectedImages = new Set(selectedImages);
-    console.log("Selected images before click: ", Array.from(newSelectedImages));
+    const newSelectedImages = { ...selectedImages };
 
-    if (selectedImages.has(fileUrl)) {
-      newSelectedImages.delete(fileUrl);
+    if (selectedImages[fileUrl]) {
+      delete newSelectedImages[fileUrl];
       setSelectedImagesInCollection((prev) => prev.filter((image) => image !== fileUrl));
     } else {
-      newSelectedImages.add(fileUrl);
+      newSelectedImages[fileUrl] = true;
       setSelectedImagesInCollection((prev) => [...prev, fileUrl]);
     }
 
     setSelectedImages(newSelectedImages);
-    console.log("Selected images after click: ", Array.from(newSelectedImages));
-  };
+    console.log("Selected images after click: ", newSelectedImages);
+  }, [selectedImages, setSelectedImages, setSelectedImagesInCollection]);
+
+  const ImageComponent = React.memo(({ fileUrl, index, handleImageClick }) => (
+    <div
+      className="photo"
+      key={index}
+      style={{ backgroundImage: `url(${fileUrl.url})` }}
+      aria-label={`File ${index}`}
+      onClick={() => handleImageClick(fileUrl.url)}
+    >
+      <input
+        type="checkbox"
+        checked={!!selectedImages[fileUrl.url]}
+        onChange={() => handleImageClick(fileUrl.url)}
+      />
+    </div>
+  ));
 
   return (
     <div className="gallary">
       <div className="photos">
         {images.map((fileUrl, index) => (
-          <div
-            className="photo"
-            key={index}
-            style={{ backgroundImage: `url(${fileUrl.url})` }}
-            aria-label={`File ${index}`}
-            onClick={() => handleImageClick(fileUrl.url)}
-          >
-            <input
-              type="checkbox"
-              checked={selectedImages.has(fileUrl.url)}
-              onChange={() => handleImageClick(fileUrl.url)}
-            />
-          </div>
+          <ImageComponent key={index} fileUrl={fileUrl} index={index} handleImageClick={handleImageClick} />
         ))}
       </div>
     </div>
