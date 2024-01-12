@@ -560,7 +560,6 @@ margin-left: 4px;
       border-radius: 2px;
       background-color: $dark-3;
       transition-duration: 0.2s;
-      overflow: hidden;
       transition-timing-function: ease-out;
       .photo{
         width: 100%;
@@ -611,7 +610,43 @@ margin-left: 4px;
               border: 1px solid $dark-0;
               transition-duration: 0.1s;
               opacity: 1;
+              & + .option-menu {
+                opacity: 1;
+                transform: translateY(0);
+                transition-duration: 0.1s;
+              }
             }
+          }
+          .option-menu{
+            position: absolute;
+            right: -8px*15;
+            top: 8px*4;
+            width: 8px*18.5;
+            padding: 4px 6px;
+            background-color: white;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(8px*5);
+            .photo-option{
+              padding: 4px 8px;
+              font-size: 0.9rem;
+              border-bottom: 1px solid $gray6-accessible-light;
+              border-radius: 2px;
+              color: $gray5-accessible-dark;
+              font-weight: 500;
+              cursor: pointer;
+              //last one
+              &:last-child{
+              border-bottom: none;
+              }
+              &:hover{
+                color: $gray6-accessible-dark;
+                background-color: $gray6-accessible-light;
+              }
+            }
+            // style for every fifth one
+
+            
           }
         }
         .bottom{
@@ -655,6 +690,11 @@ margin-left: 4px;
           }
         }
       }
+      &:nth-child(5n){
+        .option-menu{
+        right: -8px*1 !important
+        }
+    }
       // when clicked and stay the style
       /* &:active{
         
@@ -664,9 +704,6 @@ margin-left: 4px;
     }
   }
 }
-// linear-gradient(90deg, $dark-3 0%, $dark-2 50%, $dark-3 100%);
-// make a moving background with linear-gradient
-
 
   @keyframes image-loading {
       
@@ -678,4 +715,6 @@ margin-left: 4px;
   }
   }
 
-
+  .firebase-emulator-warning{
+    display: none;
+  }
