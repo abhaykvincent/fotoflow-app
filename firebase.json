@@ -1,7 +1,4 @@
 {
-  "functions": {
-    "source": "functions"
-  },
   "hosting": {
     "public": "build",
     "ignore": [
@@ -14,10 +11,6 @@
     "rules": "storage.rules"
   },
   "emulators": {
-    "functions": {
-      "port": 5001
-      
-    },
     "hosting": {
       "port": 5000
     },

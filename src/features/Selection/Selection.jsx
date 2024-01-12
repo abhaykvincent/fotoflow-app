@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { fetchImageUrls } from '../../utils/storageOperations';
 import { fetchProject, addSelectedImagesToFirestore } from '../../firebase/functions/firestore';
 import SelectionGallery from '../../components/ImageGallery/SelectionGallery';
+import PaginationControl from '../../components/PaginationControl/PaginationControl';
 import './Selection.scss';
-
 export default function Selection() {
   let { projectId, collectionId } = useParams();
   const [project, setProject] = useState();
   const [images, setImages] = useState([]);
-  const [selectedImages, setSelectedImages] = useState(new Set());
+  const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImagesInCollection, setSelectedImagesInCollection] = useState([]);
   const [page,setPage]=useState(1);
   const [size,setSize]=useState(15);
+  const [totalPages, setTotalPages] = useState(0);
   collectionId = collectionId || project?.collections[0]?.id;
   // Set body color to white
   useEffect(() => {
@@ -29,16 +29,22 @@ export default function Selection() {
     if(!project) return
     const newImages = project?.collections.find((collection)=>collection.id===collectionId)?.uploadedFiles;
     setImages(newImages);
-    console.log('page',newImages)
+    setTotalPages(Math.ceil(newImages.length/size))
     setPage(1)
   }, [project, collectionId]);
 
   // Paginate images
   const paginatedImages = useMemo(() => {
     let imagesTemp = images
-    console.log('images',images)
     return imagesTemp.slice((page-1)*size,page*size);
   }, [images, page]);
+useEffect(() => {
+  const photosDiv = document.querySelector('.gallary');
+  if (photosDiv) {
+    photosDiv.scrollTop = 0;
+  }
+}, [page]);
+
 
   // Fetch project data
   const fetchProjectData = async () => {
@@ -46,14 +52,15 @@ export default function Selection() {
       const projectData = await fetchProject(projectId);
       setProject(projectData);
       // get all images url with status 'selected' from projectData as set
-      const selectedImagesInFirestore = new Set();
+      const selectedImagesInFirestore = []
       projectData.collections.forEach((collection) => {
         collection.uploadedFiles.forEach((image) => {
           if (image.status === 'selected') {
-            selectedImagesInFirestore.add(image.url);
+            selectedImagesInFirestore.push(image.url);
           }
         });
       });
+      console.log(selectedImagesInFirestore)
       setSelectedImages(selectedImagesInFirestore)
     } catch (error) {
       console.error('Failed to fetch project:', error);
@@ -64,9 +71,11 @@ export default function Selection() {
   const handleAddSelectedImages = async () => {
     try {
       console.log('selectedImagesInCollection',selectedImagesInCollection)
-      await addSelectedImagesToFirestore(projectId, collectionId, [...selectedImages],page,size);
+      console.log('selectedImages',selectedImages)
+      await addSelectedImagesToFirestore(projectId, collectionId, selectedImages,page,size);
       // handle success (e.g. show a success message)
     } catch (error) {
+      console.error('Failed to add selected images:', error);
       // handle error (e.g. show an error message)
     }
   };
@@ -99,17 +108,20 @@ export default function Selection() {
       </div>
       <div className="shared-collection">
         <SelectionGallery images={paginatedImages} {...{selectedImages,setSelectedImages,setSelectedImagesInCollection}} />
-        <div className="pagination">
-          <div className={`button ${page===1?'disabled':'primary'} previous`} onClick={() => page > 1 && setPage(page-1)}>Previous</div>
-          <div className="button primary next" onClick={() => handleNextClick()}>Next</div>
-        </div>
+        <PaginationControl
+          currentPage={page}
+          totalPages={totalPages}
+          handlePageChange={(newPage) => {
+            saveSelectedImages()
+            setPage(newPage)
+          }}
+        />
       </div>
     </div>
   );
 
-  function handleNextClick() {
+  function saveSelectedImages() {
     handleAddSelectedImages()
     selectedImages.forEach((image) => selectedImagesInCollection.push(image))
-    setPage(page+1)
   }
 }

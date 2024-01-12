@@ -7,6 +7,7 @@
   padding: 0;
   background-repeat: no-repeat;
   box-sizing: border-box;
+  color: white;
 }
 a{
   text-decoration: none;
@@ -561,7 +562,7 @@ body{
       background-size: cover;
       &.dummy{
 
-      animation: image-loading 0.5s linear infinite alternate;
+      //animation: image-loading 0.5s linear infinite alternate;
       // add incrementing delay to each dummy image
      
       }

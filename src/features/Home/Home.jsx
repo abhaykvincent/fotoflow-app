@@ -27,7 +27,7 @@ function Home() {
   return (
     <main className="home">
         <div className="welcome-section">
-            <h1 className='welcome-message'>Welcome, Ashish Monalisa</h1>
+            <h1 className='welcome-message'>Welcome, Canbera Studio</h1>
             <div className="actions">
                 <div className="button primary">Create Project</div>
             </div>

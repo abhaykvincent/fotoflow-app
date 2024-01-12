@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 function AddCollectionModal({ project, visible, onClose, onSubmit }) {
   const [CollectionData, setCollectionData] = useState({
-    name: 'Wedding Eve',
+    name: 'Birthday',
     status: 'empty',
     images: [],
     imagesUrl: []

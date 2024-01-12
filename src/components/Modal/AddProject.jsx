@@ -4,10 +4,10 @@ import { addProject } from '../../firebase/functions/firestore';
 function AddProjectModal({ showAlert,visible, onClose, onSubmit }) {
 
   const [projectData, setProjectData] = useState({
-      name: 'Abhay Vincent',
+      name: 'Ethan Ross',
       type: 'Birthday',
-      email: 'abhaykvincent@gmail.com',
-      phone: '9495505112',
+      email: 'julia.ethan@gmail.com',
+      phone: '3656992278',
       collections: []
   });
   const handleInputChange = (event) => {
