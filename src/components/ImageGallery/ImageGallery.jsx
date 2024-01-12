@@ -12,7 +12,12 @@ console.log(imageUrls)
             <div className="hover-options">
               <div className="top">
                 <div className="menu-icon"></div>
-
+                <div className="option-menu">
+                  <div className="photo-option">Download</div>
+                  <div className="photo-option">Share</div>
+                  <div className="photo-option">Set as cover</div>
+                  <div className="photo-option">Delete</div>
+                </div>
               </div>
               <div className="bottom">
                 <div className="filename">{fileUrl.name}</div>
