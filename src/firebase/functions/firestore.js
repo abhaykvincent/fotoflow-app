@@ -148,11 +148,11 @@ export const deleteCollectionFromFirestore = async (projectId, collectionId) => 
 
 // Collection Image Operations
 // add array of images to collection as selectedImages
-export const addSelectedImagesToFirestore = async (projectId, collectionId, images,page,size) => {
+export const addSelectedImagesToFirestore = async (projectId, collectionId, images, page, size) => {
     if (!projectId || !collectionId || !images) {
         throw new Error('Project ID, Collection ID, and Images are required.');
     }
-
+    console.log(projectId, collectionId, images, page, size)
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
 
@@ -163,39 +163,27 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
             const projectData = projectSnapshot.data();
             const updatedCollections = projectData.collections.map((collection) => {
                 if (collection.id === collectionId) {
-                    // Update the status of the corresponding image in the uploadedImages array
                     const updatedImages = collection.uploadedFiles.map((image) => {
-                        if (page && size) {
-                            const startIndex = (page - 1) * size;
-                            const endIndex = page * size;
-                            if (collection.uploadedFiles.indexOf(image) >= startIndex && collection.uploadedFiles.indexOf(image) < endIndex) {
-                                if (images.includes(image.url)) {
-                                    console.log('found');
-                                    return {
-                                        ...image,
-                                        status: 'selected'
-                                    };
-                                } else {
-                                    return {
-                                        ...image,
-                                        status: ''
-                                    };
-                                }
-                            }
-                            else{
-                                return {
-                                    ...image,
-                                    status: ''
-                                };
-                            }
-                        } 
+                        const imageIndex = collection.uploadedFiles.indexOf(image);
+                        const startIndex = (page - 1) * size;
+                        const endIndex = page * size;
+
+                        if (imageIndex >= startIndex && imageIndex < endIndex) {
+                            return {
+                                ...image,
+                                status: images.includes(image.url) ? 'selected' : ''
+                            };
+                        } else {
+                            return image; // retain the status if outside the page and size range
+                        }
                     });
-                    console.log(updatedImages);
+
                     return {
                         ...collection,
                         uploadedFiles: updatedImages
                     };
                 }
+
                 return collection;
             });
 
