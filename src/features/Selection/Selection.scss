@@ -23,7 +23,7 @@
   position: relative;
   background-position: center 30%;
   background-size: 100%;
-  padding-top: 8px*30;
+  padding-top: 10vw;
   .banner{
     position: absolute;
     top: 0;
@@ -98,9 +98,9 @@
     overflow-y: scroll;
     .photos{
       width: 100%;
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap:8px*1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); // This will create a responsive grid
+      gap: 8px;
       .photo{
         position: relative;
         width: 100%;
@@ -150,5 +150,11 @@
     display: flex;
     justify-content: center;
     margin-bottom: 8px*3;
+  }
+}
+
+@media (max-width: 600px) {
+  .photos {
+    grid-template-columns: 1fr; // This will make it a single column grid on smaller screens
   }
 }

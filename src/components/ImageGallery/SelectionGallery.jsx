@@ -3,18 +3,22 @@ const SelectionGallery = ({ images, selectedImages, setSelectedImages, setSelect
   const handleImageClick = useCallback((fileUrl) => {
     console.log("Clicked image URL: ", fileUrl);
 
-    const newSelectedImages = { ...selectedImages };
+    // Check if fileUrl is already in selectedImages
+    const index = selectedImages.indexOf(fileUrl);
 
-    if (selectedImages[fileUrl]) {
-      delete newSelectedImages[fileUrl];
-      setSelectedImagesInCollection((prev) => prev.filter((image) => image !== fileUrl));
+    if (index > -1) {
+      // If fileUrl is already in selectedImages, remove it
+      const newSelectedImages = [...selectedImages];
+      newSelectedImages.splice(index, 1);
+      setSelectedImages(newSelectedImages);
     } else {
-      newSelectedImages[fileUrl] = true;
-      setSelectedImagesInCollection((prev) => [...prev, fileUrl]);
+      // If fileUrl is not in selectedImages, add it
+      setSelectedImages([...selectedImages, fileUrl]);
     }
 
-    setSelectedImages(newSelectedImages);
-    console.log("Selected images after click: ", newSelectedImages);
+    // Update setSelectedImagesInCollection
+    setSelectedImagesInCollection(selectedImages);
+
   }, [selectedImages, setSelectedImages, setSelectedImagesInCollection]);
 
   const ImageComponent = React.memo(({ fileUrl, index, handleImageClick }) => (
@@ -27,7 +31,8 @@ const SelectionGallery = ({ images, selectedImages, setSelectedImages, setSelect
     >
       <input
         type="checkbox"
-        checked={!!selectedImages[fileUrl.url]}
+        checked={selectedImages.includes(fileUrl.url)}
+
         onChange={() => handleImageClick(fileUrl.url)}
       />
     </div>

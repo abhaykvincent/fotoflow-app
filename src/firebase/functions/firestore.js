@@ -152,7 +152,7 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
     if (!projectId || !collectionId || !images) {
         throw new Error('Project ID, Collection ID, and Images are required.');
     }
-
+    console.log(projectId, collectionId, images, page, size)
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
 
