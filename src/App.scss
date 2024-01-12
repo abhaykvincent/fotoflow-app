@@ -607,7 +607,7 @@ margin-left: 4px;
             border: 1px solid transparent;
             opacity: 0.5;
             &:hover{
-              background-color: $dark-1;
+              background-color: $dark-2;
               border: 1px solid $dark-0;
               transition-duration: 0.1s;
               opacity: 1;
@@ -656,10 +656,10 @@ margin-left: 4px;
         }
       }
       // when clicked and stay the style
-      &:active{
+      /* &:active{
         
         box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255,0.5);
-      }
+      } */
       
     }
   }
