@@ -541,8 +541,8 @@ body{
 
 
 .gallary{
-
-  margin-top: 8px*2;
+margin-left: 4px;
+  margin-top: 8px*0;
   padding: 8px;
   max-height: calc(100vh - 8px*30);
   overflow-y: scroll;
@@ -550,22 +550,117 @@ body{
     width: 100%;
     display:grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap:8px*1;
-    .photo{
-      width: 100%;
-      padding-top: 75%;
-      //add a loading animation with linear-gradient
-      //background: linear-gradient(90deg, $dark-3 20%, $dark-2 40%,$dark-2 60%, $dark-3 80%);
-      
-      background-color: $dark-2;
+    gap:8px*0;
+    .photo-wrap{
+      position: relative;
+      margin-left: -1px;
+      margin-top: -1px;
+      position: relative;
+      border: 1px solid $dark-1;
       border-radius: 2px;
-      background-size: cover;
-      &.dummy{
-
-      //animation: image-loading 0.5s linear infinite alternate;
-      // add incrementing delay to each dummy image
-     
+      background-color: $dark-3;
+      transition-duration: 0.2s;
+      overflow: hidden;
+      transition-timing-function: ease-out;
+      .photo{
+        width: 100%;
+        height: 100%;
+        top: 0;
+        height: 100%;
+        padding-top: 100%;
+        //add a loading animation with linear-gradient
+        //background: linear-gradient(90deg, $dark-3 20%, $dark-2 40%,$dark-2 60%, $dark-3 80%);
+        
+        transform: scale(0.9);
+        border-radius: 2px;
+        // background size: take the width of largest side
+        background-size: contain;
+        background-position: center center;
+        transition-duration: 0.05s;
       }
+      .hover-options-wrap{
+          position: absolute;
+          width: 100%;;
+          height: 100%;
+      }
+      .hover-options{
+        position: relative;
+        width: 100%;;
+        height: 100%;
+        z-index: 1;
+        .top{
+          position: absolute;
+          top: -8px*4;
+          right: 0;
+          height: 8px*4;
+          transition-duration: 0.1s;
+          opacity: 0;
+          .menu-icon{
+            height: 8px*3;
+            width: 8px*3;
+            margin: 4px;
+            border-radius: 2px;
+            background-image: url('./assets/img/icons/options-dots.png');
+            background-size: auto 60%;
+            background-position: center center;
+            text-align: center;
+            border: 1px solid transparent;
+            opacity: 0.5;
+            &:hover{
+              background-color: $dark-1;
+              border: 1px solid $dark-0;
+              transition-duration: 0.1s;
+              opacity: 1;
+            }
+          }
+        }
+        .bottom{
+          position: absolute;
+          bottom: -8px*4;
+          height: 8px*2;
+          transition-duration: 0.1s;
+          width: 100%;
+          opacity: 0;
+          .filename{
+            font-size: 0.8rem;
+            text-align: center;
+            margin:-4px;
+            color: $gray2-accessible-dark;
+          }
+        }
+      }
+      &:hover{
+        border: 1px solid $dark-0;
+        background-color: $dark-1;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-out;
+        z-index: 1;
+        .photo{
+          transform: scale(0.8)translateY(-8px*1);
+          transition-duration: 0.1s;
+        }
+        .hover-options{
+          .top{
+            position: absolute;
+            top: 0;
+            opacity: 1;
+            transition-delay: 0.2s;
+          }
+          .bottom{
+            position: absolute;
+            bottom: 0;
+            transition-duration: 0.05s;
+            transition-delay: 0.1s;
+            opacity: 1;
+          }
+        }
+      }
+      // when clicked and stay the style
+      &:active{
+        
+        box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255,0.5);
+      }
+      
     }
   }
 }
