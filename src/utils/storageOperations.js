@@ -142,23 +142,35 @@ export const fetchImageInfo = async (id, collectionId) => {
 
   export const handleUpload = async (files, id, collectionId, showAlert,retries=2) => {
       let uploadPromises = [];
-    console.log('%c '+files.length+' files to upload','color:yellow')
-      files.forEach((file) => {
-          uploadPromises.push(uploadFile(id, collectionId,file));
-      });
+      console.log('%c '+files.length+' files to upload','color:yellow')
+    const sliceSize = 10;
+    const uploadSlice = async (slice) => {
+        const results = [];
+        for (const file of slice) {
+            const result = await uploadFile(id, collectionId, file);
+            results.push(result);
+        }
+        return results;
+    };
+
+    for (let i = 0; i < files.length; i += sliceSize) {
+        const slice = files.slice(i, i + sliceSize);
+        uploadPromises.push(uploadSlice(slice));
+    }
+      
   
-      return Promise.allSettled(uploadPromises)
-      .then((results) => {
-          let failedFiles = [];
-          let uploadedFiles = [];
-          results.forEach((result, index) => {
-              if (result.status === 'rejected') {
-                  failedFiles.push(files[index]);
-              }
-              else {
-                uploadedFiles.push(result.value)
-              }
-          });
+    return Promise.allSettled(uploadPromises)
+    .then((results) => {
+        let failedFiles = [];
+        let uploadedFiles = [];
+        results.forEach((result, index) => {
+            if (result.status === 'rejected') {
+                failedFiles.push(files[index]);
+            }
+            else {
+                uploadedFiles.push(...result.value); // Flatten the array
+            }
+        });
 
           if (failedFiles.length > 0) {
               console.log("Some files failed to upload. Reuploading missed files...");
@@ -188,6 +200,8 @@ export const fetchImageInfo = async (id, collectionId) => {
   
   // function to add uploadedFiles data to firestore in project of project id and collection of collection id
     export const addUploadedFilesToFirestore = async (projectId, collectionId, uploadedFiles) => {
+        console.log(projectId, collectionId, uploadedFiles)
+        debugger
         const projectsCollection = collection(db, 'projects');
         const projectDoc = doc(projectsCollection, projectId);
 
