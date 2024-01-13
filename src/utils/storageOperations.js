@@ -8,6 +8,7 @@ import {
 import { getDoc } from "firebase/firestore";
 import { db, storage } from '../firebase/app';
 import { collection, doc, updateDoc } from "firebase/firestore";
+import { delay } from "./generalUtils";
 
  // Fetches image URLs from a specific storage location based on the provided parameters.
 export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageSize) => {
@@ -58,82 +59,81 @@ export const fetchImageInfo = async (id, collectionId) => {
             });
         }
     return imageInfoList;
-    };
+};
 
+// File upload function
+export const uploadFile = (id, collectionId, file) => {
+    const MAX_RETRIES = 5;
+    const INITIAL_RETRY_DELAY = 500; // 1 second initial delay
+    let retries = 0;
 
-    export const uploadFile = (id, collectionId, file) => {
-        const MAX_RETRIES = 5;
-        const INITIAL_RETRY_DELAY = 500; // 1 second initial delay
-        let retries = 0;
-    
-        return new Promise((resolve, reject) => {
-            const storageRef = ref(storage, `${id}/${collectionId}/${file.name}`);
-            let uploadTask;
-    
-            try {
-                console.log(`Uploading ${file.name}...`)
-                uploadTask = uploadBytesResumable(storageRef, file);
-            } catch (error) {
-                console.error("Error uploading file:", error);
-                return reject(error); // Reject the promise with the error
+    return new Promise((resolve, reject) => {
+        const storageRef = ref(storage, `${id}/${collectionId}/${file.name}`);
+        let uploadTask;
+
+        try {
+            console.log(`Uploading ${file.name}...`)
+            uploadTask = uploadBytesResumable(storageRef, file);
+        } catch (error) {
+            console.error("Error uploading file:", error);
+            return reject(error); // Reject the promise with the error
+        }
+
+        function retryUpload() {
+            uploadTask.cancel(); // Cancel the current upload task
+
+            if (retries < MAX_RETRIES) {
+                let retryDelay = INITIAL_RETRY_DELAY * Math.pow(2, retries); // Exponential backoff
+
+                console.log(`Retrying upload of ${file.name} in ${retryDelay / 1000} seconds`);
+                setTimeout(() => {
+                    uploadTask = uploadBytesResumable(storageRef, file);
+
+                    uploadTask.on('state_changed',
+                        () => {},
+                        (error) => {
+                            console.error(`Error during upload retry for ${file.name}:`, error);
+                            retries++;
+                            retryUpload(); // Initiate the retry mechanism
+                        },
+                        async () => {
+                            console.log(`%c ${file.name} File uploaded successfully on ${retries + 1} retry`, 'color:yellow');
+                            let url = await getDownloadURL(uploadTask.snapshot.ref);
+                            resolve({
+                                name: file.name,
+                                url
+                            });
+                        }
+                    );
+                }, retryDelay);
+            } else {
+                console.log(`==========================`);
+                console.log(`%c ${file.name} File upload failed after ${MAX_RETRIES} retries`, 'color:red');
+                console.log(`==========================`);
+                reject(new Error(`Exceeded maximum retries (${MAX_RETRIES}) for ${file.name}`));
             }
-    
-            function retryUpload() {
-                uploadTask.cancel(); // Cancel the current upload task
-    
-                if (retries < MAX_RETRIES) {
-                    let retryDelay = INITIAL_RETRY_DELAY * Math.pow(2, retries); // Exponential backoff
-    
-                    console.log(`Retrying upload of ${file.name} in ${retryDelay / 1000} seconds`);
-                    setTimeout(() => {
-                        uploadTask = uploadBytesResumable(storageRef, file);
-    
-                        uploadTask.on('state_changed',
-                            () => {},
-                            (error) => {
-                                console.error(`Error during upload retry for ${file.name}:`, error);
-                                retries++;
-                                retryUpload(); // Initiate the retry mechanism
-                            },
-                            async () => {
-                                console.log(`%c ${file.name} File uploaded successfully on ${retries + 1} retry`, 'color:yellow');
-                                let url = await getDownloadURL(uploadTask.snapshot.ref);
-                                resolve({
-                                    name: file.name,
-                                    url
-                                });
-                            }
-                        );
-                    }, retryDelay);
-                } else {
-                    console.log(`==========================`);
-                    console.log(`%c ${file.name} File upload failed after ${MAX_RETRIES} retries`, 'color:red');
-                    console.log(`==========================`);
-                    reject(new Error(`Exceeded maximum retries (${MAX_RETRIES}) for ${file.name}`));
-                }
-            }
-    
-            uploadTask.on('state_changed',
-                () => {},
-                (error) => {
-                    console.error(`Error during initial upload for ${file.name}:`, error);
-                    retries++;
-                    retryUpload(); // Initiate the retry mechanism
-                },
-                async () => {
-                    // Handle successful uploads on complete
-                    console.log(`%c ${file.name} File uploaded successfully in the first try`, 'color:green');
-                    let url = await getDownloadURL(uploadTask.snapshot.ref);
-                    resolve({
-                        name: file.name,
-                        url
-                    }); // Resolve the promise when the file is successfully uploaded
-                }
-            );
-        });
-    };
-    
+        }
 
+        uploadTask.on('state_changed',
+            () => {},
+            (error) => {
+                console.error(`Error during initial upload for ${file.name}:`, error);
+                retries++;
+                retryUpload(); // Initiate the retry mechanism
+            },
+            async () => {
+                // Handle successful uploads on complete
+                console.log(`%c ${file.name} File uploaded successfully in the first try`, 'color:green');
+                let url = await getDownloadURL(uploadTask.snapshot.ref);
+                resolve({
+                    name: file.name,
+                    url
+                }); // Resolve the promise when the file is successfully uploaded
+            }
+        );
+    });
+};
+    
 export const handleUpload = async (files, id, collectionId, showAlert,retries=2) => {
     let uploadPromises = [];
     console.log('%c '+files.length+' files to upload','color:yellow')
@@ -148,17 +148,15 @@ export const handleUpload = async (files, id, collectionId, showAlert,retries=2)
         return results;
     };
 
-    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-for (let i = 0; i < files.length; i += sliceSize) {
-    const slice = files.slice(i, i + sliceSize);
-    uploadPromises.push(uploadSlice(slice));
-    
-    // Add a delay after each slice (1 second in this example)
-    if (i + sliceSize < files.length) {
-        await delay(1000);
+    // Upload the slices sequentially
+    for (let i = 0; i < files.length; i += sliceSize) {
+        const slice = files.slice(i, i + sliceSize);
+        uploadPromises.push(uploadSlice(slice));
+        
+        // Add a delay after each slice (1 second in this example)
+        if (slice[0]) await delay(1000)
     }
-}
       
     return Promise.allSettled(uploadPromises)
     .then((results) => {
@@ -196,86 +194,87 @@ for (let i = 0; i < files.length; i += sliceSize) {
         throw error; // Propagate the error if needed
     });
 }
+
   
-  // function to add uploadedFiles data to firestore in project of project id and collection of collection id
-    export const addUploadedFilesToFirestore = async (projectId, collectionId, uploadedFiles) => {
-        console.log(projectId, collectionId, uploadedFiles)
-        const projectsCollection = collection(db, 'projects');
-        const projectDoc = doc(projectsCollection, projectId);
+// function to add uploadedFiles data to firestore in project of project id and collection of collection id
+export const addUploadedFilesToFirestore = async (projectId, collectionId, uploadedFiles) => {
+    console.log(projectId, collectionId, uploadedFiles)
+    const projectsCollection = collection(db, 'projects');
+    const projectDoc = doc(projectsCollection, projectId);
 
-        // Get the project document
-        const projectData = await getDoc(projectDoc);
+    // Get the project document
+    const projectData = await getDoc(projectDoc);
 
-        if (projectData.exists()) {
-            // Read the collections array
-            const collections = projectData.data().collections;
+    if (projectData.exists()) {
+        // Read the collections array
+        const collections = projectData.data().collections;
 
-            // Find the collection with the given id
-            const collection = collections.find(collection => collection.id === collectionId);
+        // Find the collection with the given id
+        const collection = collections.find(collection => collection.id === collectionId);
 
-            if (collection) {
-                // Check if uploadedFiles property exists in the collection
-                if (!collection.uploadedFiles) {
-                    collection.uploadedFiles = []; // Initialize uploadedFiles array if it doesn't exist
-                }
-
-                // Append the new uploadedFiles to the collection's uploadedFiles array
-                collection.uploadedFiles.push(...uploadedFiles);
-
-                // Update the project document with the new collections array
-                return updateDoc(projectDoc, { collections })
-                    .then(() => {
-                        console.log('Uploaded files added to collection successfully.');
-                    })
-                    .catch((error) => {
-                        console.error('Error adding uploaded files to collection:', error.message);
-                        throw error;
-                    });
-            } else {
-                console.error('Collection not found.');
-                throw new Error('Collection not found.');
+        if (collection) {
+            // Check if uploadedFiles property exists in the collection
+            if (!collection.uploadedFiles) {
+                collection.uploadedFiles = []; // Initialize uploadedFiles array if it doesn't exist
             }
+
+            // Append the new uploadedFiles to the collection's uploadedFiles array
+            collection.uploadedFiles.push(...uploadedFiles);
+
+            // Update the project document with the new collections array
+            return updateDoc(projectDoc, { collections })
+                .then(() => {
+                    console.log('Uploaded files added to collection successfully.');
+                })
+                .catch((error) => {
+                    console.error('Error adding uploaded files to collection:', error.message);
+                    throw error;
+                });
         } else {
-            console.error('Project not found.');
-            throw new Error('Project not found.');
+            console.error('Collection not found.');
+            throw new Error('Collection not found.');
         }
-    };
-
-  export const deleteCollectionFromStorage = async (id, collectionId) => {
-    const storageRef = ref(storage, `${id}/${collectionId}`);
-    const listResult = await list(storageRef);
-
-    for (const item of listResult.items) {
-        await deleteObject(item);
+    } else {
+        console.error('Project not found.');
+        throw new Error('Project not found.');
     }
-  }
+};
 
-  // stoage is in format project/collection/image
-  export const deleteProjectFromStorage = async (projectId) => {
-    try {
-      const projectRef = ref(storage, projectId);
-      const projectList = await list(projectRef);
-  
-      // Iterate through projectList prefixes (collections)
-      for (const collectionRef of projectList.prefixes) {
-        const collectionList = await list(collectionRef);
-  
-        // Iterate through images in each collection
-        for (const imageRef of collectionList.items) {
-          await deleteObject(imageRef);
-          console.log('Image deleted successfully.');
-        }
-  
-        // Delete the collection directory after deleting its contents
-        await deleteObject(collectionRef);
-        console.log('Collection directory deleted successfully.');
-      }
-  
-      // Delete the project directory after deleting its contents
-      await deleteObject(projectRef);
-      console.log('Project directory deleted successfully.');
-    } catch (error) {
-      console.error('Error deleting images:', error);
+export const deleteCollectionFromStorage = async (id, collectionId) => {
+const storageRef = ref(storage, `${id}/${collectionId}`);
+const listResult = await list(storageRef);
+
+for (const item of listResult.items) {
+    await deleteObject(item);
+}
+}
+
+// stoage is in format project/collection/image
+export const deleteProjectFromStorage = async (projectId) => {
+try {
+    const projectRef = ref(storage, projectId);
+    const projectList = await list(projectRef);
+
+    // Iterate through projectList prefixes (collections)
+    for (const collectionRef of projectList.prefixes) {
+    const collectionList = await list(collectionRef);
+
+    // Iterate through images in each collection
+    for (const imageRef of collectionList.items) {
+        await deleteObject(imageRef);
+        console.log('Image deleted successfully.');
     }
-  };
+
+    // Delete the collection directory after deleting its contents
+    await deleteObject(collectionRef);
+    console.log('Collection directory deleted successfully.');
+    }
+
+    // Delete the project directory after deleting its contents
+    await deleteObject(projectRef);
+    console.log('Project directory deleted successfully.');
+} catch (error) {
+    console.error('Error deleting images:', error);
+}
+};
   
