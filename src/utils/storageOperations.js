@@ -74,27 +74,56 @@ export const uploadFile = (id, collectionId, file) => {
         try {
             console.log(`Uploading ${file.name}...`)
             uploadTask = uploadBytesResumable(storageRef, file);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                },
+                (error) => {
+                    console.error(`Error during initial upload for ${file.name}:`, error);
+                    retries++;
+                    try{
+                     retryUpload(); // Initiate the retry mechanism
+                    }
+                    catch(error) {
+                        console.error(`Error during retry upload for ${file.name}:`, error);
+                        return reject(error); // Reject the promise with final error
+                    }
+                },
+                async () => {
+                    // Handle successful uploads on complete 
+                    console.log(`%c ${file.name} File uploaded successfully in the first try`, 'color:green');
+                    let url = await getDownloadURL(uploadTask.snapshot.ref);
+                    console.log(`Download URL for ${file.name}: ${url}`);
+                    resolve({
+                        name: file.name,
+                        url
+                    }); // Resolve the promise when the file is successfully uploaded
+                }
+            );
         } catch (error) {
             console.error("Error uploading file:", error);
-            return reject(error); // Reject the promise with the error
+            return reject(error); // Reject the promise with the error  
         }
 
-        function retryUpload() {
+
+        async function retryUpload() {
             uploadTask.cancel(); // Cancel the current upload task
 
             if (retries < MAX_RETRIES) {
                 let retryDelay = INITIAL_RETRY_DELAY * Math.pow(2, retries); // Exponential backoff
 
                 console.log(`Retrying upload of ${file.name} in ${retryDelay / 1000} seconds`);
-                setTimeout(() => {
-                    uploadTask = uploadBytesResumable(storageRef, file);
+                await new Promise(resolve => setTimeout(resolve, retryDelay));
 
-                    uploadTask.on('state_changed',
-                        () => {},
-                        (error) => {
+                uploadTask = uploadBytesResumable(storageRef, file);
+
+                uploadTask.on('state_changed',
+                    () => {},
+                    async (error) => {
                             console.error(`Error during upload retry for ${file.name}:`, error);
                             retries++;
-                            retryUpload(); // Initiate the retry mechanism
+                            await retryUpload(); // Initiate the retry mechanism
                         },
                         async () => {
                             console.log(`%c ${file.name} File uploaded successfully on ${retries + 1} retry`, 'color:yellow');
@@ -104,8 +133,7 @@ export const uploadFile = (id, collectionId, file) => {
                                 url
                             });
                         }
-                    );
-                }, retryDelay);
+                );
             } else {
                 console.log(`==========================`);
                 console.log(`%c ${file.name} File upload failed after ${MAX_RETRIES} retries`, 'color:red');
@@ -114,86 +142,85 @@ export const uploadFile = (id, collectionId, file) => {
             }
         }
 
-        uploadTask.on('state_changed',
-            () => {},
-            (error) => {
-                console.error(`Error during initial upload for ${file.name}:`, error);
-                retries++;
-                retryUpload(); // Initiate the retry mechanism
-            },
-            async () => {
-                // Handle successful uploads on complete
-                console.log(`%c ${file.name} File uploaded successfully in the first try`, 'color:green');
-                let url = await getDownloadURL(uploadTask.snapshot.ref);
-                resolve({
-                    name: file.name,
-                    url
-                }); // Resolve the promise when the file is successfully uploaded
-            }
-        );
+        
     });
 };
     
-export const handleUpload = async (files, id, collectionId, showAlert,retries=2) => {
+export const handleUpload = async (files, id, collectionId, showAlert, retries = 2) => {
+    console.log('%c ' + files.length + ' files to upload', 'color:yellow')
     let uploadPromises = [];
-    console.log('%c '+files.length+' files to upload','color:yellow')
-    const sliceSize = 20;
+
     // Slice the files array into smaller arrays of size sliceSize
-    const uploadSlice = async (slice) => {
+    const sliceSize = 20;
+    const sliceUpload = async (slice) => {
         const results = [];
+
+        // add a new concole to result
+
         for (const file of slice) {
-            const result = await uploadFile(id, collectionId, file);
-            results.push(result);
+            try {
+                await console.log(file.name)
+                const result = await uploadFile(id, collectionId, file);
+                results.push(result);
+            } catch (error) {
+                console.error(`Error uploading ${file.name}:`, error);
+            }
         }
         return results;
     };
-
-
     // Upload the slices sequentially
+
     for (let i = 0; i < files.length; i += sliceSize) {
         const slice = files.slice(i, i + sliceSize);
-        uploadPromises.push(uploadSlice(slice));
-        
-        // Add a delay after each slice (1 second in this example)
-        if (slice[0]) await delay(1000)
-    }
-      
-    return Promise.allSettled(uploadPromises)
-    .then((results) => {
-        let failedFiles = [];
-        let uploadedFiles = [];
-        results.forEach((result, index) => {
-            if (result.status === 'rejected') {
-                failedFiles.push(files[index]);
-            }
-            else {
-                uploadedFiles.push(...result.value); // Flatten the array
-            }
-        });
 
-        if (failedFiles.length > 0) {
-            console.log("Some files failed to upload. Reuploading missed files...");
-            return handleUpload(failedFiles, id, collectionId, retries-1);
-        } else {
-            console.log("%c All files uploaded successfully!", 'color:green');
-            // 
-            addUploadedFilesToFirestore(id, collectionId, uploadedFiles)
-            .then(() => {
-                showAlert('success', 'All files uploaded successfully!')
-            })
-            .catch((error) => {
-                console.error('Error adding uploaded files to project:', error.message);
-                showAlert('error', error.message)
-                throw error;
+        uploadPromises.push(sliceUpload(slice));
+        // Add a delay after each slice (1 second in this example)
+        if (slice[0]) await delay(100)
+    }
+    // console length of each slice in upload promises
+
+    console.log('Promises:')
+    console.log(uploadPromises)
+    return Promise.all(uploadPromises)
+        .then((results) => {
+            let failedFiles = [];
+            let uploadedFiles = [];
+            // results is an array of arrays with objects
+            // convert all objects  to single array
+            results = [].concat(...results);
+            console.log(results)
+            debugger
+            results.forEach((result, index) => {
+                if (result.status === 'rejected')
+                    failedFiles.push(files[index]);
+                else
+                    uploadedFiles.push(result); // Flatten the array
             });
-            return uploadedFiles;
-        }
-    })
-    .catch((error) => {
-        console.error("Error uploading files:", error);
-        throw error; // Propagate the error if needed
-    });
+
+            if (failedFiles.length == 0) {
+                console.log("%c All files uploaded successfully!", 'color:green');
+
+                addUploadedFilesToFirestore(id, collectionId, uploadedFiles)
+                    .then(() => {
+                        showAlert('success', 'All files uploaded successfully!')
+                    })
+                    .catch((error) => {
+                        console.error('Error adding uploaded files to project:', error.message);
+                        showAlert('error', error.message)
+                        throw error;
+                    });
+                return uploadedFiles;
+            } else {
+                console.log("Some files failed to upload. Reuploading missed files...");
+                return handleUpload(failedFiles, id, collectionId, retries - 1);
+            }
+        })
+        .catch((error) => {
+            console.error("Error uploading files:", error);
+            throw error; // Propagate the error if needed
+        });
 }
+
 
   
 // function to add uploadedFiles data to firestore in project of project id and collection of collection id
