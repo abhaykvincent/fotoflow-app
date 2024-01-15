@@ -97,7 +97,7 @@ useEffect(() => {
   if(!project) return null;
 
   return (
-    <div className="share-project">
+    <div className="select-project">
       <div className="project-header" style={{ backgroundImage: `url(${images[0]?images[0].url:''})`}}>
         <div className="project-info">
           <h1 className='projet-name'>{project.name}</h1>

@@ -17,32 +17,41 @@ export default function ShareProject() {
   const [imageUrls, setImageUrls] = useState([]);
 
   const [page,setPage]=useState(1);
-  const [size,setSize]=useState(30);
+  const [size,setSize]=useState(100);
   // Fetch Images
 // if co collectionIs is passed, use the first collectionId
   console.log(project)
     collectionId  = collectionId || project?.collections[0]?.id
     console.log(projectId, collectionId)
     
-  //let collection = findCollectionById( project, project.collections.length > 0 ? collectionId || project.collections[0].id:null);
-  // Fetch Images based on projectId and collectionId
+  // Fetch Images based on projectId
+  const fetchProjectData = async () => {
+    try {
+      const projectData = await fetchProject(projectId);
+      setProject(projectData);
+    } catch (error) {
+      console.error('Failed to fetch project:', error);
+    }
+  };
+  const fetchImagesData = async () => {
+    try {
+      fetchImageUrls(projectId, collectionId, setImageUrls, page, size);
+    } catch (error) {
+      console.error('Failed to fetch project:', error);
+    }
+  };
+
   useEffect(() => {
     console.log(projectId, collectionId)
-    const fetchProjectData = async () => {
-      try {
-        const projectData = await fetchProject(projectId);
-        setProject(projectData);
-      } catch (error) {
-        console.error('Failed to fetch project:', error);
-      }
-    };
-
     fetchProjectData();
-    fetchImageUrls(projectId, collectionId, setImageUrls, page, size);
-  }, [projectId, collectionId,page]);
+  }, []);
+
   useEffect(() => {
+    if(!project) return
+    const newImages = project?.collections.find((collection)=>collection.id===collectionId)?.uploadedFiles;
+    setImageUrls(newImages)
     setPage(1)
-  }, [collectionId]);
+  }, [project, collectionId]);
 
   if(!project) return
   
