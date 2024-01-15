@@ -235,7 +235,6 @@ export const handleUpload = async (files, id, collectionId, showAlert, retries =
 export const addUploadedFilesToFirestore = async (projectId, collectionId, uploadedFiles) => {
 
     console.log(projectId, collectionId, uploadedFiles)
-    debugger
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
 
