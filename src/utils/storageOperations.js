@@ -11,11 +11,11 @@ import { collection, doc, updateDoc } from "firebase/firestore";
 import { delay } from "./generalUtils";
 
  // Fetches image URLs from a specific storage location based on the provided parameters.
-export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageSize) => {
+export const fetchImageUrlsBack = async (id, collectionId, page, pageSize) => {
     console.log(`Fetching images for page ${page}`);
     const storageRef = ref(storage, `${id}/${collectionId}`);
     try {
-        setImageUrls([]); // Clear the imageUrls array
+        const imageUrls = []; // Create an empty array to store the image URLs
     
         // Calculate starting and ending indexes based on the page and page size
         const startAt = (page - 1) * pageSize;
@@ -26,15 +26,48 @@ export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageS
         let currentIndex = 0;
         for (const item of listResult.items) {
             if (currentIndex >= startAt && currentIndex < endAt) {
-                await new Promise((resolve) => setTimeout(resolve, 10)); // Add a delay of 500 milliseconds
+                await new Promise((resolve) => setTimeout(resolve, 10)); // Add a delay of 10 milliseconds
                 const downloadURL = await getDownloadURL(item);
-                setImageUrls((prev) => [...prev, downloadURL]);
+                imageUrls.push(downloadURL);
             }
 
             currentIndex++;
             // Break the loop once endAt is reached
             if (currentIndex === endAt) break;
         }
+
+        return imageUrls; // Return the array of image URLs
+    } catch (error) {
+        console.error("Error fetching images:", error);
+    }
+    console.log('Fetching images FINISHED');
+};
+export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageSize) => {
+    console.log(`Fetching images for page ${page}`);
+    const storageRef = ref(storage, `${id}/${collectionId}`);
+    try {
+        const imageUrls = []; // Create an empty array to store the image URLs
+    
+        // Calculate starting and ending indexes based on the page and page size
+        const startAt = (page - 1) * pageSize;
+        const endAt = startAt + pageSize;
+
+        const listResult = await list(storageRef);
+
+        let currentIndex = 0;
+        for (const item of listResult.items) {
+            if (currentIndex >= startAt && currentIndex < endAt) {
+                //await new Promise((resolve) => setTimeout(resolve, 10)); // Add a delay of 10 milliseconds
+                const downloadURL = await getDownloadURL(item);
+                imageUrls.push(downloadURL);
+            }
+
+            currentIndex++;
+            // Break the loop once endAt is reached
+            if (currentIndex === endAt) break;
+        }
+        console.log(imageUrls.length)
+        setImageUrls(imageUrls); // Set the image URLs outside the loop
     } catch (error) {
         console.error("Error fetching images:", error);
     }
