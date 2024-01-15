@@ -10,38 +10,7 @@ import { db, storage } from '../firebase/app';
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { delay } from "./generalUtils";
 
- // Fetches image URLs from a specific storage location based on the provided parameters.
-export const fetchImageUrlsBack = async (id, collectionId, page, pageSize) => {
-    console.log(`Fetching images for page ${page}`);
-    const storageRef = ref(storage, `${id}/${collectionId}`);
-    try {
-        const imageUrls = []; // Create an empty array to store the image URLs
-    
-        // Calculate starting and ending indexes based on the page and page size
-        const startAt = (page - 1) * pageSize;
-        const endAt = startAt + pageSize;
 
-        const listResult = await list(storageRef);
-
-        let currentIndex = 0;
-        for (const item of listResult.items) {
-            if (currentIndex >= startAt && currentIndex < endAt) {
-                await new Promise((resolve) => setTimeout(resolve, 10)); // Add a delay of 10 milliseconds
-                const downloadURL = await getDownloadURL(item);
-                imageUrls.push(downloadURL);
-            }
-
-            currentIndex++;
-            // Break the loop once endAt is reached
-            if (currentIndex === endAt) break;
-        }
-
-        return imageUrls; // Return the array of image URLs
-    } catch (error) {
-        console.error("Error fetching images:", error);
-    }
-    console.log('Fetching images FINISHED');
-};
 export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageSize) => {
     console.log(`Fetching images for page ${page}`);
     const storageRef = ref(storage, `${id}/${collectionId}`);
@@ -220,8 +189,8 @@ export const handleUpload = async (files, id, collectionId, showAlert, retries =
         }
     }
     console.log('Promises:')
-    console.log(uploadPromises)
-    return Promise.all(uploadPromises)
+    console.log(uploadedFiles)
+    return Promise.all(uploadedFiles)
         .then((results) => {
             let failedFiles = [];
             let uploadedFiles = [];
@@ -229,7 +198,6 @@ export const handleUpload = async (files, id, collectionId, showAlert, retries =
             // convert all objects  to single array
             results = [].concat(...results);
             console.log(results)
-            debugger
             results.forEach((result, index) => {
                 if (result.status === 'rejected')
                     failedFiles.push(files[index]);
@@ -265,6 +233,7 @@ export const handleUpload = async (files, id, collectionId, showAlert, retries =
   
 // function to add uploadedFiles data to firestore in project of project id and collection of collection id
 export const addUploadedFilesToFirestore = async (projectId, collectionId, uploadedFiles) => {
+
     console.log(projectId, collectionId, uploadedFiles)
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
