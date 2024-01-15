@@ -178,40 +178,47 @@ export const uploadFile = (id, collectionId, file) => {
         
     });
 };
-    
+const sliceUpload = async (slice, id, collectionId) => {
+    const results = [];
+
+    for (const file of slice) {
+        try {
+            console.log(file.name);
+            const result = await uploadFile(id, collectionId, file);
+            results.push(result);
+        } catch (error) {
+            console.error(`Error uploading ${file.name}:`, error);
+            throw error; // Propagate the error if needed
+        }
+    }
+
+    return results;
+};
 export const handleUpload = async (files, id, collectionId, showAlert, retries = 2) => {
-    console.log('%c ' + files.length + ' files to upload', 'color:yellow')
     let uploadPromises = [];
 
     // Slice the files array into smaller arrays of size sliceSize
-    const sliceSize = 20;
-    const sliceUpload = async (slice) => {
-        const results = [];
+    const sliceSize = 5;
+    console.log('%c ' + files.length + ' files to upload', 'color:yellow');
+    let uploadedFiles = [];
 
-        // add a new concole to result
-
-        for (const file of slice) {
-            try {
-                await console.log(file.name)
-                const result = await uploadFile(id, collectionId, file);
-                results.push(result);
-            } catch (error) {
-                console.error(`Error uploading ${file.name}:`, error);
-            }
-        }
-        return results;
-    };
     // Upload the slices sequentially
-
     for (let i = 0; i < files.length; i += sliceSize) {
         const slice = files.slice(i, i + sliceSize);
 
-        uploadPromises.push(sliceUpload(slice));
-        // Add a delay after each slice (1 second in this example)
-        if (slice[0]) await delay(100)
-    }
-    // console length of each slice in upload promises
+        try {
+            const results = await sliceUpload(slice, id, collectionId);
+            uploadedFiles.push(...results);
+        } catch (error) {
+            console.error("Error uploading files:", error);
+            throw error; // Propagate the error if needed
+        }
 
+        // Add a delay after each slice (if needed)
+        if (i + sliceSize < files.length) {
+            await delay(100);
+        }
+    }
     console.log('Promises:')
     console.log(uploadPromises)
     return Promise.all(uploadPromises)
