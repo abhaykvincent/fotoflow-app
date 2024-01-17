@@ -146,6 +146,15 @@ body{
         &:hover{
           border: 1px solid $dark-0;
         }
+        &.disabled{
+          &:hover{
+            border: 1px solid $dark-2;
+          }
+          .label,.icon{
+            opacity: 0.2;
+          }
+          cursor: not-allowed;
+        }
         .icon{
           width: 8px*3;
           height: 8px*3;

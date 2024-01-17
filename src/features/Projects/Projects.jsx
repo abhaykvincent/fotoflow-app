@@ -5,7 +5,7 @@ import './Projects.scss';
 import AddProjectModal from '../../components/Modal/AddProject';
 
 
-  
+
 
 function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
     document.title = `Projects`

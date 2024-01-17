@@ -38,3 +38,19 @@
         cursor: not-allowed;
     }
 }
+.coming-soon{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    opacity: 0.5;
+}
+.coming-soon-tag{
+    display: inline-block;
+    color: $green-default-light;
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 2px 4px;
+    //background-color: $green-accessible-light;
+    border: 1px solid $green-accessible-light;
+    border-radius: 4px;
+}
