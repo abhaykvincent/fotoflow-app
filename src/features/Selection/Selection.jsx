@@ -27,6 +27,8 @@ export default function Selection() {
   // Update images when project or collectionId changes
   useEffect(() => {
     if(!project) return
+    // set document title
+    document.title = project.name+' | Selection'
     const newImages = project?.collections.find((collection)=>collection.id===collectionId)?.uploadedFiles;
     setImages(newImages);
     setTotalPages(Math.ceil(newImages.length/size))
