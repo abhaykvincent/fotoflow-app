@@ -35,7 +35,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
 
   // Find the project with the given id
   const project = projects.find((p) => p.id === id);
-
+  document.title = `${project.name}`
   // If the project is not found, redirect to the projects page and return
   if (!project) {
     navigate('/projects');

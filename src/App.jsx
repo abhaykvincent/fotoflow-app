@@ -34,6 +34,7 @@ function App() {
   // Core Data
   const [projects, setProjects] = useState();
   useEffect(() => {
+    document.title = `FotoFlow`;
     fetchProjects().then((fetchedProjects) => {
       setProjects(fetchedProjects);
     });
