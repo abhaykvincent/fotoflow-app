@@ -8,6 +8,7 @@ import AddProjectModal from '../../components/Modal/AddProject';
   
 
 function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
+    document.title = `Projects`
     // Modal
     const [modal, setModal] = useState({
         createProject: false

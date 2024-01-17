@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 
 import './Home.scss';
 function Home() {
-  // Replace this with your logic to fetch recent and all projects
-  const recentProjects = [
-    { id: 'alex-and-mia', name: 'Alex & Mia', type: 'Wedding', pin: 6554 },
-    { id: 'ethan-and-emma', name: 'Ethan & Emma', type: 'Wedding', pin: 3365 },
-    { id: 'noah-and-olivia', name: 'Noah & Olivia', type: 'Wedding', pin: 6798 },
-    { id: 'michael-and-emily', name: 'Michael & Emily', type: 'Anniversary', pin: 5678 },
-    { id: 'apeiro-inc', name: 'Apeiro Inc', type: 'Corporate Event', pin: 9876 }
-]; 
+
+    document.title = `FotoFlow | Home`;
+    // Replace this with your logic to fetch recent and all projects
+    const recentProjects = [
+        { id: 'alex-and-mia', name: 'Alex & Mia', type: 'Wedding', pin: 6554 },
+        { id: 'ethan-and-emma', name: 'Ethan & Emma', type: 'Wedding', pin: 3365 },
+        { id: 'noah-and-olivia', name: 'Noah & Olivia', type: 'Wedding', pin: 6798 },
+        { id: 'michael-and-emily', name: 'Michael & Emily', type: 'Anniversary', pin: 5678 },
+        { id: 'apeiro-inc', name: 'Apeiro Inc', type: 'Corporate Event', pin: 9876 }
+    ]; 
 // An array of recent projects
   const reviewedProjects = [
     { id: 'sarah-john', name: 'Sarah John', type: 'Birthday', pin: 1234 },

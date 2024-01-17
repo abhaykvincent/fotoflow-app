@@ -3,6 +3,8 @@ import { provider,auth,signInWithPopup } from '../../firebase/app';
 import {GoogleAuthProvider} from 'firebase/auth';
 
 const LoginModal = ({setAuthenticated}) => {
+
+  document.title = `Login`
     const handleGoogleSignIn = async () => {
         signInWithPopup(auth, provider)
         .then((result) => {
