@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="31.498" height="27" viewBox="0 0 31.498 27">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.399" y1="0.34" x2="0.776" y2="0.684" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#32d74b"/>
+      <stop offset="1" stop-color="#196c26"/>
+    </linearGradient>
+  </defs>
+  <g id="Icon_ionic-ios-folder" data-name="Icon ionic-ios-folder" transform="translate(-2.251 -4.499)">
+    <path id="Union_1" data-name="Union 1" d="M-1878.328-10650a2.22,2.22,0,0,1-2.221-2.222v-14.934a1.128,1.128,0,0,1,1.123-1.125h29.25a1.129,1.129,0,0,1,1.125,1.125v14.907a2.255,2.255,0,0,1-2.248,2.248Zm29.068-20.15a1.316,1.316,0,0,0-.493-.1h-30.094a1.305,1.305,0,0,0-.493.1c-.091.056-.209.064-.209-.049v-5.182a1.675,1.675,0,0,1,1.736-1.619h6.755a1.531,1.531,0,0,1,1.217.485l.016.014,1.581,1.583a.522.522,0,0,0,.429.169h18.162a1.549,1.549,0,0,1,1.6,1.616v2.934a.079.079,0,0,1-.086.089A.25.25,0,0,1-1849.26-10670.151Z" transform="translate(1882.8 10681.5)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

@@ -5,9 +5,10 @@ import './Projects.scss';
 import AddProjectModal from '../../components/Modal/AddProject';
 
 
-  
+
 
 function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
+    document.title = `Projects`
     // Modal
     const [modal, setModal] = useState({
         createProject: false
@@ -18,6 +19,18 @@ function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
     useEffect(()=>{
         setBreadcrumbs(['Home'])
     },[setBreadcrumbs])
+
+    // project photos count 
+    const getProjectPhotosCount = (project) => {
+        return project.collections.reduce((count, collection) => count + collection.uploadedFiles?.length || 0, 0);
+    }
+    // project select photos count
+    const getProjectSelectedPhotosCount = (project) => {
+        return project.collections.flatMap(collection => collection.uploadedFiles)
+            .filter(image => image?.status === 'selected')
+            .length;
+    }
+    
 
     return (
         <main className="projects">
@@ -45,8 +58,8 @@ function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
                             </div> :
                             <div className="project-info">
                                 <div className="collection-count"><b>{project.collections.length}</b> Collections</div>
-                                <div className="photos-count"><b>1209</b> Photos</div>
-                                <div className="selected-count"><b>257</b> Selected</div>
+                                <div className="photos-count"><b>{getProjectPhotosCount(project)}</b> Photos</div>
+                                <div className="selected-count"><b>{ getProjectSelectedPhotosCount(project)} </b> Selected</div>
                             </div>
                             }
                             <div className="project-options">

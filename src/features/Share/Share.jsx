@@ -40,6 +40,9 @@ export default function ShareProject() {
       console.error('Failed to fetch project:', error);
     }
   };
+  const findCollectionById= (collections, collectionId) => {
+    return collections.find((collection) => collection.id === collectionId);
+  }
 
   useEffect(() => {
     console.log(projectId, collectionId)
@@ -48,6 +51,10 @@ export default function ShareProject() {
 
   useEffect(() => {
     if(!project) return
+    // find collection name from collection id
+    const collection = findCollectionById(project.collections, collectionId);
+    console.log(collection)
+    document.title = `${project.name} | ${collection.name} | Gallery`
     const newImages = project?.collections.find((collection)=>collection.id===collectionId)?.uploadedFiles;
     setImageUrls(newImages)
     setPage(1)
