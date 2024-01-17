@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.935" height="30.96" viewBox="0 0 28.935 30.96">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.396" y1="0.6" x2="0.839" y2="0.738" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#32d74b"/>
+      <stop offset="1" stop-color="#196c26"/>
+    </linearGradient>
+  </defs>
+  <path id="Icon_map-department-store" data-name="Icon map-department-store" d="M24.48,7.92V5.734a3.6,3.6,0,0,0-3.3-3.574H15.169A3.917,3.917,0,0,0,11.52,5.734V7.92H7.7L3.6,33.12H32.535l-4.16-25.2H24.48ZM13.68,5.734A1.664,1.664,0,0,1,15.169,4.32h6.007c.667,0,1.144.745,1.144,1.414V7.92H13.68Z" transform="translate(-3.6 -2.16)" fill="url(#linear-gradient)"/>
+</svg>

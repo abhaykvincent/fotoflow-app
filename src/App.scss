@@ -128,23 +128,38 @@ body{
     box-shadow:  -1px 1px 4px rgba(0, 0, 0, 0.3);
     .menu-list{
       padding: 8px;
+      margin-top: 8px*0.5;
       .menu{
         display: flex;
         align-items: center;
         gap:8px;
-        padding: 8px 8px*2;
+        padding: 6px 8px;
         margin-bottom: 8px;
-        border-radius: 8px*1;
+        border-radius: 8px*0.75;
         border: 1px solid transparent;
+        opacity: 0.8;
         &.selected{
           background-color: $dark-2;
-          border: 1px solid $dark-0;
+          border: 1px solid $dark-1;
+          box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+          opacity: 1;
           .icon{
             opacity: 0.9;
           }
         }
         &:hover{
-          border: 1px solid $dark-0;
+          border: 1px solid $dark-1;
+          background-color: $dark-2;
+        }
+        &.disabled{
+          &:hover{
+            border: 1px solid $dark-2;
+          }
+          .label,.icon{
+            opacity: 0.2;
+          }
+          cursor: not-allowed;
         }
         .icon{
           width: 8px*3;
@@ -152,23 +167,33 @@ body{
           padding: 8px;
           background-size:75%;
           background-position: center center;
-          opacity: 0.5;
+          opacity: 0.6;
         }
         &.home .icon{
           background-size: 90%;
-          background-image: url('./assets/img/icons/home.png');
+          background-image: url('./assets/img/icons/home.svg');
         }
         &.events .icon{
           background-image: url('./assets/img/icons/event.png');
         }
         &.projects .icon{
-          background-image: url('./assets/img/icons/folder.png');
+          background-image: url('./assets/img/icons/folder.svg');
         }
         &.store .icon{
-          background-image: url('./assets/img/icons/store.png');
+          background-size: 90%;
+          background-image: url('./assets/img/icons/store.svg');
         }
         &.settings .icon{
-          background-image: url('./assets/img/icons/settings.png');
+          background-size: 100%;
+          background-image: url('./assets/img/icons/settings.svg');
+        }
+        &.calendar .icon{
+          background-size: 90%;
+          background-image: url('./assets/img/icons/calendar.svg');
+        }
+        &.invoices .icon{
+          background-size: 80%;
+          background-image: url('./assets/img/icons/reciept.svg');
         }
       }
     }
