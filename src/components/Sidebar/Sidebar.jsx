@@ -24,7 +24,7 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="icon"></div>
             <div className="label">Store</div>
             <div className="coming-soon">
-              <div className="coming-soon-tag">SOON</div>
+              <div className="coming-soon-tag">PRO</div>
             </div>
           </div>
         </Link>
@@ -33,7 +33,7 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="icon"></div>
             <div className="label">Calendar</div>
             <div className="coming-soon">
-              <div className="coming-soon-tag">SOON</div>
+              <div className="coming-soon-tag">PRO</div>
             </div>
           </div>
         </Link>
@@ -42,7 +42,7 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="icon"></div>
             <div className="label">Invoices</div>
             <div className="coming-soon">
-              <div className="coming-soon-tag">SOON</div>
+              <div className="coming-soon-tag">PRO</div>
             </div>
           </div>
         </Link>
