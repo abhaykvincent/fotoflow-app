@@ -20,9 +20,30 @@ function Sidebar({isUploading,totalUploadProgress}) {
           </div>
         </Link>
         <Link to={`/store`}>
-          <div className={`menu store ${location.pathname === '/store' ? 'selected' : ''}`}>
+          <div className={`menu store ${location.pathname === '/store' ? 'selected' : ''} disabled`}>
             <div className="icon"></div>
             <div className="label">Store</div>
+            <div className="coming-soon">
+              <div className="coming-soon-tag">PRO</div>
+            </div>
+          </div>
+        </Link>
+        <Link to={`/calendar`}>
+          <div className={`menu calendar ${location.pathname === '/calendar' ? 'selected' : ''} disabled`}>
+            <div className="icon"></div>
+            <div className="label">Calendar</div>
+            <div className="coming-soon">
+              <div className="coming-soon-tag">PRO</div>
+            </div>
+          </div>
+        </Link>
+        <Link to={`/invoices`}>
+          <div className={`menu invoices ${location.pathname === '/invoices' ? 'selected' : ''} disabled`}>
+            <div className="icon"></div>
+            <div className="label">Invoices</div>
+            <div className="coming-soon">
+              <div className="coming-soon-tag">PRO</div>
+            </div>
           </div>
         </Link>
         <Link to={`/settings`}>
