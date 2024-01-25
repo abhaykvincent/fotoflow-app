@@ -35,14 +35,14 @@ export const fetchProject = async (projectId) => {
 export const fetchImages = async (projectId,collectionId) => {
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
-    const projectSnapshot = await getDoc(projectDoc);
+    const subCollectionId = projectId+'-'+collectionId;
+    const collectionDoc = doc(projectDoc, 'collections', subCollectionId);
+    const collectionSnapshot = await getDoc(collectionDoc);
 
-    if (projectSnapshot.exists()) {
-        const projectData = projectSnapshot.data();
-        //find collection with collectionId
-        const collection = projectData.collections.find((collection) => collection.id === collectionId);
 
-        return collection.uploadedFiles
+    if (collectionSnapshot.exists()) {
+        const collectionsData = collectionSnapshot.data();
+        return collectionsData.uploadedFiles
     } else {
         throw new Error('Project does not exist.');
     }
@@ -102,9 +102,18 @@ export const addCollectionToFirestore = async (projectId,collectionData) => {
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
 
+    const collectionsCollection = collection(projectDoc, 'collections');
+    const collectionDoc = {
+        id : projectId+'-'+id,
+    }
+
     // Update the project with the new collection
     return updateDoc(projectDoc, {
         collections: arrayUnion({ id, name, status }), // Assuming collections is an array in your projectData
+    })
+    .then(() => {
+        // create new collection 
+        setDoc(doc(collectionsCollection, collectionDoc.id), collectionDoc)
     })
     .then(() => {
         console.log('Collection added to project successfully.');
