@@ -20,7 +20,14 @@ console.log(imageUrls)
                 </div>
               </div>
               <div className="bottom">
-                <div className="filename">{fileUrl.name}</div>
+                  <div className="filename">
+                    {
+                      fileUrl.name?.length > 30
+                        ? `${fileUrl.name.substring(0, 10)}...${fileUrl.name.substring(fileUrl.name.length - 10)}`
+                        : fileUrl.name
+                    }
+                  </div>
+
               </div>
             </div>
             </div>
