@@ -201,6 +201,8 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
 
 
 
+            await updateDoc(collectionDoc, {...collectionData,uploadedFiles:updatedImages});
+            console.log('Selected images status updated successfully.');
 
         } else {
             console.log('Collection document does not exist.');
