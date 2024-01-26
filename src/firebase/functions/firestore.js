@@ -66,7 +66,7 @@ export const addProject = async ({ name, type, ...optionalData }) => {
     throw new Error('Project name and type are required.');
     }
     const id= `${name.toLowerCase().replace(/\s/g, '-')}-${generateRandomString(5)}`;
-    const projectData = {id,name, type, ...optionalData,collections:[] };
+    const projectData = {id,name, type, ...optionalData,collections:[],uploadedFilesCount:0 };
     const projectsCollection = collection(db, 'projects');
     return setDoc(doc(projectsCollection, id), projectData)
     .then((dta) => {
@@ -177,17 +177,10 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
     const projectDoc = doc(projectsCollection, projectId);
     const subCollectionId = projectId+'-'+collectionId;
     const collectionDoc = doc(projectDoc, 'collections', subCollectionId);
-    
-
     try {
         const collectionSnapshot = await getDoc(collectionDoc);
         const collectionData=collectionSnapshot.data();
-
-        console.log(collectionSnapshot)
-        console.log(collectionData)
         if (collectionSnapshot.exists()) {
-
-                    console.log(collectionData)
                     const updatedImages = collectionData.uploadedFiles.map((image) => {
                         const imageIndex = collectionData.uploadedFiles.indexOf(image);
                         const startIndex = (page - 1) * size;
@@ -202,9 +195,6 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
                             return image; // retain the status if outside the page and size range
                         }
                     });
-                    console.log(collectionData)
-                    console.log(updatedImages)
-                    debugger
 
             await updateDoc(collectionDoc, {...collectionData,uploadedFiles:updatedImages});
             console.log('Selected images status updated successfully.');
