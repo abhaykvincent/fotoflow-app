@@ -5,7 +5,7 @@ import {
     ref,
     deleteObject
 } from "firebase/storage";
-import { getDoc } from "firebase/firestore";
+import { getDoc, getDocs, setDoc } from "firebase/firestore";
 import { db, storage } from '../firebase/app';
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { delay } from "./generalUtils";
@@ -234,42 +234,31 @@ export const handleUpload = async (files, id, collectionId, showAlert, retries =
 // function to add uploadedFiles data to firestore in project of project id and collection of collection id
 export const addUploadedFilesToFirestore = async (projectId, collectionId, uploadedFiles) => {
 
-    console.log(projectId, collectionId, uploadedFiles)
+    // Get a reference to the project document
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
+    // Get a reference to the collection document
+    const subCollectionId = projectId+'-'+collectionId;
+    const collectionDoc = doc(projectDoc, 'collections', subCollectionId);
 
-    // Get the project document
-    const projectData = await getDoc(projectDoc);
+    // Get the data from project document
+    const projectData = await getDoc(projectDoc,subCollectionId);
 
     if (projectData.exists()) {
-        // Read the collections array
-        const collections = projectData.data().collections;
-
-        // Find the collection with the given id
-        const collection = collections.find(collection => collection.id === collectionId);
-
-        if (collection) {
-            // Check if uploadedFiles property exists in the collection
-            if (!collection.uploadedFiles) {
-                collection.uploadedFiles = []; // Initialize uploadedFiles array if it doesn't exist
-            }
-
-            // Append the new uploadedFiles to the collection's uploadedFiles array
-            collection.uploadedFiles.push(...uploadedFiles);
-
-            // Update the project document with the new collections array
-            return updateDoc(projectDoc, { collections })
-                .then(() => {
-                    console.log('Uploaded files added to collection successfully.');
-                })
-                .catch((error) => {
-                    console.error('Error adding uploaded files to collection:', error.message);
-                    throw error;
-                });
-        } else {
-            console.error('Collection not found.');
-            throw new Error('Collection not found.');
-        }
+        // Update the project document with the new collections array
+        return updateDoc(collectionDoc, { uploadedFiles })
+            .then(() => {
+                console.log('Uploaded files added to collection successfully.');
+                // update uploaded files count on project document
+                return updateDoc(projectDoc, { uploadedFilesCount: projectData.data().uploadedFilesCount + uploadedFiles.length });
+            })
+            .then(() => {
+                console.log('Uploaded files count updated successfully.');
+            })
+            .catch((error) => {
+                console.error('Error adding uploaded files to collection:', error.message);
+                throw error;
+            });
     } else {
         console.error('Project not found.');
         throw new Error('Project not found.');

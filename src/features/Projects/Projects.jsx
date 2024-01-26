@@ -20,10 +20,6 @@ function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
         setBreadcrumbs(['Home'])
     },[setBreadcrumbs])
 
-    // project photos count 
-    const getProjectPhotosCount = (project) => {
-        return project.collections.reduce((count, collection) => count + collection.uploadedFiles?.length || 0, 0);
-    }
     // project select photos count
     const getProjectSelectedPhotosCount = (project) => {
         return project.collections.flatMap(collection => collection.uploadedFiles)
@@ -58,7 +54,7 @@ function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
                             </div> :
                             <div className="project-info">
                                 <div className="collection-count"><b>{project.collections.length}</b> Collections</div>
-                                <div className="photos-count"><b>{getProjectPhotosCount(project)}</b> Photos</div>
+                                <div className="photos-count"><b>{project.uploadedFilesCount}</b> Photos</div>
                                 <div className="selected-count"><b>{ getProjectSelectedPhotosCount(project)} </b> Selected</div>
                             </div>
                             }
