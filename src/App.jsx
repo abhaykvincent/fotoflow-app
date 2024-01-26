@@ -98,8 +98,10 @@ function App() {
       showAlert('error', `Error deleting collection: ${error.message}`);
     });
   };
+  
   const shareOrSelection = window.location.href.includes('share') || window.location.href.includes('selection' )
   
+  // Render
   return (
     <div className="App">
       {authenticated && (!shareOrSelection)? (
