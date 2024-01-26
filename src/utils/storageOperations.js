@@ -234,13 +234,14 @@ export const handleUpload = async (files, id, collectionId, showAlert, retries =
 // function to add uploadedFiles data to firestore in project of project id and collection of collection id
 export const addUploadedFilesToFirestore = async (projectId, collectionId, uploadedFiles) => {
 
-    console.log(projectId, collectionId, uploadedFiles)
+    // Get a reference to the project document
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
+    // Get a reference to the collection document
     const subCollectionId = projectId+'-'+collectionId;
     const collectionDoc = doc(projectDoc, 'collections', subCollectionId);
 
-    // Get the project document
+    // Get the data from project document
     const projectData = await getDoc(projectDoc,subCollectionId);
 
     if (projectData.exists()) {
@@ -248,6 +249,11 @@ export const addUploadedFilesToFirestore = async (projectId, collectionId, uploa
         return updateDoc(collectionDoc, { uploadedFiles })
             .then(() => {
                 console.log('Uploaded files added to collection successfully.');
+                // update uploaded files count on project document
+                return updateDoc(projectDoc, { uploadedFilesCount: projectData.data().uploadedFilesCount + uploadedFiles.length });
+            })
+            .then(() => {
+                console.log('Uploaded files count updated successfully.');
             })
             .catch((error) => {
                 console.error('Error adding uploaded files to collection:', error.message);

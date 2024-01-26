@@ -66,7 +66,7 @@ export const addProject = async ({ name, type, ...optionalData }) => {
     throw new Error('Project name and type are required.');
     }
     const id= `${name.toLowerCase().replace(/\s/g, '-')}-${generateRandomString(5)}`;
-    const projectData = {id,name, type, ...optionalData,collections:[] };
+    const projectData = {id,name, type, ...optionalData,collections:[],uploadedFilesCount:0,selectedFilesCount:0 };
     const projectsCollection = collection(db, 'projects');
     return setDoc(doc(projectsCollection, id), projectData)
     .then((dta) => {
@@ -172,45 +172,39 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
     if (!projectId || !collectionId || !images) {
         throw new Error('Project ID, Collection ID, and Images are required.');
     }
-    console.log({projectId, collectionId, images, page, size})
+
+
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
-    const subCollectionId = projectId+'-'+collectionId;
+    const subCollectionId = projectId + '-' + collectionId;
     const collectionDoc = doc(projectDoc, 'collections', subCollectionId);
-    
-
     try {
         const collectionSnapshot = await getDoc(collectionDoc);
-        const collectionData=collectionSnapshot.data();
+        const collectionData = collectionSnapshot.data();
 
-        console.log(collectionSnapshot)
-        console.log(collectionData)
         if (collectionSnapshot.exists()) {
 
-                    console.log(collectionData)
-                    const updatedImages = collectionData.uploadedFiles.map((image) => {
-                        const imageIndex = collectionData.uploadedFiles.indexOf(image);
-                        const startIndex = (page - 1) * size;
-                        const endIndex = page * size;
+            const updatedImages = collectionData.uploadedFiles.map((image) => {
+                const imageIndex = collectionData.uploadedFiles.indexOf(image);
+                const startIndex = (page - 1) * size;
+                const endIndex = page * size;
 
-                        if (imageIndex >= startIndex && imageIndex < endIndex) {
-                            return {
-                                ...image,
-                                status: images.includes(image.url) ? 'selected' : ''
-                            };
-                        } else {
-                            return image; // retain the status if outside the page and size range
-                        }
-                    });
-                    console.log(collectionData)
-                    console.log(updatedImages)
-                    debugger
+                if (imageIndex >= startIndex && imageIndex < endIndex) {
+                    return {
+                        ...image,
+                        status: images.includes(image.url) ? 'selected' : ''
+                    };
+                } else {
+                    return image; // retain the status if outside the page and size range
+                }
+            });
 
-            await updateDoc(collectionDoc, {...collectionData,uploadedFiles:updatedImages});
-            console.log('Selected images status updated successfully.');
+
+
+
         } else {
-            console.log('Project document does not exist.');
-            throw new Error('Project does not exist.');
+            console.log('Collection document does not exist.');
+            throw new Error('Collection does not exist.');
         }
     } catch (error) {
         console.error('Error updating image status:', error.message);
