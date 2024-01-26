@@ -173,10 +173,10 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
         throw new Error('Project ID, Collection ID, and Images are required.');
     }
 
-    
+
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
-    const subCollectionId = projectId+'-'+collectionId;
+    const subCollectionId = projectId + '-' + collectionId;
     const collectionDoc = doc(projectDoc, 'collections', subCollectionId);
     try {
         const collectionSnapshot = await getDoc(collectionDoc);
@@ -199,22 +199,8 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
                 }
             });
 
-            await updateDoc(collectionDoc, {
-                ...collectionData,
-                uploadedFiles: updatedImages
-            });
 
-            // Update selectedFileCount on project document
-            const projectSnapshot = await getDoc(projectDoc);
-            const projectData = projectSnapshot.data();
-            let selectedFilesCount = projectData.selectedFilesCount || 0;
-            selectedFilesCount += images.length;
 
-            await updateDoc(projectDoc, {
-                selectedFilesCount
-            });
-
-            console.log('Selected images status updated successfully.');
 
         } else {
             console.log('Collection document does not exist.');
