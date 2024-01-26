@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 
 const ImageGallery = React.memo(({ imageUrls }) => {
-  const dummyUrls = useMemo(() => Array.from({ length: 15 }, (_, index) => imageUrls[index] || 'dummyurl'), [imageUrls]);
-console.log(imageUrls)
+  let importedImages=[]
   return (
     <div className="gallary">
       <div className="photos">
-        {dummyUrls.map((fileUrl, index) => (
+        {imageUrls.map((fileUrl, index) => (
           <div className="photo-wrap">
             <div className="hover-options-wrap">
             <div className="hover-options">
@@ -20,7 +19,14 @@ console.log(imageUrls)
                 </div>
               </div>
               <div className="bottom">
-                <div className="filename">{fileUrl.name}</div>
+                  <div className="filename">
+                    {
+                      fileUrl.name?.length > 30
+                        ? `${fileUrl.name.substring(0, 10)}...${fileUrl.name.substring(fileUrl.name.length - 10)}`
+                        : fileUrl.name
+                    }
+                  </div>
+
               </div>
             </div>
             </div>
