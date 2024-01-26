@@ -10,9 +10,6 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   const navigate = useNavigate();
   // Route Params
   let { id,collectionId } = useParams();
-  // Core Data
-  const [project, setProject] = useState(projects.find((p) => p.id === id));
-  const [collection, setCollection] = useState();
   // Modal
   const [modal, setModal] = useState({createCollection: false})
   const openModal = () => setModal({ createCollection: true });
@@ -22,40 +19,42 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   const onDeleteConfirmClose = () => setConfirmDeleteProject(false)
   const onDeleteConfirm = () => deleteProject(id);
 
-
   console.log(projects)
-  console.log(project)
-    useEffect(() => {
-      // Find the project with the given id
-      // If the project is not found, redirect to the projects page
-      if (!project) {
-        navigate('/projects');
-        return;
-      }
+  // If no projects are available, return early
+  if (!projects) return;
 
-      document.title = `${project.name}'s ${project.type}`
-
-      // Determine the collectionId to use
-      const defaultCollectionId = project.collections.length > 0 ? project.collections[0].id : null;
-      const targetCollectionId = collectionId || defaultCollectionId;
-
-      // If no collectionId, redirect to collection
-      if (!collectionId) {
-        navigate(`/project/${id}/${targetCollectionId}`);
-        return;
-      }
-
-      // Find the collection by id
-      setCollection(findCollectionById(project, targetCollectionId))
+  // Find the project with the given id
+  const project = projects.find((p) => p.id === id);
+  // If the project is not found, redirect to the projects page and return
+  if (!project) {
+    navigate('/projects');
+    return;
+  }
+  else{
+  document.title = `${project.name}'s ${project.type}`
+  }
 
 
-    }, [id, collectionId, projects,project]);
+  // Determine the collectionId to use
+  const defaultCollectionId = project.collections.length > 0 ? project.collections[0].id : null;
+  const targetCollectionId = collectionId || defaultCollectionId;
+  /* if(!collectionId){
+    navigate(`/project/${id}/${targetCollectionId}`);
+    return
+  } */
 
+  // Find the collection by id
+  let collection = findCollectionById(project, targetCollectionId);
+
+  // If the collection is not found, redirect to the project page and return
+  if (!collection) {
+    navigate(`/project/${id}`);
+    return;
+  }
 
 
 
   return (
-      projects&&collection ? (
     <main className='project-page'>
       <div className="project-info">
         <div className="client">
@@ -91,10 +90,6 @@ export default function Project({ projects,  addCollection, deleteCollection, de
       )}
       <AddCollectionModal project={project} visible={modal.createCollection} onClose={closeModal} onSubmit={addCollection}  />
       {confirmDeleteProject ? <DeleteConfirmationModal onDeleteConfirm={onDeleteConfirm} onClose={onDeleteConfirmClose}/>:''}
-    </main>)
-    : (
-      <main className='project-page'>
-      </main>
-    )
+    </main>
   )
   }

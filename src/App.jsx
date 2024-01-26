@@ -35,6 +35,9 @@ function App() {
     fetchProjects()
     .then((fetchedProjects) => setProjects(fetchedProjects));
   }, []);
+  useEffect(() => {
+    console.log(projects)
+  }, [projects]);
   // Project/Collection Data Logic
   const addProject = (newProject) => {
     setProjects((prevProjects) => [...prevProjects, newProject]);
