@@ -7,9 +7,15 @@
     height: 8px*3.5;
     margin: 4px;
     font-weight: 600;
+    opacity: 0.8;
     cursor: pointer;
+    &:hover{
+        opacity: 1;
+    }
     &.primary{
-        background-color: $green-accessible-light;
+        background: linear-gradient(330deg, $green-dark-accessible-light, $green-accessible-light);
+        border: 1px solid $green-default-light;
+
     }
     &.secondary{
         background-color: $dark-2;
