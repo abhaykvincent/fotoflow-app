@@ -21,13 +21,14 @@
     .project{
         display: grid;
         grid-template-columns: 1fr 2fr 1fr;
-        border-bottom: 1px solid $dark-2;
-        border-radius: 4px;
+        border-radius: 2px;
         opacity: 0.8;
         padding: 8px;
         cursor: pointer;
         border: 1px solid transparent;
+        border-bottom: 1px solid $dark-2;
         &:hover{
+            border-radius: 4px;
             background-color: $dark-2;
             opacity: 1;
             .pin{
@@ -35,7 +36,7 @@
             }
         }
         &:last-child{
-            border-bottom: 0px solid $dark-1;
+            border-bottom: 1px solid transparent;
         }
         .project-details{
             display: flex;
