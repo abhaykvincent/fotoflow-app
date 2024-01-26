@@ -387,6 +387,7 @@ body{
               padding: 8px 8px*2;
               font-weight: 400;
               border-radius: $border-radius-1;
+              cursor: pointer;
               &.active{
                 background-color: $dark-1;
                 border: 1px solid $dark-0;
@@ -543,10 +544,9 @@ body{
       font-size: 0.8rem;
       text-align: center;
       color: $gray4-default-dark;
-      border: 1px solid $dark-1;
+      border: 1px solid $dark-3;
       padding: 4px 8px*2;
       border-radius: 4px;
-      @include boxShadow;
     }
   }
 }
@@ -569,7 +569,7 @@ body{
 margin-left: 4px;
   margin-top: 8px*0;
   padding: 8px;
-  max-height: calc(100vh - 8px*30);
+  max-height: calc(100vh - 8px*50);
   overflow-y: scroll;
   .photos{
     width: 100%;
@@ -584,7 +584,7 @@ margin-left: 4px;
       border: 1px solid $dark-1;
       border-radius: 2px;
       background-color: $dark-3;
-      transition-duration: 0.2s;
+      transition-duration: 0.1s;
       transition-timing-function: ease-out;
       .photo{
         width: 100%;
@@ -600,7 +600,8 @@ margin-left: 4px;
         // background size: take the width of largest side
         background-size: contain;
         background-position: center center;
-        transition-duration: 0.05s;
+        transition-duration: 0.1s;
+        transition-timing-function: ease-out;
       }
       .hover-options-wrap{
           position: absolute;
@@ -614,7 +615,7 @@ margin-left: 4px;
         z-index: 1;
         .top{
           position: absolute;
-          top: -8px*4;
+          top: -8px*2;
           right: 0;
           height: 8px*4;
           transition-duration: 0.1s;
@@ -676,7 +677,7 @@ margin-left: 4px;
         }
         .bottom{
           position: absolute;
-          bottom: -8px*4;
+          bottom: -8px*2;
           height: 8px*2;
           transition-duration: 0.1s;
           width: 100%;
@@ -691,13 +692,15 @@ margin-left: 4px;
       }
       &:hover{
         border: 1px solid $dark-0;
-        background-color: $dark-1;
-        transition-duration: 0.2s;
-        transition-timing-function: ease-out;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition-duration: 0.05s;
+        transition-timing-function: ease-in;
+        border-radius: 2px;
         z-index: 1;
         .photo{
           transform: scale(0.8)translateY(-8px*1);
           transition-duration: 0.1s;
+          transition-timing-function: ease-out;
         }
         .hover-options{
           .top{
