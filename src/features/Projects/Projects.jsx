@@ -7,7 +7,7 @@ import AddProjectModal from '../../components/Modal/AddProject';
 
 
 
-function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
+function Projects({projects,addProject,showAlert}) {
     document.title = `Projects`
     // Modal
     const [modal, setModal] = useState({
@@ -15,10 +15,6 @@ function Projects({projects,addProject,showAlert,setBreadcrumbs}) {
     })
     const openModal = () => setModal({ createProject: true });
     const closeModal = () => setModal({ createProject: false });
-    
-    useEffect(()=>{
-        setBreadcrumbs(['Home'])
-    },[setBreadcrumbs])
 
     // project select photos count
     const getProjectSelectedPhotosCount = (project) => {
