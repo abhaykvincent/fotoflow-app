@@ -94,7 +94,6 @@ return (
                             let uploadedImages=await handleUpload(files, id, collectionId,showAlert)
                             console.log(uploadedImages)
                             setImageUrls(uploadedImages)
-                            debugger
                         }}
                         >Upload Images</div>
                 </div>
