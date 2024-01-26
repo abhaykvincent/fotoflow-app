@@ -23,14 +23,25 @@ export const fetchProject = async (projectId) => {
     const projectDoc = doc(projectsCollection, projectId);
     const projectSnapshot = await getDoc(projectDoc);
 
-    if (projectSnapshot.exists()) {
-        return {
-            id: projectSnapshot.id,
-            ...projectSnapshot.data()
-        };
-    } else {
-        throw new Error('Project does not exist.');
-    }
+    const projectData = projectSnapshot.data();
+    // loop through projectData.collections
+    // for each collection, fetch collection data
+    let collectionsData = [];
+    projectData.collections = await Promise.all(projectData.collections.map(async (collection) => {
+        const subCollectionId = projectId + '-' + collection.id;
+        const collectionDoc = doc(projectDoc, 'collections', subCollectionId);
+        const collectionSnapshot = await getDoc(collectionDoc);
+    
+        if (collectionSnapshot.exists()) {
+            console.log(collectionSnapshot.data());
+            return {...collection,...collectionSnapshot.data(),...{id:collection.id}};
+        } else {
+            throw new Error('Collection does not exist.');
+        }
+    }));
+    
+
+    return projectData;
 };
 export const fetchImages = async (projectId,collectionId) => {
     const projectsCollection = collection(db, 'projects');
@@ -161,19 +172,24 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
     if (!projectId || !collectionId || !images) {
         throw new Error('Project ID, Collection ID, and Images are required.');
     }
-    console.log(projectId, collectionId, images, page, size)
+    console.log({projectId, collectionId, images, page, size})
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
+    const subCollectionId = projectId+'-'+collectionId;
+    const collectionDoc = doc(projectDoc, 'collections', subCollectionId);
+    
 
     try {
-        const projectSnapshot = await getDoc(projectDoc);
+        const collectionSnapshot = await getDoc(collectionDoc);
+        const collectionData=collectionSnapshot.data();
 
-        if (projectSnapshot.exists()) {
-            const projectData = projectSnapshot.data();
-            const updatedCollections = projectData.collections.map((collection) => {
-                if (collection.id === collectionId) {
-                    const updatedImages = collection.uploadedFiles.map((image) => {
-                        const imageIndex = collection.uploadedFiles.indexOf(image);
+        console.log(collectionSnapshot)
+        console.log(collectionData)
+        if (collectionSnapshot.exists()) {
+
+                    console.log(collectionData)
+                    const updatedImages = collectionData.uploadedFiles.map((image) => {
+                        const imageIndex = collectionData.uploadedFiles.indexOf(image);
                         const startIndex = (page - 1) * size;
                         const endIndex = page * size;
 
@@ -186,17 +202,11 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
                             return image; // retain the status if outside the page and size range
                         }
                     });
+                    console.log(collectionData)
+                    console.log(updatedImages)
+                    debugger
 
-                    return {
-                        ...collection,
-                        uploadedFiles: updatedImages
-                    };
-                }
-
-                return collection;
-            });
-
-            await updateDoc(projectDoc, { collections: updatedCollections });
+            await updateDoc(collectionDoc, {...collectionData,uploadedFiles:updatedImages});
             console.log('Selected images status updated successfully.');
         } else {
             console.log('Project document does not exist.');
