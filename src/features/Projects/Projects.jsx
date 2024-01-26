@@ -1,29 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Import React Router components
-
-import './Projects.scss';
 import AddProjectModal from '../../components/Modal/AddProject';
-
-
-
-
+import './Projects.scss';
 function Projects({projects,addProject,showAlert}) {
     document.title = `Projects`
     // Modal
-    const [modal, setModal] = useState({
-        createProject: false
-    })
+    const [modal, setModal] = useState({createProject: false})
     const openModal = () => setModal({ createProject: true });
     const closeModal = () => setModal({ createProject: false });
-
-    // project select photos count
+    //Project's selected photos count
     const getProjectSelectedPhotosCount = (project) => {
         return project.collections.flatMap(collection => collection.uploadedFiles)
             .filter(image => image?.status === 'selected')
             .length;
     }
     
-
     return (
         <main className="projects">
             <div className="projects-header">

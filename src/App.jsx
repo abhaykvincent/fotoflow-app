@@ -35,7 +35,7 @@ function App() {
     fetchProjects()
     .then((fetchedProjects) => setProjects(fetchedProjects));
   }, []);
-  // Project/Collection CRUD
+  // Project/Collection Data Logic
   const addProject = (newProject) => {
     setProjects((prevProjects) => [...prevProjects, newProject]);
     navigate(`/project/${newProject.id}`);
