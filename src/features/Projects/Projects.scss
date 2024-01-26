@@ -27,10 +27,12 @@
         cursor: pointer;
         border: 1px solid transparent;
         border-bottom: 1px solid $dark-2;
+        transition-duration: 0.3s;
         &:hover{
             border-radius: 4px;
             background-color: $dark-2;
             opacity: 1;
+            transition-duration: 0.1s;
             .pin{
                 display: block;
             }
