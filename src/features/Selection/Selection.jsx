@@ -14,6 +14,7 @@ export default function Selection() {
   const [size,setSize]=useState(15);
   const [totalPages, setTotalPages] = useState(0);
   collectionId = collectionId || project?.collections[0]?.id;
+  console.log(projectId, collectionId)
   // Set body color to white
   useEffect(() => {
     document.body.style.backgroundColor = 'white';
