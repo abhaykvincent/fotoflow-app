@@ -29,6 +29,7 @@ function App() {
   const showAlert = (type, message) => setAlert({ type, message, show: true });
   // Core Data
   const [projects, setProjects] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch Projects
@@ -41,9 +42,7 @@ function App() {
       setIsLoading(false);
     });
   }, []);
-  useEffect(() => {
-    console.log(projects)
-  }, [projects]);
+
   // Project/Collection Data Logic
   const addProject = (newProject) => {
     setProjects((prevProjects) => [...prevProjects, newProject]);
@@ -122,17 +121,26 @@ function App() {
       ) : (
         <>{!shareOrSelection && <LoginModal {...{ setAuthenticated }} />}</>
       )}
+      {isLoading ? (
+                <div className="loader-wrap">
+                    <div className="loader"></div>
+                    <p className='loading-message'>loading projects</p>
+                </div>
+            ) : (
       <Routes>
         { authenticated ? 
           <>
-            <Route exact path="/" element={<Home/>}/>
+            <Route exact path="/" element={<Home {...{projects}} />}/>
             <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,showAlert }} />}/>
             <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert, isLoading }} />}/>
-          </> : ''
+          </> 
+          
+          : ''
         }
         <Route path="/share/:projectId/:collectionId?" element={<ShareProject {...{ projects }} />}/>
         <Route path="/selection/:projectId/:collectionId?" element={<Selection {...{ projects }} />}/>
       </Routes>
+            )}
       
     </div>
   );
