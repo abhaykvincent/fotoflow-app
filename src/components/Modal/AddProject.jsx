@@ -8,7 +8,12 @@ function AddProjectModal({ showAlert,visible, onClose, onSubmit }) {
       type: 'Birthday',
       email: 'julia.ethan@gmail.com',
       phone: '3656992278',
-      collections: []
+      collections: [],
+      status: 'draft',
+      createdAt: new Date(),
+      uploadedFilesCount:0,
+      selectedFilesCount:0,
+      lastOpened: new Date(),
   });
   const handleInputChange = (event) => {
       const {name,value} = event.target;

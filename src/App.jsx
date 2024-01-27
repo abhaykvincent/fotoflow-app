@@ -5,7 +5,6 @@ import './App.scss';
 import Alert from './components/Alert/Alert';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
-import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 // Features
 import Home from './features/Home/Home';
 import Project from './features/Project/Project';
@@ -25,21 +24,26 @@ function App() {
   
   const navigate = useNavigate();
   const [authenticated,setAuthenticated] = useState(true)
-  // Breadcrumbs
-  const [breadcrumbs, setBreadcrumbs] = useState([]);
   // Alert
   const [alert, setAlert] = useState({ type: '', message: '', show: false });
   const showAlert = (type, message) => setAlert({ type, message, show: true });
-
   // Core Data
-  const [projects, setProjects] = useState();
+  const [projects, setProjects] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch Projects
   useEffect(() => {
     document.title = `FotoFlow`;
-    fetchProjects().then((fetchedProjects) => {
-      setProjects(fetchedProjects);
+    setIsLoading(true);
+    fetchProjects()
+    .then((fetchedProjects) => {
+      setProjects(fetchedProjects)
+      setIsLoading(false);
     });
   }, []);
-  // Project/Collection CRUD
+
+  // Project/Collection Data Logic
   const addProject = (newProject) => {
     setProjects((prevProjects) => [...prevProjects, newProject]);
     navigate(`/project/${newProject.id}`);
@@ -47,7 +51,8 @@ function App() {
   const deleteProject = (projectId) => {
     const updatedProjects = projects.filter(project => project.id !== projectId)
     const project = projects.find(project => project.id === projectId) || {}
-    deleteProjectFromFirestore(projectId).then(()=>{
+    deleteProjectFromFirestore(projectId)
+    .then(() => {
       navigate('/projects');
       setTimeout(() => {
         const projectElement = document.querySelector(`.${projectId}`);
@@ -58,14 +63,14 @@ function App() {
         showAlert('success', `Project <b>${project.name}</b> deleted successfully!`);// Redirect to /projects page
       }, 700);
     })
-    .catch((error)=>{
+    .catch((error) => {
       console.error('Error deleting project:', error);
       showAlert('error', error.message)
-    }
-    )
+    })
   };
   const addCollection = (projectId, newCollection) => {
-    addCollectionToFirestore(projectId,newCollection).then((id)=>{
+    addCollectionToFirestore(projectId,newCollection)
+    .then((id)=>{
       const updatedProjects = projects.map((project) => {
         if (project.id === projectId) {
           const updatedCollections = [...project.collections, {id,...newCollection}];
@@ -78,76 +83,68 @@ function App() {
       showAlert('success', `Collection <b>${newCollection.name}</b> added successfully!`);// Redirect to /projects page
       navigate(`/project/${projectId}/${id}`);
     })
+    .catch((error) => {
+      showAlert('error', `Error adding collection: ${error.message}`);
+    });
   };
   const deleteCollection = (projectId, collectionId) => {
     deleteCollectionFromFirestore(projectId, collectionId)
-      .then(() => {
-        const updatedProjects = projects.map((project) => {
-          if (project.id === projectId) {
-              const updatedCollections = project.collections.filter(
-              (collection) => collection.id !== collectionId
-            );
-            showAlert('success', 'Collection deleted!');
-            return { ...project, collections: updatedCollections };
-          }
-          return project;
-        });
-        setProjects(updatedProjects);
-      })
-      .catch((error) => {
-        showAlert('error', `Error deleting collection: ${error.message}`);
+    .then(() => {
+      const updatedProjects = projects.map((project) => {
+        if (project.id === projectId) {
+            const updatedCollections = project.collections.filter(
+            (collection) => collection.id !== collectionId
+          );
+          showAlert('success', 'Collection deleted!');
+          return { ...project, collections: updatedCollections };
+        }
+        return project;
       });
-  };
-  const shareOrSelection = window.location.href.includes('share') || window.location.href.includes('selection' )
-  const updateCollectionImages = (projectId, collectionId, images) => {
-    
-    const updatedProjects = projects.map((project) => {
-      if (project.id === projectId) {
-        const updatedCollections = project.collections.map((collection) => {
-          if (collection.id === collectionId) {
-            console.log(images)
-            console.log(collection)
-            const updatedImages = [...collection.images, ...images];
-            return { ...collection, images: updatedImages };
-          }
-          return collection;
-        });
-        return { ...project, collections: updatedCollections };
-      }
-      return project;
+      setProjects(updatedProjects);
+    })
+    .catch((error) => {
+      showAlert('error', `Error deleting collection: ${error.message}`);
     });
-    console.log(updatedProjects)
-    setProjects(updatedProjects);
-  }
-
+  };
+  
+  const shareOrSelection = window.location.href.includes('share') || window.location.href.includes('selection' )
+  
+  // Render
   return (
     <div className="App">
-      {/* <UploadImages /> */}
       {authenticated && (!shareOrSelection)? (
         <>
           <Header />
           <Sidebar />
           <Alert {...alert} setAlert={setAlert} />
-          <Breadcrumbs breadcrumbs={breadcrumbs} />
         </>
       ) : (
         <>{!shareOrSelection && <LoginModal {...{ setAuthenticated }} />}</>
       )}
+      {isLoading ? (
+                <div className="loader-wrap">
+                    <div className="loader"></div>
+                    <p className='loading-message'>loading projects</p>
+                </div>
+            ) : (
       <Routes>
         { authenticated ? 
           <>
-            <Route exact path="/" element={<Home/>}/>
-            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,updateCollectionImages, setBreadcrumbs,showAlert }} />}/>
-            <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert, setBreadcrumbs }} />}/>
-          </> : ''
+            <Route exact path="/" element={<Home {...{projects}} />}/>
+            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,showAlert }} />}/>
+            <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert, isLoading }} />}/>
+          </> 
+          
+          : ''
         }
         <Route path="/share/:projectId/:collectionId?" element={<ShareProject {...{ projects }} />}/>
         <Route path="/selection/:projectId/:collectionId?" element={<Selection {...{ projects }} />}/>
       </Routes>
+            )}
       
     </div>
   );
 }
 
 export default App;
-// line Complexity  146 -> 133 -> 127
+// line Complexity  146 -> 133 -> 127 -> 152 -> 132

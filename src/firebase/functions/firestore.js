@@ -66,7 +66,11 @@ export const addProject = async ({ name, type, ...optionalData }) => {
     throw new Error('Project name and type are required.');
     }
     const id= `${name.toLowerCase().replace(/\s/g, '-')}-${generateRandomString(5)}`;
-    const projectData = {id,name, type, ...optionalData,collections:[],uploadedFilesCount:0,selectedFilesCount:0 };
+    const projectData = {
+        id,
+        name,
+        type, 
+        ...optionalData};
     const projectsCollection = collection(db, 'projects');
     return setDoc(doc(projectsCollection, id), projectData)
     .then((dta) => {
