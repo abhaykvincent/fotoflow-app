@@ -92,6 +92,9 @@
                     }
                 }
             }
+            .message{
+                color: $gray4-default-dark;
+            }
             
             &.completed{
                 h3::after{
