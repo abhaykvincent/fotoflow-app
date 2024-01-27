@@ -29,11 +29,17 @@ function App() {
   const showAlert = (type, message) => setAlert({ type, message, show: true });
   // Core Data
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   // Fetch Projects
   useEffect(() => {
     document.title = `FotoFlow`;
+    setIsLoading(true);
     fetchProjects()
-    .then((fetchedProjects) => setProjects(fetchedProjects));
+    .then((fetchedProjects) => {
+      setProjects(fetchedProjects)
+      setIsLoading(false);
+    });
   }, []);
   useEffect(() => {
     console.log(projects)
@@ -121,7 +127,7 @@ function App() {
           <>
             <Route exact path="/" element={<Home/>}/>
             <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,showAlert }} />}/>
-            <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert }} />}/>
+            <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert, isLoading }} />}/>
           </> : ''
         }
         <Route path="/share/:projectId/:collectionId?" element={<ShareProject {...{ projects }} />}/>
