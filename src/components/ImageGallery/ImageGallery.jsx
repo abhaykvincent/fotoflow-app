@@ -1,12 +1,26 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import Preview from '../../features/Preview/Preview';
 
 const ImageGallery = React.memo(({ imageUrls }) => {
   let importedImages=[]
+  // Preview
+  // is preview open
+  const [isPreviewOpen,setIsPreviewOpen] = useState(false);
+  const [previewIndex,setPreviewIndex] = useState(0);
+  const openPreview = (index) => {
+    setIsPreviewOpen(true)
+    setPreviewIndex(index)
+  }
+  const closePreview = () => {
+    setIsPreviewOpen(false)
+  }
+
   return (
     <div className="gallary">
       <div className="photos">
         {imageUrls.map((fileUrl, index) => (
-          <div className="photo-wrap">
+          <div className="photo-wrap"
+          onClick={()=>openPreview(index)}>
             <div className="hover-options-wrap">
             <div className="hover-options">
               <div className="top">
@@ -30,10 +44,14 @@ const ImageGallery = React.memo(({ imageUrls }) => {
               </div>
             </div>
             </div>
-            <div className={fileUrl!=='dummyurl'?`photo`:'photo dummy'} key={index} style={fileUrl!=='dummyurl'? { backgroundImage: `url(${fileUrl.url})` }:{}} alt={`File ${index}`}></div>
+            <div className='photo' key={index} 
+            style={{ backgroundImage: `url(${fileUrl.url})` }} alt={`File ${index}`}></div>
           </div>
         ))}
       </div>
+        {
+            isPreviewOpen && <Preview image={imageUrls[previewIndex].url } setPreviewIndex={setPreviewIndex}/>
+        }
     </div>
   );
 });

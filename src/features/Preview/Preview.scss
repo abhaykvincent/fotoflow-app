@@ -1,0 +1,47 @@
+@import '../../style/variables';
+.preview{
+    position: fixed;
+    top: -($header-height + 8px*1);
+    left: -($sidebar-width);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    .image-wrap{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-items: center;
+        .image{
+            height: calc(100% - 8px * 20);
+            width: 100%;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+    .controls{
+        .prev{
+            position: fixed;
+            top: 50vh;
+            left: 0px;
+            width: 8px*5;
+            height: 8px*5;
+            margin: 8px*2;
+            background-image: url('../../assets/img/icons/back.png');
+            background-size: contain;
+        }
+        .next{
+            position: fixed;
+            top: 50vh;
+            right: 0vh;
+            width: 8px*5;
+            height: 8px*5;
+            margin: 8px*2;
+            background-image: url('../../assets/img/icons/back.png');
+            background-size: contain;
+            transform: rotate(180deg);
+        }
+    }
+}

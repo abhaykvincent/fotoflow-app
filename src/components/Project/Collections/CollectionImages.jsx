@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { fetchImageUrls, handleUpload } from '../../../utils/storageOperations';
 import ImageGallery from '../../ImageGallery/ImageGallery';
 import { fetchImages } from '../../../firebase/functions/firestore';
+import Preview from '../../../features/Preview/Preview';
 
 const CollectionImages = ({ id, collectionId,collection,showAlert }) => {
 // Files
