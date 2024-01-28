@@ -225,7 +225,7 @@ body{
   }
   main{
     position: relative;
-    top: $header-height + 8px*5;
+    top: $header-height + 8px*1;
     left: $sidebar-width;
     width: calc(100vw - #{$sidebar-width});
     padding: 0 8px*2;
