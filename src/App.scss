@@ -303,6 +303,10 @@ body{
         @include boxed;
         @include boxShadow;
         color: $gray4-accessible-dark ;
+        &:hover{
+          border-top: 1px solid $gray4-accessible-dark;
+          z-index: 100;
+        }
         a{
           padding: 4px;
           color: $gray3-accessible-dark;
