@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Preview from '../../features/Preview/Preview';
+import { shortenFileName } from '../../utils/stringUtils';
 
 const ImageGallery = React.memo(({ imageUrls }) => {
   let importedImages=[]
@@ -35,9 +36,7 @@ const ImageGallery = React.memo(({ imageUrls }) => {
               <div className="bottom">
                   <div className="filename">
                     {
-                      fileUrl.name?.length > 30
-                        ? `${fileUrl.name.substring(0, 10)}...${fileUrl.name.substring(fileUrl.name.length - 10)}`
-                        : fileUrl.name
+                      shortenFileName(fileUrl.name)
                     }
                   </div>
 
@@ -50,7 +49,7 @@ const ImageGallery = React.memo(({ imageUrls }) => {
         ))}
       </div>
         {
-            isPreviewOpen && <Preview image={imageUrls[previewIndex].url } setPreviewIndex={setPreviewIndex}/>
+            isPreviewOpen && <Preview image={imageUrls[previewIndex] } setPreviewIndex={setPreviewIndex}/>
         }
     </div>
   );
