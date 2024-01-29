@@ -1,7 +1,7 @@
 
 import { db } from "../app";
 import { collection, doc, getDocs, getDoc, setDoc, deleteDoc, updateDoc, arrayUnion} from "firebase/firestore";
-import generateRandomString from "../../utils/generateRandomString";
+import {generateRandomString} from "../../utils/stringUtils";
 import { deleteCollectionFromStorage, deleteProjectFromStorage } from "../../utils/storageOperations";
 
 
