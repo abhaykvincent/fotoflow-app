@@ -2,7 +2,7 @@ import React from 'react'
 import './Preview.scss'
 import { shortenFileName } from '../../utils/stringUtils'
 
-function Preview({image,setPreviewIndex}) {
+function Preview({image,setPreviewIndex,closePreview}) {
   console.log(image)
   return (
     <div className='preview'>
@@ -22,7 +22,9 @@ function Preview({image,setPreviewIndex}) {
             </div>
             <div className="controls top">
               <div className="left-controls">
-                <div className="back"></div>
+                <div className="back"
+                onClick={()=>closePreview()}
+                ></div>
                 <div className="file-name">{shortenFileName(image.name)}</div>
               </div>
               <div className="right-controls">

@@ -49,7 +49,7 @@ const ImageGallery = React.memo(({ imageUrls }) => {
         ))}
       </div>
         {
-            isPreviewOpen && <Preview image={imageUrls[previewIndex] } setPreviewIndex={setPreviewIndex}/>
+            isPreviewOpen && <Preview image={imageUrls[previewIndex] } {...{setPreviewIndex,closePreview}}/>
         }
     </div>
   );
