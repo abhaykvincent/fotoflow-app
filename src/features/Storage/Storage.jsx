@@ -76,11 +76,16 @@ function Storage({projects}) {
         <p className='storage-class-label'>Cold Storage <b>10GB</b></p>
         <div className="bar">
             <div className="used"></div>
+            <div className="limited access"></div>
         </div>
         <div className="legends">
             <div className="legend ">
                 <div className="colour used"></div>
                 <div className="label">Used</div>
+            </div>
+            <div className="legend ">
+                <div className="colour limited"></div>
+                <div className="label">Limited Access</div>
             </div>
             <div className="legend">
                 <div className="colour available"></div>
@@ -100,7 +105,7 @@ function Storage({projects}) {
                     return (
                         <div className="row">
                             <div className="box-content">
-                                <h3>{project.name}</h3>
+                                <h4>{project.name}</h4>
                                 <div className="project-info">
                                     <p>{convertMegabytes(project.totalFileSize,1)} </p>
                                 </div>
