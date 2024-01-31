@@ -1,12 +1,27 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import Preview from '../../features/Preview/Preview';
+import { shortenFileName } from '../../utils/stringUtils';
 
 const ImageGallery = React.memo(({ imageUrls }) => {
   let importedImages=[]
+  // Preview
+  // is preview open
+  const [isPreviewOpen,setIsPreviewOpen] = useState(false);
+  const [previewIndex,setPreviewIndex] = useState(0);
+  const openPreview = (index) => {
+    setIsPreviewOpen(true)
+    setPreviewIndex(index)
+  }
+  const closePreview = () => {
+    setIsPreviewOpen(false)
+  }
+
   return (
     <div className="gallary">
       <div className="photos">
         {imageUrls.map((fileUrl, index) => (
-          <div className="photo-wrap">
+          <div className="photo-wrap"
+          onClick={()=>openPreview(index)}>
             <div className="hover-options-wrap">
             <div className="hover-options">
               <div className="top">
@@ -21,19 +36,21 @@ const ImageGallery = React.memo(({ imageUrls }) => {
               <div className="bottom">
                   <div className="filename">
                     {
-                      fileUrl.name?.length > 30
-                        ? `${fileUrl.name.substring(0, 10)}...${fileUrl.name.substring(fileUrl.name.length - 10)}`
-                        : fileUrl.name
+                      shortenFileName(fileUrl.name)
                     }
                   </div>
 
               </div>
             </div>
             </div>
-            <div className={fileUrl!=='dummyurl'?`photo`:'photo dummy'} key={index} style={fileUrl!=='dummyurl'? { backgroundImage: `url(${fileUrl.url})` }:{}} alt={`File ${index}`}></div>
+            <div className='photo' key={index} 
+            style={{ backgroundImage: `url(${fileUrl.url})` }} alt={`File ${index}`}></div>
           </div>
         ))}
       </div>
+        {
+            isPreviewOpen && <Preview image={imageUrls[previewIndex] } {...{setPreviewIndex,closePreview}}/>
+        }
     </div>
   );
 });

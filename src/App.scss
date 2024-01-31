@@ -1,7 +1,6 @@
 @import './style/variables';
 @import './style/components';
 
-
 *{
   margin: 0;
   padding: 0;
@@ -179,6 +178,9 @@ body{
         &.projects .icon{
           background-image: url('./assets/img/icons/folder.svg');
         }
+        &.storage .icon{
+          background-image: url('./assets/img/icons/storage-drive.svg');
+        }
         &.store .icon{
           background-size: 90%;
           background-image: url('./assets/img/icons/store.svg');
@@ -225,10 +227,11 @@ body{
   }
   main{
     position: relative;
-    top: $header-height + 8px*5;
+    top: $header-height + 8px*1;
     left: $sidebar-width;
     width: calc(100vw - #{$sidebar-width});
     padding: 0 8px*2;
+    z-index: 10;
     &.project-page{
       opacity: 0;
       transform: translateY(-8px*2);
@@ -303,6 +306,10 @@ body{
         @include boxed;
         @include boxShadow;
         color: $gray4-accessible-dark ;
+        &:hover{
+          border-top: 1px solid $gray4-accessible-dark;
+          z-index: 100;
+        }
         a{
           padding: 4px;
           color: $gray3-accessible-dark;
@@ -410,6 +417,13 @@ body{
         display: flex;
         justify-content: center;
       }
+    }
+    .fixed-wrap{
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      background-color: red;
+      top: -200px;
     }
   }
   .modal{

@@ -1,0 +1,75 @@
+@import '../../style/_variables.scss';
+.storage-page{
+    .page-header{
+        padding: 8px*2;
+    }
+    .storage-info{
+        padding: 8px;
+        display: grid;
+        grid-template-columns: 8px*30 auto;
+        gap: 8px*5;
+        .storage-pie-wrap{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .storage-pie{
+                width: 8px*20;
+                height: 8px*20;
+                border-radius: 100%;
+                border: 8px solid $gray3-accessible-dark;
+            }
+            .available-storage{
+                stroke: $dark-3;
+            }
+            .used-storage{
+                stroke: $green-default-dark;
+                // add drop shadow that glows
+                filter: drop-shadow(0 0 2px $green-dark-accessible-light)
+            }
+            .used-storage-text{
+                font-weight: 700;
+                font-size: 0.95rem;
+                fill: $green-default-light;
+            }
+            .available-storage-text{
+                font-weight: 400;
+                font-size: 0.4rem;
+                fill: $gray2-accessible-dark;
+                // space between letters
+                letter-spacing: -0.05rem;
+            }
+        }
+        .storage-insight{
+            text-align: center;
+            color: $gray-accessible-dark;
+        }
+        .storage-subscription{
+            width: auto;
+            .subscription-info{ 
+                border: 1px solid $gray5-accessible-dark;
+                margin: 8px*2 0;
+                border-radius: 8px;
+                .subscription-group{
+                    display: grid;
+                    grid-template-columns: auto 8px*20;
+                    align-items: center;
+                    padding: 8px*3;
+                    border-bottom: 1px solid $gray5-accessible-dark;
+                    &:last-child{
+                        border-bottom: none;
+                    }
+                    .box-content{
+                        h2{
+                            font-weight: 400;
+                            margin-bottom: 8px;
+                        }
+                        p{
+                            color: $gray2-accessible-dark;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
