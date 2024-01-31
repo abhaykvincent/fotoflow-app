@@ -19,6 +19,7 @@ import {
   deleteCollectionFromFirestore, 
 } from './firebase/functions/firestore';
 import Selection from './features/Selection/Selection';
+import Storage from './features/Storage/Storage';
 
 function App() {
   
@@ -133,6 +134,7 @@ function App() {
             <Route exact path="/" element={<Home {...{projects}} />}/>
             <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,showAlert }} />}/>
             <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert, isLoading }} />}/>
+            <Route path="/storage" element={<Storage/>}/>
           </> 
           
           : ''

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30.849" height="29.139" viewBox="0 0 30.849 29.139">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.054" y1="0.022" x2="0.908" y2="0.935" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00e323"/>
+      <stop offset="0.463" stop-color="#179a2b"/>
+      <stop offset="1" stop-color="#0b4313"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_2" data-name="Group 2" transform="translate(-100.176 -127.661)">
+    <path id="Icon_metro-drive" data-name="Icon metro-drive" d="M8.355,28.921h19.28c3.194,0,5.784-4.59,5.784-7.784H2.571c0,3.195,2.59,7.784,5.784,7.784ZM31.266,0a1.06,1.06,0,0,0-.744-.217H5.333A.986.986,0,0,0,4.626,0a1.388,1.388,0,0,0-.219.8L2.571,19.208H33.419L31.585.831A1.6,1.6,0,0,0,31.266,0Z" transform="translate(97.605 127.88)" fill="url(#linear-gradient)"/>
+    <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(124 152)" stroke="#000" stroke-width="1">
+      <circle cx="1.5" cy="1.5" r="1.5" stroke="none"/>
+      <circle cx="1.5" cy="1.5" r="1" fill="none"/>
+    </g>
+  </g>
+</svg>

@@ -45,6 +45,10 @@
         opacity: 0.2;
         cursor: not-allowed;
     }
+    &.large{
+        height: 8px*5;
+        padding: 8px*1.1 8px*4;
+    }
 }
 .coming-soon{
     display: flex;
