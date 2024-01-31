@@ -19,7 +19,7 @@
                 border: 8px solid $gray3-accessible-dark;
             }
             .available-storage{
-                stroke: $dark-1;
+                stroke: $dark-3;
             }
             .used-storage{
                 stroke: $green-default-dark;
@@ -28,11 +28,12 @@
             }
             .used-storage-text{
                 font-weight: 700;
+                font-size: 0.95rem;
                 fill: $green-default-light;
             }
             .available-storage-text{
                 font-weight: 400;
-                font-size: 0.45rem;
+                font-size: 0.4rem;
                 fill: $gray2-accessible-dark;
                 // space between letters
                 letter-spacing: -0.05rem;

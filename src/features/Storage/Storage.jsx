@@ -35,7 +35,7 @@ function Storage() {
                         <p>Get more storage</p>
                     </div>
                     <div className="action">
-                        <div className="button primary large">Manage</div>
+                        <div className="button secondary large">Manage</div>
                     </div>
                 </div>
             </div>

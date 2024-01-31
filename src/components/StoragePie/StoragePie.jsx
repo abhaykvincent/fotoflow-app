@@ -13,14 +13,14 @@ const StoragePie = ({ totalSpace, usedSpace }) => {
   const dashoffset = circumference - (usedPercentage / 100) * circumference;
 
   return (
-    <svg width="200" height="200" viewBox="0 0 100 100">
+    <svg width="250" height="250" viewBox="0 0 100 100">
       <circle
         className='available-storage'
         cx="50"
         cy="50"
         r="40"
         fill="none"
-        strokeWidth="5" // Set the border width
+        strokeWidth="6" // Set the border width
       />
       <circle
         className='used-storage'
@@ -29,17 +29,17 @@ const StoragePie = ({ totalSpace, usedSpace }) => {
         r="40"
         fill="none"
         stroke="#3498db" // Set the used space color
-        strokeWidth="7"
+        strokeWidth="5"
         strokeDasharray={dasharray}
         strokeDashoffset={dashoffset}
         //round
         strokeLinecap='round'
         transform="rotate(-90 50 50)"
       />
-            <text className='used-storage-text' x="50" y="45" textAnchor="middle" dy="0.3em" fill="white" style={{ maxWidth: '50px' }}>
+            <text className='used-storage-text' x="50" y="47" textAnchor="middle" dy="0.3em" fill="white" style={{ maxWidth: '50px' }}>
                 {convertMegabytes(usedSpace,2)}
             </text>
-            <text className='available-storage-text' x="50" y="60" textAnchor="middle" dy="0.3em" fill="white" style={{ maxWidth: '50px' }}>
+            <text className='available-storage-text' x="50" y="58" textAnchor="middle" dy="0.3em" fill="white" style={{ maxWidth: '50px' }}>
                 {`of ${convertMegabytes(totalSpace)} (${usedPercentage.toFixed(1)}%)`}
             </text>
 
