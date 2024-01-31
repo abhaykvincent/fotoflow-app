@@ -17,8 +17,13 @@ export function convertMegabytes(megabytes, decimalPlaces = 0) {
 
   let sizeIndex = 0;
 
-  while (megabytes >= 1024 && sizeIndex < sizes.length - 1) {
-    megabytes /= 1024;
+  if (megabytes > 500 && sizes[sizeIndex] === 'MB') {
+    megabytes /= 1000;
+    sizeIndex++;
+  }
+
+  if (megabytes > 500 && sizes[sizeIndex] === 'GB') {
+    megabytes /= 1000;
     sizeIndex++;
   }
 

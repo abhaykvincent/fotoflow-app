@@ -22,7 +22,7 @@ function Storage({projects}) {
         </div>
       <div className="storage-info">
         <div className="storage-pie-wrap">
-            <StoragePie totalSpace={1024} usedSpace={usedSpace} />
+            <StoragePie totalSpace={2000} usedSpace={usedSpace} />
         </div>
         {/* <p className="storage-insight">Storing 24034 photos in 17 collections</p> */}
         <div className="storage-subscription">
@@ -70,7 +70,7 @@ function Storage({projects}) {
                             <div className="box-content">
                                 <h3>{project.name}</h3>
                                 <div className="project-info">
-                                    <p>{convertMegabytes(project.totalFileSize,2)} </p>
+                                    <p>{convertMegabytes(project.totalFileSize,1)} </p>
                                 </div>
                             </div>
                             <div className="action">
