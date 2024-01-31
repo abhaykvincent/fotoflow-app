@@ -13,6 +13,7 @@ function AddProjectModal({ showAlert,visible, onClose, onSubmit }) {
       createdAt: new Date(),
       uploadedFilesCount:0,
       selectedFilesCount:0,
+      totalFileSize:0,
       lastOpened: new Date(),
   });
   const handleInputChange = (event) => {

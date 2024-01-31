@@ -13,7 +13,7 @@ const StoragePie = ({ totalSpace, usedSpace }) => {
   const dashoffset = circumference - (usedPercentage / 100) * circumference;
 
   return (
-    <svg width="250" height="250" viewBox="0 0 100 100">
+    <svg width="200" height="200" viewBox="0 0 100 100">
       <circle
         className='available-storage'
         cx="50"
@@ -37,7 +37,7 @@ const StoragePie = ({ totalSpace, usedSpace }) => {
         transform="rotate(-90 50 50)"
       />
             <text className='used-storage-text' x="50" y="47" textAnchor="middle" dy="0.3em" fill="white" style={{ maxWidth: '50px' }}>
-                {convertMegabytes(usedSpace,2)}
+                {convertMegabytes(usedSpace,1)}
             </text>
             <text className='available-storage-text' x="50" y="58" textAnchor="middle" dy="0.3em" fill="white" style={{ maxWidth: '50px' }}>
                 {`of ${convertMegabytes(totalSpace)} (${usedPercentage.toFixed(1)}%)`}
