@@ -1,0 +1,157 @@
+@import '../../style/variables';
+.preview{
+    position: fixed;
+    top: -($header-height + 8px*1);
+    left: -($sidebar-width);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    .image-wrap{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-items: center;
+        .image{
+            height: calc(100% - 8px * 20);
+            width: 100%;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+    .controls{
+        .prev{
+            position: fixed;
+            top: 50vh;
+            left: 0px;
+            width: 8px*5;
+            height: 8px*5;
+            margin: 8px*2;
+            background-image: url('../../assets/img/icons/back.png');
+            background-size: contain;
+        }
+        .next{
+            position: fixed;
+            top: 50vh;
+            right: 0vh;
+            width: 8px*5;
+            height: 8px*5;
+            margin: 8px*2;
+            background-image: url('../../assets/img/icons/back.png');
+            background-size: contain;
+            transform: rotate(180deg);
+        }
+        .top{
+            margin-top: 8px;
+        }
+        .left-controls{
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 8px;
+            left: 0px;
+            width: 8px*40;
+            height: 8px*3;
+            margin: 8px*2;
+            .back{
+                padding: 8px*2.5;
+                margin-right: 8px*2;
+                border-radius: 100%;
+                background-image: url('../../assets/img/icons/arrow-round-back.svg');
+                background-position: center center;
+                background-size: 40% auto;
+                cursor: pointer;
+                transition-duration: 0.2s;
+            &:hover{
+                background-color: rgba(255, 255, 255, 0.1);
+                transform: scale(1.1);
+            }
+            }
+            .file-name{
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+        }
+        .right-controls{
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            position: fixed;
+            top: 8px;
+            right: 0px;
+            width: 8px*40;
+            height: 8px*3;
+            margin: 8px*2;
+            .icon{
+                padding: 8px*2.5;
+                border-radius: 100%;
+                background-position: center center;
+                background-size: 50% auto;
+                cursor: pointer;
+                transition-duration: 0.2s;
+                &:hover{
+                    background-color: rgba(255, 255, 255, 0.1);
+                    transform: scale(1.1);
+                }
+
+            }
+            .download{
+                background-image: url('../../assets/img/icons/download.svg');
+            }
+            .share{
+                background-image: url('../../assets/img/icons/share.svg');
+            }
+        }
+        .center-controls{
+            .magnifier{
+                display: flex;
+                align-items: center;
+                position: fixed;
+                top: 8px*2;
+                left: 50vw;
+                gap:8px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 4px;
+                transform: translateX(-50%);
+                .zoom-out{
+                    padding: 8px*2;
+                    width: 8px*3;
+                    height: 8px*3;
+                    border-radius: 6px;
+                    background-image: url('../../assets/img/icons/minus.svg');
+                    background-size: 50%;
+                    background-position: center center;
+                    opacity: 0.6;
+                    cursor: pointer;
+                    transition-duration: 0.2s;
+                    &:hover{
+                        background-color: rgba(255, 255, 255, 0.1);
+                        opacity: 1;
+                    }
+                }
+                .zoom-value{
+                    font-weight: 600;
+                }
+                .zoom-in{
+                    padding: 8px*2;
+                    width: 8px*3;
+                    height: 8px*3;
+                    border-radius: 6px;
+                    background-image: url('../../assets/img/icons/plus.svg');
+                    background-size: 50%;
+                    background-position: center center;
+                    opacity: 0.6;
+                    cursor: pointer;
+                    transition-duration: 0.2s;
+                    &:hover{
+                        background-color: rgba(255, 255, 255, 0.2);
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}
