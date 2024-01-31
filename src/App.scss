@@ -178,6 +178,9 @@ body{
         &.projects .icon{
           background-image: url('./assets/img/icons/folder.svg');
         }
+        &.storage .icon{
+          background-image: url('./assets/img/icons/storage-drive.svg');
+        }
         &.store .icon{
           background-size: 90%;
           background-image: url('./assets/img/icons/store.svg');
