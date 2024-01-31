@@ -13,7 +13,7 @@ const StoragePie = ({ totalSpace, usedSpace }) => {
   const dashoffset = circumference - (usedPercentage / 100) * circumference;
 
   return (
-    <svg width="250" height="250" viewBox="0 0 100 100">
+    <svg width="200" height="200" viewBox="0 0 100 100">
       <circle
         className='available-storage'
         cx="50"
