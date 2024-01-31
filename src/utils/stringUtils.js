@@ -22,5 +22,5 @@ export function convertMegabytes(megabytes, decimalPlaces = 0) {
     sizeIndex++;
   }
 
-  return `${megabytes.toFixed(0)} ${sizes[sizeIndex]}`;
+  return `${megabytes.toFixed(decimalPlaces)} ${sizes[sizeIndex]}`;
 }

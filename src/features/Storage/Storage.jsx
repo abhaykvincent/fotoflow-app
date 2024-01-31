@@ -1,8 +1,15 @@
 import React from 'react'
 import './Storage.scss'
 import StoragePie from '../../components/StoragePie/StoragePie';
+import { convertMegabytes } from '../../utils/stringUtils';
 
 function Storage({projects}) {
+    // Calculate the storage used from projects importFileSize
+    const usedSpace = projects.reduce((acc,project) => {
+        return acc + project.totalFileSize
+    },0)
+    console.log(usedSpace)
+
     const progressPercentage = 25; // Set the desired progress percentage
 
   // Calculate the stroke-dashoffset based on the percentage
@@ -15,7 +22,7 @@ function Storage({projects}) {
         </div>
       <div className="storage-info">
         <div className="storage-pie-wrap">
-            <StoragePie totalSpace={1024} usedSpace={650} />
+            <StoragePie totalSpace={1024} usedSpace={usedSpace} />
         </div>
         {/* <p className="storage-insight">Storing 24034 photos in 17 collections</p> */}
         <div className="storage-subscription">
@@ -57,12 +64,13 @@ function Storage({projects}) {
         <div className="row-group">
             {
                 projects.map((project)=>{
+                    console.log(project)
                     return (
                         <div className="row">
                             <div className="box-content">
                                 <h3>{project.name}</h3>
                                 <div className="project-info">
-                                    <p>12 GB</p>
+                                    <p>{convertMegabytes(project.totalFileSize,2)} </p>
                                 </div>
                             </div>
                             <div className="action">
