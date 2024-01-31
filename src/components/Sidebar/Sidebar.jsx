@@ -19,6 +19,12 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="label">Projects</div>
           </div>
         </Link>
+        <Link to={`/storage`}>
+          <div className={`menu storage ${location.pathname === '/storage' ? 'selected' : ''}`}>
+            <div className="icon"></div>
+            <div className="label">Storage</div>
+          </div>
+        </Link>
         <Link to={`/store`}>
           <div className={`menu store ${location.pathname === '/store' ? 'selected' : ''} disabled`}>
             <div className="icon"></div>
