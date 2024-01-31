@@ -49,11 +49,43 @@ function Storage({projects}) {
         </div>
       </div>
       <section className="breakdown">
-        <h2>Breakdown</h2>
+        <p className='storage-class-label'>Primary Storage <b>5GB</b></p> 
         <div className="bar">
-            <div className="used"></div>
+            <div className="photos"></div>
             <div className="videos"></div>
             <div className="duplicates"></div>
+        </div>
+        <div className="legends">
+            <div className="legend">
+                <div className="colour photos"></div>
+                <div className="label">Photos</div>
+            </div>
+            <div className="legend">
+                <div className="colour videos"></div>
+                <div className="label">Videos</div>
+            </div>
+            <div className="legend">
+                <div className="colour duplicates"></div>
+                <div className="label">Duplicates</div>
+            </div>
+            <div className="legend ">
+                <div className="colour available"></div>
+                <div className="label">Available</div>
+            </div>
+        </div>
+        <p className='storage-class-label'>Cold Storage <b>10GB</b></p>
+        <div className="bar">
+            <div className="used"></div>
+        </div>
+        <div className="legends">
+            <div className="legend ">
+                <div className="colour used"></div>
+                <div className="label">Used</div>
+            </div>
+            <div className="legend">
+                <div className="colour available"></div>
+                <div className="label">Available</div>
+            </div>
         </div>
         <div className="breakdown-info">
 
@@ -74,7 +106,7 @@ function Storage({projects}) {
                                 </div>
                             </div>
                             <div className="action">
-                                <div className="button primary">Manage</div>
+                                <div className="button secondary">Manage</div>
                             </div>
                         </div>
                     )

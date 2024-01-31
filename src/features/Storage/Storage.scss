@@ -55,32 +55,79 @@
         margin: 8px*2;
         margin-bottom: 8px*4;
         h2{
-            margin-bottom: 8px;
+            margin-bottom: 8px*2;
+        }
+        .storage-class-label{
+            font-weight: 600;
+            color: $gray-accessible-dark;
         }
         .bar{
             display: flex;
-            height: 8px*8;
-            border: 1px solid $gray5-accessible-dark;
+            height: 8px*4;
             background-color: $dark-1;
             border-radius: 8px;
             overflow: hidden;
-            .used{
+            margin-bottom: 8px;
+            margin-top: 8px;
+            div{
+                border-right: 1px solid $dark-3;
+            }
+            .photos{
                 width: 33.5%;
                 height: 100%;
-                background-color: $green-accessible-light;
-                border: 2px solid $green-accessible-light;
+                background-color: $green-default-dark;
             }
             .duplicates{
                 width: 10%;
                 height: 100%;
                 background-color: $gray3-accessible-dark;
-                border: 2px solid $gray3-accessible-dark;
             }
             .videos{
                 width: 20%;
                 height: 100%;
                 background-color: $green-dark-accessible-light;
-                border: 2px solid $green-dark-accessible-light;
+            }
+            .used{
+                width: 20%;
+                height: 100%;
+                background-color: $gray2-accessible-dark;
+            }
+        }
+        .legends{
+            display: flex;
+            gap: 8px*2;
+
+            margin-bottom: 8px*2;
+            .legend{
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                .label{
+                    color: $gray3-accessible-dark;
+                    font-size: 0.8rem;
+                }
+                .colour{
+                    height: 8px;
+                    width: 8px;
+                    border-radius: 50%;
+                    background-color: azure;
+                    border: 1px solid $dark-3;
+                    &.photos{
+                        background-color: $green-accessible-light;
+                    }
+                    &.videos{
+                        background-color: $green-dark-accessible-light;
+                    }
+                    &.duplicates{
+                        background-color: $gray3-accessible-dark;
+                    }
+                    &.available{
+                        background-color: $dark-1;
+                    }
+                    &.used{
+                        background-color: $gray2-accessible-dark;
+                    }
+                }
             }
         }
     }
