@@ -40,10 +40,12 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   // Determine the collectionId to use
   const defaultCollectionId = project.collections.length > 0 ? project.collections[0].id : null;
   const targetCollectionId = collectionId || defaultCollectionId;
-  /* if(!collectionId){
+  if(!collectionId){
+    setTimeout(()=>{
     navigate(`/project/${id}/${targetCollectionId}`);
+    },100)
     return
-  } */
+  }
 
   // Find the collection by id
   let collection = findCollectionById(project, targetCollectionId);
