@@ -660,6 +660,30 @@ margin-left: 4px;
         width: 100%;;
         height: 100%;
         z-index: 1;
+        .favorite-wrap{
+          position: absolute;
+        }
+        .favorite{
+          width: 8px*2;
+          height: 8px*2;
+          margin: 8px;
+          opacity: 1;
+          cursor: pointer;
+          &.selected{
+            opacity: 1;
+            background-image: url('./assets/img/icons/heart.svg');
+            background-size: 90%;
+            background-position: center;
+            transform: translateX(1px);
+            transition-duration: 0.1s;
+            &:hover{
+              background-size: 101%;
+              background-image: url('./assets/img/icons/heart-dislike.svg');
+              transform: translateX(-1px);
+
+            }
+          }
+        }
         .top{
           position: absolute;
           top: -8px*2;
