@@ -318,9 +318,15 @@ body{
         @include boxed;
         @include boxShadow;
         color: $gray4-accessible-dark ;
+        transition-duration: 0.2s;
         &:hover{
           border-top: 1px solid $gray4-accessible-dark;
           z-index: 100;
+          transition-duration: 0.1s;
+          a{
+
+          color: $gray-accessible-dark;
+          }
         }
         a{
           padding: 4px;
@@ -404,15 +410,27 @@ body{
           .controls{
             @include boxed;
             border-radius: $border-radius-1+1;
+            transition-duration: 0.15s;
+            &:hover{
+              border: 1px solid $gray4-accessible-dark;
+              transition-duration: 0.1s;
+              background-color: rgba(0, 0, 0, 0.1);
+            }
             display:flex;
             .control{
               padding: 8px 8px*2;
               font-weight: 400;
               border-radius: $border-radius-1;
               cursor: pointer;
+              transition-duration: 0.15s;
               &.active{
                 background-color: $dark-1;
                 border: 1px solid $dark-0;
+                &:hover{
+                  background-color: $dark-2;
+                  border: 1px solid $gray2-accessible-dark;
+                  transition-duration: 0.1s;
+                }
               }
             }
           }
