@@ -19,15 +19,17 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   const onDeleteConfirmClose = () => setConfirmDeleteProject(false)
   const onDeleteConfirm = () => deleteProject(id);
 
-  console.log(projects)
   // If no projects are available, return early
   if (!projects) return;
 
   // Find the project with the given id
   const project = projects.find((p) => p.id === id);
+  console.log(!project)
   // If the project is not found, redirect to the projects page and return
   if (!project) {
-    navigate('/projects');
+    setTimeout(()=>{
+      navigate('/projects');
+    },100)
     return;
   }
   else{
@@ -45,10 +47,12 @@ export default function Project({ projects,  addCollection, deleteCollection, de
 
   // Find the collection by id
   let collection = findCollectionById(project, targetCollectionId);
-
+  console.log(collection)
   // If the collection is not found, redirect to the project page and return
-  if (!collection) {
+  if (collection==='Collection not found') {
+    setTimeout(()=>{
     navigate(`/project/${id}`);
+    },100)
     return;
   }
 
@@ -84,8 +88,8 @@ export default function Project({ projects,  addCollection, deleteCollection, de
         </>
       ) : (
         <div className="project-collections">
-          <CollectionsPanel {...{project, collectionId, deleteCollection, openModal}}/>
-          <CollectionImages  {...{ id, collectionId,collection,showAlert}} />
+          <CollectionsPanel {...{project, collectionId:targetCollectionId, deleteCollection, openModal}}/>
+          <CollectionImages  {...{ id, collectionId:targetCollectionId,collection,showAlert}} />
         </div>
       )}
       <AddCollectionModal project={project} visible={modal.createCollection} onClose={closeModal} onSubmit={addCollection}  />
