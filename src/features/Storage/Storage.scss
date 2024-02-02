@@ -1,17 +1,27 @@
 @import '../../style/_variables.scss';
 .storage-page{
+    padding: 8px*4;
     .page-header{
         padding: 8px*2;
     }
     .storage-info{
-        padding: 8px;
+        padding: 8px*2;
         display: grid;
-        grid-template-columns: 8px*30 auto;
         gap: 8px*5;
+        grid-template-columns: 1fr 1fr;
+        justify-content: space-between;
+        align-items: center;
+        margin: 8px;
+        border-radius: 8px;
+        @include boxed;
+        margin-bottom: 8px*5;
+        background-color: $dark-3;
         .storage-pie-wrap{
             display: flex;
             align-items: center;
             justify-content: center;
+            animation: reveal-storage-space-pie;
+            animation-duration: 0.5s;
             .storage-pie{
                 width: 8px*20;
                 height: 8px*20;
@@ -19,24 +29,35 @@
                 border: 8px solid $gray3-accessible-dark;
             }
             .available-storage{
-                stroke: $dark-3;
+                stroke: $dark-1;
             }
             .used-storage{
                 stroke: $green-default-dark;
                 // add drop shadow that glows
-                filter: drop-shadow(0 0 2px $green-dark-accessible-light)
+                filter: drop-shadow(0 0 2px $green-dark-accessible-light);
+                transition-duration: 1s;
+                transition-timing-function: ease-out;
             }
             .used-storage-text{
                 font-weight: 700;
                 font-size: 0.95rem;
                 fill: $green-default-light;
+                opacity: 0;
+                animation: reveal-storage-text;
+                animation-duration: 0.5s;
+                animation-delay: 0.7s;
+                animation-fill-mode: forwards;
             }
             .available-storage-text{
                 font-weight: 400;
                 font-size: 0.4rem;
                 fill: $gray2-accessible-dark;
-                // space between letters
                 letter-spacing: -0.05rem;
+                opacity: 0;
+                animation: reveal-storage-text;
+                animation-duration: 0.5s;
+                animation-delay: 01s;
+                animation-fill-mode: forwards;
             }
         }
         .storage-insight{
@@ -44,32 +65,255 @@
             color: $gray-accessible-dark;
         }
         .storage-subscription{
-            width: auto;
-            .subscription-info{ 
-                border: 1px solid $gray5-accessible-dark;
-                margin: 8px*2 0;
-                border-radius: 8px;
-                .subscription-group{
-                    display: grid;
-                    grid-template-columns: auto 8px*20;
-                    align-items: center;
-                    padding: 8px*3;
-                    border-bottom: 1px solid $gray5-accessible-dark;
-                    &:last-child{
-                        border-bottom: none;
+            opacity: 0;
+            animation-name: storage-subscription;
+            animation-duration: 0.5s;
+            animation-fill-mode: forwards;
+            animation-delay: 1.4s;
+            .subscription-group{
+                opacity: 0;
+                animation-name: storage-subscription;
+                animation-duration: 0.5s;
+                animation-fill-mode: forwards;
+                &:nth-child(1){
+                    animation-delay: 1.5s;
+                }
+                &:nth-child(2){
+                    animation-delay: 1.6s;
+                }
+            }
+            .subscription-info{
+            }
+        }
+    }
+    section{
+        margin: 8px*2;
+        margin-bottom: 8px*4;
+        h2{
+            margin-bottom: 8px*2;
+        }
+    }
+    .breakdown{
+        &.storage{
+            display: grid;
+            gap: 8px*5;
+            grid-template-columns: 1fr 1fr;
+            margin: 8px;
+            padding: 8px*3;
+            background-color: $dark-3;
+            border-radius: 8px;
+            height: auto;
+            width: 0px;
+            border: 1px solid $dark-1;
+            box-shadow: -1px 1px 6px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation-name: storage-breakdown-reveal;
+            animation-duration: 0.2s;
+            animation-delay: 1.5s;
+            animation-fill-mode: forwards;
+            .storage-class{
+
+                opacity: 0;
+                animation-name: storage-class-reveal;
+                animation-duration: 0.2s;
+                animation-delay: 1.5s;
+                animation-fill-mode: forwards;
+            }
+            .storage-class-label{
+                font-weight: 600;
+                color: $gray-accessible-dark;
+                margin-bottom: 8px*2;
+            }
+            .bar{
+                display: flex;
+                height: 8px*3;
+                background-color: $dark-1;
+                border-radius: 4PX;
+                margin-bottom: 8px;
+                margin-top: 8px;
+                div{
+                    border-right: 1px solid $dark-1;
+                    &:first-child{
+                    border-radius: 4px 0px 0px 4px ;
                     }
-                    .box-content{
-                        h2{
-                            font-weight: 400;
-                            margin-bottom: 8px;
+                    &:last-child{
+                        border-right: 1px solid $dark-3;
+                    border-radius:  0px 4px 4px 0px;
+                    }
+                }
+                .photos{
+                    width: 33.5%;
+                    height: 100%;
+                    background-color: $green-default-dark;
+                    box-shadow: 0 0 2px $green-dark-accessible-light;
+                }
+                .duplicates{
+                    width: 10%;
+                    height: 100%;
+                    background-color: $gray3-accessible-dark;
+                }
+                .videos{
+                    width: 20%;
+                    height: 100%;
+                    background-color: $green-accessible-light;
+                }
+                .used{
+                    width: 20%;
+                    height: 100%;
+                    background-color: $gray2-accessible-dark;
+                }
+                .limited{
+                    width:4%;
+                    height: 100%;
+                    background-color: $gray3-accessible-dark;
+                }
+            }
+            .legends{
+                display: flex;
+                gap: 8px*2;
+    
+                .legend{
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    .label{
+                        color: $gray3-accessible-dark;
+                        font-size: 0.8rem;
+                    }
+                    .colour{
+                        height: 8px;
+                        width: 8px;
+                        border-radius: 50%;
+                        background-color: azure;
+                        border: 1px solid $dark-3;
+                        &.photos{
+                            background-color: $green-accessible-light;
                         }
-                        p{
-                            color: $gray2-accessible-dark;
+                        &.videos{
+                            background-color: $green-dark-accessible-light;
+                        }
+                        &.duplicates{
+                            background-color: $gray3-accessible-dark;
+                        }
+                        &.available{
+                            background-color: $dark-1;
+                        }
+                        &.used{
+                            background-color: $gray2-accessible-dark;
+                        }
+                        &.limited{
+                            background-color: $gray3-accessible-dark;
                         }
                     }
                 }
             }
-
+    }
+        &.projects{
+            margin-top: 8px*5;
+            opacity:0 ;
+            animation-name: storage-class-reveal;
+            animation-duration: 0.2s;
+            animation-delay: 1.9s;
+            animation-fill-mode: forwards;
+            .row{
+                padding: 8px 8px*2;
+                h3{
+                    margin-bottom: 2px;
+                }
+            }
+            .project-info{
+                display: flex;
+                justify-content: start;
+                gap:8px;
+                padding: 0;
+                font-size: 0.8rem;
+                margin-top: 4px;
+            }
         }
+    }
+
+    .row-group{ 
+        border: 1px solid $gray5-accessible-dark;
+        border-radius: 8px;
+        .row{
+            display: grid;
+            grid-template-columns: auto auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px*3;
+            border-bottom: 1px solid $gray5-accessible-dark;
+            opacity: 0;
+            &:last-child{
+                border-bottom: none;
+            }
+            .box-content{
+                h3{
+                    margin-bottom: 4px;
+                }
+                p{
+                    color: $gray2-accessible-dark;
+                }
+            
+            }@for $i from 1 through 10 {
+                &:nth-child(#{$i}) {
+                  $delay: 2s + 0.05s * ($i - 1);
+                  animation: fadeInUp 0.1s ease-out $delay;
+                  animation-fill-mode: forwards;
+                  animation-timing-function: ease-out;
+                }
+              }
+        }
+    }
+}
+@keyframes reveal-storage-space-pie {
+    0%{
+        transform: scale(0.7);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+@keyframes reveal-storage-text {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes storage-subscription {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes storage-breakdown-reveal {
+    0%{
+        opacity: 0;
+        width:0;
+    }
+    100%{
+        opacity: 1;
+        width:100%;
+    }
+}
+@keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+@keyframes storage-class-reveal {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
     }
 }

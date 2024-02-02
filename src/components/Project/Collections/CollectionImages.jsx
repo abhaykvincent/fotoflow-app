@@ -3,6 +3,7 @@ import { fetchImageUrls, handleUpload } from '../../../utils/storageOperations';
 import ImageGallery from '../../ImageGallery/ImageGallery';
 import { fetchImages } from '../../../firebase/functions/firestore';
 import Preview from '../../../features/Preview/Preview';
+import { addAllFileSizesToMB } from '../../../utils/fileUtils';
 
 const CollectionImages = ({ id, collectionId,collection,showAlert }) => {
 // Files
@@ -10,6 +11,8 @@ const [files, setFiles] = useState([]);
 const [collectionImages, setCollectionImages] = useState([]);
 const [imageUrls, setImageUrls] = useState([]);
 const [isPhotosImported, setIsPhotosImported] = useState(false);
+//import size
+const [importFileSize, setImportFileSize] = useState();
 const [showAllPhotos,setShowAllPhotos]=useState(true);
 const [page,setPage]=useState(1);
 const [size,setSize]=useState(15);
@@ -57,8 +60,9 @@ useEffect(() => {
 
 const handleFileInputChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
-    setIsPhotosImported(true)
+    setIsPhotosImported(true);
     setFiles(selectedFiles);
+    setImportFileSize(addAllFileSizesToMB(selectedFiles))
     setImageUrls(selectedFiles)
 };
 return (
@@ -92,7 +96,7 @@ return (
                     <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
                         onClick={async()=>{
                             setIsPhotosImported(false);
-                            let uploadedImages=await handleUpload(files, id, collectionId,showAlert)
+                            let uploadedImages=await handleUpload(files, id, collectionId,importFileSize,showAlert)
                             console.log(uploadedImages)
                             setImageUrls(uploadedImages)
                         }}

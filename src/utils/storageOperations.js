@@ -163,7 +163,7 @@ const sliceUpload = async (slice, id, collectionId) => {
 
     return results;
 };
-export const handleUpload = async (files, id, collectionId, showAlert, retries = 2) => {
+export const handleUpload = async (files, id, collectionId,importFileSize, showAlert, retries = 2) => {
     let uploadPromises = [];
 
     // Slice the files array into smaller arrays of size sliceSize
@@ -208,7 +208,7 @@ export const handleUpload = async (files, id, collectionId, showAlert, retries =
             if (failedFiles.length == 0) {
                 console.log("%c All files uploaded successfully!", 'color:green');
 
-                addUploadedFilesToFirestore(id, collectionId, uploadedFiles)
+                addUploadedFilesToFirestore(id, collectionId,importFileSize, uploadedFiles)
                     .then(() => {
                         showAlert('success', 'All files uploaded successfully!')
                     })
@@ -232,7 +232,7 @@ export const handleUpload = async (files, id, collectionId, showAlert, retries =
 
   
 // function to add uploadedFiles data to firestore in project of project id and collection of collection id
-export const addUploadedFilesToFirestore = async (projectId, collectionId, uploadedFiles) => {
+export const addUploadedFilesToFirestore = async (projectId, collectionId,importFileSize, uploadedFiles) => {
 
     // Get a reference to the project document
     const projectsCollection = collection(db, 'projects');
@@ -250,7 +250,10 @@ export const addUploadedFilesToFirestore = async (projectId, collectionId, uploa
             .then(() => {
                 console.log('Uploaded files added to collection successfully.');
                 // update uploaded files count on project document
-                return updateDoc(projectDoc, { uploadedFilesCount: projectData.data().uploadedFilesCount + uploadedFiles.length });
+                return updateDoc(projectDoc, 
+                    { uploadedFilesCount: projectData.data().uploadedFilesCount + uploadedFiles.length ,
+                        totalFileSize:importFileSize+projectData.data().totalFileSize
+                });
             })
             .then(() => {
                 console.log('Uploaded files count updated successfully.');
