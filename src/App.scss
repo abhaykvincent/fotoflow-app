@@ -128,6 +128,18 @@ body{
     .menu-list{
       padding: 8px;
       margin-top: 8px*0.5;
+
+      a{
+        opacity: 0.0;
+        transform: translateX(8px*4);
+        @for $i from 1 through 10 {
+          &:nth-child(#{$i}) {
+              $delay: 0s + 0.05s * ($i - 1);
+              animation: fadeInLeft 0.1s ease-out $delay;
+              animation-fill-mode: forwards;
+          }
+      }
+        }
       .menu{
         display: flex;
         align-items: center;
@@ -136,7 +148,7 @@ body{
         margin-bottom: 8px;
         border-radius: 8px*0.75;
         border: 1px solid transparent;
-        opacity: 0.8;
+        
         &.selected{
           background-color: $dark-2;
           border: 1px solid $dark-1;
