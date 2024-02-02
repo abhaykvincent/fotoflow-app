@@ -29,8 +29,8 @@ function Storage({projects}) {
             <div className="subscription-info row-group">
                 <div className="row subscription-group">
                     <div className="box-content">
-                        <h2>Free Storage</h2>
-                        <p>FotoFlow Free Trial Includes: 5GB</p>
+                        <h3>Free Storage</h3>
+                        <p>Free Trial Includes: 5GB</p>
                     </div>
                     <div className="action">
                         <div className="button primary large">Upgrade</div>
@@ -38,7 +38,7 @@ function Storage({projects}) {
                 </div>
                 <div className="row subscription-group">
                     <div className="box-content">
-                        <h2>Add-on Storage</h2>
+                        <h3>Add-on Storage</h3>
                         <p>Get more storage</p>
                     </div>
                     <div className="action">
@@ -48,47 +48,54 @@ function Storage({projects}) {
             </div>
         </div>
       </div>
-      <section className="breakdown">
-        <p className='storage-class-label'>Primary Storage <b>5GB</b></p> 
-        <div className="bar">
-            <div className="photos"></div>
-            <div className="videos"></div>
-            <div className="duplicates"></div>
-        </div>
-        <div className="legends">
-            <div className="legend">
-                <div className="colour photos"></div>
-                <div className="label">Photos</div>
-            </div>
-            <div className="legend">
-                <div className="colour videos"></div>
-                <div className="label">Videos</div>
-            </div>
-            <div className="legend">
-                <div className="colour duplicates"></div>
-                <div className="label">Duplicates</div>
-            </div>
-            <div className="legend ">
-                <div className="colour available"></div>
-                <div className="label">Available</div>
-            </div>
-        </div>
-        <p className='storage-class-label'>Cold Storage <b>10GB</b></p>
-        <div className="bar">
-            <div className="used"></div>
-        </div>
-        <div className="legends">
-            <div className="legend ">
-                <div className="colour used"></div>
-                <div className="label">Used</div>
-            </div>
-            <div className="legend">
-                <div className="colour available"></div>
-                <div className="label">Available</div>
-            </div>
-        </div>
-        <div className="breakdown-info">
+      <section className="breakdown storage">
+        <div className="storage-class">
 
+            <p className='storage-class-label'>Primary Storage <b>5GB</b></p> 
+            <div className="bar">
+                <div className="photos"></div>
+                <div className="videos"></div>
+                <div className="duplicates"></div>
+            </div>
+            <div className="legends">
+                <div className="legend">
+                    <div className="colour photos"></div>
+                    <div className="label">Photos</div>
+                </div>
+                <div className="legend">
+                    <div className="colour videos"></div>
+                    <div className="label">Videos</div>
+                </div>
+                <div className="legend">
+                    <div className="colour duplicates"></div>
+                    <div className="label">Duplicates</div>
+                </div>
+                <div className="legend ">
+                    <div className="colour available"></div>
+                    <div className="label">Available</div>
+                </div>
+            </div>
+        </div>
+        <div className="storage-class">
+            <p className='storage-class-label'>Cold Storage <b>10GB</b></p>
+            <div className="bar">
+                <div className="used"></div>
+                <div className="limited access"></div>
+            </div>
+            <div className="legends">
+                <div className="legend ">
+                    <div className="colour used"></div>
+                    <div className="label">Used</div>
+                </div>
+                <div className="legend ">
+                    <div className="colour limited"></div>
+                    <div className="label">Limited Access</div>
+                </div>
+                <div className="legend">
+                    <div className="colour available"></div>
+                    <div className="label">Available</div>
+                </div>
+            </div>
         </div>
       </section>
       <section className="breakdown projects">
@@ -100,7 +107,7 @@ function Storage({projects}) {
                     return (
                         <div className="row">
                             <div className="box-content">
-                                <h3>{project.name}</h3>
+                                <h4>{project.name}</h4>
                                 <div className="project-info">
                                     <p>{convertMegabytes(project.totalFileSize,1)} </p>
                                 </div>
