@@ -48,7 +48,7 @@
                 width: 100%;
                 padding: 8px*1;
                 display: grid;
-                grid-template-columns: auto 8px*12;
+                grid-template-columns: auto 8px*2;
                 background-color: $dark-3;
                 border-radius: $border-radius-1;
                 @include boxShadow;
