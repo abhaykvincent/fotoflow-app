@@ -128,6 +128,18 @@ body{
     .menu-list{
       padding: 8px;
       margin-top: 8px*0.5;
+
+      a{
+        opacity: 0.0;
+        transform: translateX(8px*4);
+        @for $i from 1 through 10 {
+          &:nth-child(#{$i}) {
+              $delay: 0s + 0.05s * ($i - 1);
+              animation: fadeInLeft 0.1s ease-out $delay;
+              animation-fill-mode: forwards;
+          }
+      }
+        }
       .menu{
         display: flex;
         align-items: center;
@@ -136,7 +148,7 @@ body{
         margin-bottom: 8px;
         border-radius: 8px*0.75;
         border: 1px solid transparent;
-        opacity: 0.8;
+        
         &.selected{
           background-color: $dark-2;
           border: 1px solid $dark-1;
@@ -306,9 +318,15 @@ body{
         @include boxed;
         @include boxShadow;
         color: $gray4-accessible-dark ;
+        transition-duration: 0.2s;
         &:hover{
           border-top: 1px solid $gray4-accessible-dark;
           z-index: 100;
+          transition-duration: 0.1s;
+          a{
+
+          color: $gray-accessible-dark;
+          }
         }
         a{
           padding: 4px;
@@ -392,15 +410,27 @@ body{
           .controls{
             @include boxed;
             border-radius: $border-radius-1+1;
+            transition-duration: 0.15s;
+            &:hover{
+              border: 1px solid $gray4-accessible-dark;
+              transition-duration: 0.1s;
+              background-color: rgba(0, 0, 0, 0.1);
+            }
             display:flex;
             .control{
               padding: 8px 8px*2;
               font-weight: 400;
               border-radius: $border-radius-1;
               cursor: pointer;
+              transition-duration: 0.15s;
               &.active{
                 background-color: $dark-1;
                 border: 1px solid $dark-0;
+                &:hover{
+                  background-color: $dark-2;
+                  border: 1px solid $gray2-accessible-dark;
+                  transition-duration: 0.1s;
+                }
               }
             }
           }
@@ -630,6 +660,30 @@ margin-left: 4px;
         width: 100%;;
         height: 100%;
         z-index: 1;
+        .favorite-wrap{
+          position: absolute;
+        }
+        .favorite{
+          width: 8px*2;
+          height: 8px*2;
+          margin: 8px;
+          opacity: 1;
+          cursor: pointer;
+          &.selected{
+            opacity: 1;
+            background-image: url('./assets/img/icons/heart.svg');
+            background-size: 90%;
+            background-position: center;
+            transform: translateX(1px);
+            transition-duration: 0.1s;
+            &:hover{
+              background-size: 101%;
+              background-image: url('./assets/img/icons/heart-dislike.svg');
+              transform: translateX(-1px);
+
+            }
+          }
+        }
         .top{
           position: absolute;
           top: -8px*2;

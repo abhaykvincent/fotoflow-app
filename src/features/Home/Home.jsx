@@ -49,6 +49,34 @@ function Home({ projects }) {
                                 }
                             </div>
                         </div>
+                        <div className="section recent">
+                            <h3 className='section-heading'>Recent Projects</h3>
+                            <div className="projects">
+                            {recentProjects.length !== 0? (
+                                recentProjects.map((project, index) => (
+                                    <Link className="project" to={`/project/${project.id}`} key={index}>
+                                        <div className="project-details">
+                                            <h4 className="project-title">{project.name}</h4>
+                                            <p className="project-type">{project.type}</p>
+                                        </div>
+                                        <div className="project-options">
+                                            {
+                                                // if pin available, show pin number
+                                                project.pin? (
+                                                <div className="pin">
+                                                    <p className="pin-label">PIN</p>
+                                                    <p className="pin-number">{project.pin}</p>
+                                                </div>
+                                                ) : ''
+                                            }
+                                            
+                                        </div>
+                                    </Link>
+                                ))) : (
+                                    <p className="message">No recent projects</p>)
+                                }
+                            </div>
+                        </div>
 
                         <div className="section  pending-approvals">
                             <h3 className='section-heading'>Selection completed</h3>

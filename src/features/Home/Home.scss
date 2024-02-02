@@ -16,11 +16,42 @@
             display: flex;
             justify-content: flex-end;
         }
+        animation: fadeInLeft 0.5s ease-out 0s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-out;
         
 
     }
     .section{
         padding: 8px;
+        opacity: 0;
+        transform: translateX(8px);
+        transition: opacity 0.5s, transform 0.5s;
+        
+        @for $i from 1 through 4 {
+            &:nth-child(#{$i}) {
+                $delay: 0.1s + 0.8s * ($i - 1);
+                animation: fadeInUp 0.1s ease-out $delay;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-out;
+                .projects{
+                    .project{
+                        opacity: 0;
+                    transform: translateY(-8px);
+                    transition: opacity 0.5s, transform 0.5s;
+                    
+                    @for $j from 1 through 10 {
+                        &:nth-child(#{$j}) {
+                            $delay2: 0.1*($i - 1) + 0.9s + 0.05s * ($j - 1);
+                            animation: fadeInUp 0.1s ease-out $delay2;
+                            animation-fill-mode: forwards;
+                            animation-timing-function: ease-out;
+                        }
+                    }
+                    }
+                }
+            }
+        }
         .section-heading{
             font-weight: 400;
             padding: 8px*1 0;
@@ -96,6 +127,18 @@
                         }
                     }
                 }
+                opacity: 0;
+                transform: translateY(-8px);
+                transition: opacity 0.5s, transform 0.5s;
+                
+                @for $i from 1 through 10 {
+                    &:nth-child(#{$i}) {
+                        $delay: 1.0s + 0.05s * ($i - 1);
+                        animation: fadeInUp 0.1s ease-out $delay;
+                        animation-fill-mode: forwards;
+                        animation-timing-function: ease-out;
+                    }
+                }
             }
             .message{
                 color: $gray4-default-dark;
@@ -125,3 +168,13 @@
         }
     }
 }
+@keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(8px*4);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
