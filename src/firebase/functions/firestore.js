@@ -217,3 +217,29 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
         throw error;
     }
 }
+
+// Set cover photo
+export const setCoverPhotoInFirestore = async (projectId, image) => {
+    if (!projectId || !image) {
+        throw new Error('Project ID and Image are required.');
+    }
+
+    const projectsCollection = collection(db, 'projects');
+    const projectDoc = doc(projectsCollection, projectId);
+
+    try {
+        const projectSnapshot = await getDoc(projectDoc);
+        const projectData = projectSnapshot.data();
+
+        if (projectSnapshot.exists()) {
+            await updateDoc(projectDoc, { projectCover: image });
+            console.log('Cover photo updated successfully.');
+        } else {
+            console.log('Project document does not exist.');
+            throw new Error('Project does not exist.');
+        }
+    } catch (error) {
+        console.error('Error updating cover photo:', error.message);
+        throw error;
+    }
+}

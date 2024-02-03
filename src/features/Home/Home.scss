@@ -77,7 +77,7 @@
             width: 100%;
             .project{
                 width: 100%;
-                padding: 8px*1;
+                //padding: 8px*1;
                 display: grid;
                 grid-template-columns: 8px*18 auto;
                 background-color: $dark-3;
@@ -85,24 +85,39 @@
                 @include boxShadow;
                 @include boxed;
                 transition-duration: 0.2s;
+                transform: scale(1) translateY(-8px);
                 &:hover{
                     border: 1px solid $gray4-accessible-dark;
                     transition-duration: 0.4s;
                     box-shadow: 0 0 8px 4px #14562413;
+                    transition-duration: 0.1s;
+                    transition-timing-function: ease-in;
+                    transform: scale(1.1);
+                    .project-cover{
+                        height: 100%;
+                        min-height: 8px*12;
+                        width: 8px*18;
+                        border-radius: 8px;
+                        border: 1px solid $gray4-accessible-dark;
+                        background-size: 100%;
+                        background-position:  center 20%;
+                        transition-duration: 0.2s;
+                        transition-timing-function: ease-in;
+                    }
                 }
                 .project-cover{
-                    height: 8px*10;
+                    height: 100%;
+                    min-height: 8px*12;
                     width: 8px*18;
-                    border-radius: 4px;
+                    border-radius: 8px;
                     border: 1px solid $gray4-accessible-dark;
-                    background-size: 200%;
+                    background-size: 150%;
                     background-position:  center 20%;
                 }
                 .project-details{
                     display: grid;
-                    gap: 4px;
-                    align-items: start;
-                    margin: 8px;
+                    align-content: start;
+                    margin: 8px*2;
                     .project-type{
                     line-height: 8px*2.5;
                     font-weight: 400;
@@ -136,7 +151,7 @@
                     }
                 }
                 opacity: 0;
-                transform: translateY(-8px);
+                transform: scale(1) translateY(-8px);
                 transition: opacity 0.5s, transform 0.5s;
                 
                 @for $i from 1 through 10 {

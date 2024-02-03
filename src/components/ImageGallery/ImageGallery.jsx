@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Preview from '../../features/Preview/Preview';
 import { shortenFileName } from '../../utils/stringUtils';
 
-const ImageGallery = React.memo(({ imageUrls }) => {
+const ImageGallery = React.memo(({ imageUrls,projectId }) => {
   let importedImages=[]
   // Preview
   // is preview open
@@ -58,7 +58,7 @@ const ImageGallery = React.memo(({ imageUrls }) => {
         ))}
       </div>
         {
-            isPreviewOpen && <Preview image={imageUrls[previewIndex] } {...{setPreviewIndex,closePreview}}/>
+            isPreviewOpen && <Preview image={imageUrls[previewIndex] } {...{previewIndex,setPreviewIndex,imagesLength:imageUrls.length,closePreview,projectId}}/>
         }
     </div>
   );

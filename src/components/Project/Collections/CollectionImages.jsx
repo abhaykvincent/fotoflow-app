@@ -106,7 +106,7 @@ return (
         </div>
         {
             imageUrls.length > 0 ?
-            <ImageGallery isPhotosImported={isPhotosImported} imageUrls={imageUrls} />:''
+            <ImageGallery {...{isPhotosImported, imageUrls, projectId:id}}/>:''
         }
         <div className="pagination">
             <div className={`button ${page===1?'disabled':'primary'} previous`}
