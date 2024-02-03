@@ -79,7 +79,7 @@
                 width: 100%;
                 padding: 8px*1;
                 display: grid;
-                grid-template-columns: auto 8px*2;
+                grid-template-columns: 8px*8 auto 8px*2;
                 background-color: $dark-3;
                 border-radius: $border-radius-1;
                 @include boxShadow;
@@ -89,6 +89,12 @@
                     border: 1px solid $gray4-accessible-dark;
                     transition-duration: 0.4s;
                     box-shadow: 0 0 8px 4px #14562413;
+                }
+                .project-cover{
+                    height: 8px*8;
+                    width: 8px*8;
+                    border-radius: 50%;
+                    border: 1px solid $gray-accessible-dark;
                 }
                 .project-details{
                     display: grid;
