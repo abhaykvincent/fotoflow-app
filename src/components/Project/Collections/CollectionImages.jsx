@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { fetchImageUrls, handleUpload } from '../../../utils/storageOperations';
 import ImageGallery from '../../ImageGallery/ImageGallery';
 import { fetchImages } from '../../../firebase/functions/firestore';
-import Preview from '../../../features/Preview/Preview';
 import { addAllFileSizesToMB } from '../../../utils/fileUtils';
 
 const CollectionImages = ({ id, collectionId,collection,showAlert }) => {
@@ -10,6 +9,7 @@ const CollectionImages = ({ id, collectionId,collection,showAlert }) => {
 const [files, setFiles] = useState([]);
 const [collectionImages, setCollectionImages] = useState([]);
 const [imageUrls, setImageUrls] = useState([]);
+const [selectedImages, setSelectedImages] = useState([]);
 const [isPhotosImported, setIsPhotosImported] = useState(false);
 //import size
 const [importFileSize, setImportFileSize] = useState();
@@ -52,8 +52,7 @@ useEffect(() => {
     }
     else{
     // loop through collectionImages and if image status is selected update imageUrls
-    let selectedImages=collectionImages.filter((image)=>image.status==='selected')
-    console.log(selectedImages)
+    setSelectedImages(collectionImages.filter((image)=>image.status==='selected'))
     setImageUrls(selectedImages)
     }
 }, [showAllPhotos]);
@@ -73,7 +72,7 @@ return (
                 {
                     collectionImages?.length>0?
                     <div className="view-control">
-                        <div className="control-label label-all-photos">569 Photos</div>
+                        <div className="control-label label-all-photos">{collectionImages.length} Photos</div>
                         <div className="control-wrap">
                             <div className="controls">
                                 <div className={`control ${showAllPhotos ? 'active' : ''}`} onClick={() => setShowAllPhotos(true)}>All photos</div>
@@ -81,7 +80,7 @@ return (
                             </div>
                             <div className={`active`}></div>
                         </div>
-                        <div className="control-label label-selected-photos">247 Photos</div>
+                        <div className="control-label label-selected-photos">{selectedImages.length} Photos</div>
                     </div>:
                     <div className="empty-message">
                         <p>Import shoot photos to upload </p>

@@ -6,9 +6,29 @@ import { useState } from 'react'
 
 function Preview({ image, previewIndex,setPreviewIndex,imagesLength, closePreview, projectId }) {
   const [zoomValue, setZoomValue] = useState(100)
-  const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 })
+  // get the image width and height 
+  const [imageWidth, setImageWidth] = useState(0)
+  const [imageHeight, setImageHeight] = useState(0)
+  // screeen size
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight)
+  const [imagePosition, setImagePosition] = useState({
+    x: (screenWidth/2)-imageWidth/1.5,
+    y: (screenHeight/2)-imageHeight/1.5
+  })
   const [isDragging, setIsDragging] = useState(false);
+  // function to set image width and height from url
+  const setImageSize = () => {
+    const setimage = new Image();
+    setimage.src = image.url;
+    setimage.onload = () => {
+      setImageWidth(setimage.width)
+      setImageHeight(setimage.height)
+    }
+  }
+
   useEffect(() => {
+    setImageSize()
     zoomReset()
   }, [image])
   useEffect(() => {
@@ -47,16 +67,19 @@ function Preview({ image, previewIndex,setPreviewIndex,imagesLength, closePrevie
     const { movementX, movementY } = event;
     if(imagePosition.x === 'center' || imagePosition.x === 0)
     {
+      console.log('A')
       setImagePosition({
-        x: 0 + movementX,
-        y: 0 + movementY
+        x: (screenWidth/2)-imageWidth/1.5 + movementX,
+        y: (screenHeight/2)-imageHeight/1.5 + movementY
       });
     }
     else
-    setImagePosition({
+    {
+      console.log('B')
+      setImagePosition({
       x: imagePosition.x + movementX,
       y: imagePosition.y + movementY
-    });
+    });}
   }
 
   return (

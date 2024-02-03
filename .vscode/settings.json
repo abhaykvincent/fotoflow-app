@@ -1,5 +1,11 @@
 {
     "workbench.tree.enableStickyScroll": true,
     "notebook.stickyScroll.enabled": true,
-    "editor.stickyScroll.defaultModel": "indentationModel"
+    "editor.stickyScroll.defaultModel": "indentationModel",
+    "explorer.autoReveal": true,
+    "explorer.fileNesting.expand": true,
+    "editor.scrollbar.horizontal": "auto",
+    "editor.scrollbar.vertical": "auto",
+    "explorer.openEditors.visible": 9,
+    "editor.stickyScroll.enabled": true
 }

@@ -52,7 +52,6 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   }
   if(!collectionId&&defaultCollectionId!==''){
     setTimeout(()=>{
-      debugger
     navigate(`/project/${id}/${targetCollectionId}`);
     },100)
     return
