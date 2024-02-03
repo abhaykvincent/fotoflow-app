@@ -255,7 +255,8 @@ export const addUploadedFilesToFirestore = async (projectId, collectionId,import
                 // update uploaded files count on project document
                 return updateDoc(projectDoc, 
                     { uploadedFilesCount: projectData.data().uploadedFilesCount + uploadedFiles.length ,
-                        totalFileSize:importFileSize+projectData.data().totalFileSize
+                        totalFileSize:importFileSize+projectData.data().totalFileSize,
+                        projectCover:projectCover,
                 });
             })
             .then(() => {

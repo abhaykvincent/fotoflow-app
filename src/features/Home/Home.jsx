@@ -28,7 +28,7 @@ function Home({ projects }) {
                                 recentProjects.map((project, index) => (
                                     <Link className="project" to={`/project/${project.id}`} key={index}>
                                         <div className="project-cover"
-                                            style={{ backgroundImage: `url(${project.collections[0]})` }}
+                                            style={{ backgroundImage: `url(${project.projectCover})` }}
                                         ></div>
                                         <div className="project-details">
                                             <h4 className="project-title">{project.name}</h4>
@@ -58,6 +58,9 @@ function Home({ projects }) {
                             {recentProjects.length !== 0? (
                                 recentProjects.map((project, index) => (
                                     <Link className="project" to={`/project/${project.id}`} key={index}>
+                                        <div className="project-cover"
+                                            style={{ backgroundImage: `url(${project.projectCover})` }}
+                                        ></div>
                                         <div className="project-details">
                                             <h4 className="project-title">{project.name}</h4>
                                             <p className="project-type">{project.type}</p>
