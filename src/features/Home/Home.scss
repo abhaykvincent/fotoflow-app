@@ -28,9 +28,9 @@
         transform: translateX(8px);
         transition: opacity 0.5s, transform 0.5s;
         
-        @for $i from 1 through 4 {
+        @for $i from 1 through 5 {
             &:nth-child(#{$i}) {
-                $delay: 0.1s + 0.8s * ($i - 1);
+                $delay: 0.1*($i - 1) + 0.5s * ($i - 1);
                 animation: fadeInUp 0.1s ease-out $delay;
                 animation-fill-mode: forwards;
                 animation-timing-function: ease-out;
@@ -42,7 +42,7 @@
                     
                     @for $j from 1 through 10 {
                         &:nth-child(#{$j}) {
-                            $delay2: 0.1*($i - 1) + 0.9s + 0.05s * ($j - 1);
+                            $delay2: 0.3s*($i - 1) + 0.7s + 0.05s * ($j - 1);
                             animation: fadeInUp 0.1s ease-out $delay2;
                             animation-fill-mode: forwards;
                             animation-timing-function: ease-out;

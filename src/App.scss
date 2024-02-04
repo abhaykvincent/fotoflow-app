@@ -130,86 +130,101 @@ body{
       margin-top: 8px*0.5;
 
       a{
-        opacity: 0.0;
-        transform: translateX(8px*4);
+        .label{
+          opacity: 0.0;
+          transform: translateX(8px*4);
+        }
         @for $i from 1 through 10 {
           &:nth-child(#{$i}) {
-              $delay: 0s + 0.05s * ($i - 1);
+            .label{
+              $delay: 0.1s + 0.05s * ($i - 1);
               animation: fadeInLeft 0.1s ease-out $delay;
               animation-fill-mode: forwards;
+            }
           }
-      }
         }
-      .menu{
-        display: flex;
-        align-items: center;
-        gap:8px;
-        padding: 6px 8px;
-        margin-bottom: 8px;
-        border-radius: 8px*0.75;
-        border: 1px solid transparent;
         
-        &.selected{
-          background-color: $dark-2;
-          border: 1px solid $dark-1;
-          box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
-          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-          opacity: 1;
-          .icon{
-            opacity: 0.9;
-          }
-        }
-        &:hover{
-          border: 1px solid $dark-1;
-          background-color: $dark-2;
-        }
-        &.disabled{
-          &:hover{
-            border: 1px solid $dark-2;
-          }
-          .label,.icon{
-            opacity: 0.2;
-          }
-          cursor: not-allowed;
-        }
         .icon{
           width: 8px*3;
           height: 8px*3;
           padding: 8px;
           background-size:75%;
           background-position: center center;
-          opacity: 0.6;
+          opacity: 0;
+          transform: scale(0.1)  translateY(8px*5);
         }
-        &.home .icon{
-          background-size: 90%;
-          background-image: url('./assets/img/icons/home.svg');
+        @for $i from 1 through 10 {
+          &:nth-child(#{$i}) {
+            .icon{
+              $delay: 0s + 0.05s * ($i - 1);
+              animation: menu-icon-reveal 0.2s ease-out $delay;
+              animation-fill-mode: forwards;
+            }
+          }
         }
-        &.events .icon{
-          background-image: url('./assets/img/icons/event.png');
+        .menu{
+          display: flex;
+          align-items: center;
+          gap:8px;
+          padding: 6px 8px;
+          margin-bottom: 8px;
+          border-radius: 8px*0.75;
+          border: 1px solid transparent;
+          
+          &.selected{
+            background-color: $dark-2;
+            border: 1px solid $dark-1;
+            box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            opacity: 1;
+            .icon{
+              opacity: 0.9;
+            }
+          }
+          &:hover{
+            border: 1px solid $dark-1;
+            background-color: $dark-2;
+          }
+          &.disabled{
+            &:hover{
+              border: 1px solid $dark-2;
+            }
+            .label,.icon{
+              opacity: 0.2 !important;
+            }
+            cursor: not-allowed;
+          }
+          &.home .icon{
+            background-size: 90%;
+            background-image: url('./assets/img/icons/home.svg');
+          }
+          &.events .icon{
+            background-image: url('./assets/img/icons/event.png');
+          }
+          &.projects .icon{
+            background-image: url('./assets/img/icons/folder.svg');
+          }
+          &.storage .icon{
+            background-image: url('./assets/img/icons/storage-drive.svg');
+          }
+          &.store .icon{
+            background-size: 90%;
+            background-image: url('./assets/img/icons/store.svg');
+          }
+          &.settings .icon{
+            background-size: 100%;
+            background-image: url('./assets/img/icons/settings.svg');
+          }
+          &.calendar .icon{
+            background-size: 90%;
+            background-image: url('./assets/img/icons/calendar.svg');
+          }
+          &.invoices .icon{
+            background-size: 80%;
+            background-image: url('./assets/img/icons/reciept.svg');
+          }
         }
-        &.projects .icon{
-          background-image: url('./assets/img/icons/folder.svg');
         }
-        &.storage .icon{
-          background-image: url('./assets/img/icons/storage-drive.svg');
-        }
-        &.store .icon{
-          background-size: 90%;
-          background-image: url('./assets/img/icons/store.svg');
-        }
-        &.settings .icon{
-          background-size: 100%;
-          background-image: url('./assets/img/icons/settings.svg');
-        }
-        &.calendar .icon{
-          background-size: 90%;
-          background-image: url('./assets/img/icons/calendar.svg');
-        }
-        &.invoices .icon{
-          background-size: 80%;
-          background-image: url('./assets/img/icons/reciept.svg');
-        }
-      }
     }
     .status{
       position: fixed;
@@ -606,6 +621,16 @@ body{
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes menu-icon-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.1)  translateY(8px*5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }
 
