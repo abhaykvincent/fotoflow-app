@@ -138,7 +138,7 @@ body{
           &:nth-child(#{$i}) {
             .label{
               $delay: 0.1s + 0.05s * ($i - 1);
-              animation: fadeInLeft 0.1s ease-out $delay;
+              animation: fadeInLeft 0.15s ease-out $delay;
               animation-fill-mode: forwards;
             }
           }

@@ -5,7 +5,7 @@ import { getProjectsByStatus, getRecentProjects } from '../../utils/projectFilte
 function Home({ projects }) {
 
     document.title = `FotoFlow | Home`;
-    const recentProjects = getRecentProjects(projects, 5);
+    const recentProjects = getRecentProjects(projects, 4);
     const selectionCompletedProjects = getProjectsByStatus(projects, 'selection-completed');
     const requestPendingProjects = getProjectsByStatus(projects, 'request-pending');
 
