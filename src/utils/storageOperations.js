@@ -248,11 +248,15 @@ export const addUploadedFilesToFirestore = async (projectId, collectionId,import
         // Update the project document with the new collections array
         return updateDoc(collectionDoc, { uploadedFiles })
             .then(() => {
+                let projectCover= uploadedFiles[0].url
+                // if project-cover doesent exixt
+                console.log(projectData.data())
                 console.log('Uploaded files added to collection successfully.');
                 // update uploaded files count on project document
                 return updateDoc(projectDoc, 
                     { uploadedFilesCount: projectData.data().uploadedFilesCount + uploadedFiles.length ,
-                        totalFileSize:importFileSize+projectData.data().totalFileSize
+                        totalFileSize:importFileSize+projectData.data().totalFileSize,
+                        projectCover:projectCover,
                 });
             })
             .then(() => {

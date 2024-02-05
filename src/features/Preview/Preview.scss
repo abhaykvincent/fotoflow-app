@@ -15,10 +15,12 @@
         align-items: center;
         justify-items: center;
         .image{
-            height: calc(100% - 8px * 20);
+            height: calc(100% - 8px * 18);
             width: 100%;
-            background-size: contain;
             background-position: center;
+            transition: background-size 0.1s ease;
+
+    
         }
     }
     .controls{
@@ -103,6 +105,15 @@
             .share{
                 background-image: url('../../assets/img/icons/share.svg');
             }
+            .set-cover{
+                
+                padding: 8px*1 8px*2;
+                border-radius: 8px*2;
+                &:hover{
+                    background-color: rgba(255, 255, 255, 0.1);
+                    transform: scale(1);
+                }
+            }
         }
         .center-controls{
             .magnifier{
@@ -134,6 +145,7 @@
                 }
                 .zoom-value{
                     font-weight: 600;
+                    color: $gray-accessible-dark;
                 }
                 .zoom-in{
                     padding: 8px*2;
@@ -149,6 +161,31 @@
                     &:hover{
                         background-color: rgba(255, 255, 255, 0.2);
                         opacity: 1;
+                    }
+                }
+                .zoom-reset{
+                    position: absolute;
+                    top: 8px;
+                    right: 0;
+                    padding: 4px 12px;
+                    border-radius: 4px;
+                    font-size: 0.9rem;
+                    background-color: $gray6-accessible-dark;
+                    border: 1px solid $gray6-accessible-dark;
+                    z-index: -1;
+                    opacity: 0;
+                    
+                    transition-duration: 0.2s;
+                    // cursor for reset
+                    cursor: pointer;
+                    &.show{
+                        opacity: 0.6;
+                        right: -8px*1.5;
+                        transform: translateX(100%);
+                        transition-duration: 0.2s;
+                    }
+                    &:hover{
+                        border: 1px solid $gray4-accessible-dark;
                     }
                 }
             }

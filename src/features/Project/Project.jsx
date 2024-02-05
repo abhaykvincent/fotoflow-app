@@ -36,29 +36,26 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   document.title = `${project.name}'s ${project.type}`
   }
 
-
   // Determine the collectionId to use
-  const defaultCollectionId = project.collections.length > 0 ? project.collections[0].id : null;
+  const defaultCollectionId = project.collections.length > 0 ? project.collections[0].id : '';
   const targetCollectionId = collectionId || defaultCollectionId;
-  if(!collectionId){
-    setTimeout(()=>{
-    navigate(`/project/${id}/${targetCollectionId}`);
-    },100)
-    return
-  }
-
-  // Find the collection by id
+  console.log(targetCollectionId)
   let collection = findCollectionById(project, targetCollectionId);
   console.log(collection)
   // If the collection is not found, redirect to the project page and return
-  if (collection==='Collection not found') {
+
+  if (collection==='Collection not found' && defaultCollectionId!=='') {
     setTimeout(()=>{
     navigate(`/project/${id}`);
     },100)
     return;
   }
-
-
+  if(!collectionId&&defaultCollectionId!==''){
+    setTimeout(()=>{
+    navigate(`/project/${id}/${targetCollectionId}`);
+    },100)
+    return
+  }
 
   return (
     <main className='project-page'>
