@@ -40,6 +40,8 @@ useEffect(() => {
     let end=page*size;
     let images=collectionImages.slice(start,end)
     setImageUrls(images)
+    // loop through collectionImages and if image status is selected update imageUrls
+    setSelectedImages(collectionImages.filter((image)=>image.status==='selected'))
 }, [collectionImages,page]);
 
 useEffect(() => {
@@ -51,11 +53,9 @@ useEffect(() => {
     setImageUrls(images)
     }
     else{
-    // loop through collectionImages and if image status is selected update imageUrls
-    setSelectedImages(collectionImages.filter((image)=>image.status==='selected'))
     setImageUrls(selectedImages)
     }
-}, [showAllPhotos]);
+}, [showAllPhotos,collectionImages]);
 
 const handleFileInputChange = (event) => {
     const selectedFiles = Array.from(event.target.files);

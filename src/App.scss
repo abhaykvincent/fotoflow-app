@@ -674,6 +674,7 @@ margin-left: 4px;
         background-position: center center;
         transition-duration: 0.1s;
         transition-timing-function: ease-out;
+        transition: transform 0.1s;
       }
       .hover-options-wrap{
           position: absolute;
@@ -689,22 +690,20 @@ margin-left: 4px;
           position: absolute;
         }
         .favorite{
-          width: 8px*2;
-          height: 8px*2;
-          margin: 8px;
+          width: 8px*4;
+          height: 8px*4;
           opacity: 1;
+          padding: 8px*2;
           cursor: pointer;
           &.selected{
             opacity: 1;
             background-image: url('./assets/img/icons/heart.svg');
-            background-size: 90%;
+            background-size: 50%;
             background-position: center;
             transform: translateX(1px);
             transition-duration: 0.1s;
             &:hover{
-              background-size: 101%;
               background-image: url('./assets/img/icons/heart-dislike.svg');
-              transform: translateX(-1px);
 
             }
           }
