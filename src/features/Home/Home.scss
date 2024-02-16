@@ -87,12 +87,15 @@
             }
         }
         .section-heading{
+            display: inline-block;
+            width: auto;
             font-weight: 400;
             padding: 8px*1 0;
+            padding-right: 8px*2;
             margin-left: 8px;
             margin-top: 8px*1;
             margin-bottom: 8px*3;
-            border-bottom: 1px solid $dark-1;
+            border-bottom: 2px solid $gray6-default-dark;
             color: $gray3-default-light;
             a{
                 font-size: 0.9rem;
