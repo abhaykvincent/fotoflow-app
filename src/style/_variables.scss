@@ -133,7 +133,6 @@ $border-radius-1: 8px*1;
 
 @mixin boxed{
     border: 1px solid $dark-1;
-    border-right: 1px solid rgba(0, 128, 0, 0.1);
   }
 @mixin boxShadow{
     box-shadow:  -1px 1px 6px rgba(0, 0, 0, 0.2);
