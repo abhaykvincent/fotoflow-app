@@ -33,6 +33,12 @@
             margin: 8px*2;
             background-image: url('../../assets/img/icons/back.png');
             background-size: contain;
+            opacity: 0.5;
+            transition-duration: 0.2s;
+            cursor: pointer;
+            &:hover{
+                opacity: 1;
+            }
         }
         .next{
             position: fixed;
@@ -44,6 +50,12 @@
             background-image: url('../../assets/img/icons/back.png');
             background-size: contain;
             transform: rotate(180deg);
+            opacity: 0.5;
+            transition-duration: 0.2s;
+            cursor: pointer;
+            &:hover{
+                opacity: 1;
+            }
         }
         .top{
             margin-top: 8px;

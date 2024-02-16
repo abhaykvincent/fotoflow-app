@@ -126,13 +126,15 @@ body{
     padding-top: $header-height ;
     box-shadow:  -1px 1px 4px rgba(0, 0, 0, 0.3);
     .menu-list{
-      padding: 8px;
-      margin-top: 8px*0.5;
+      padding: 8px*2;
 
       a{
         .label{
           opacity: 0.0;
           transform: translateX(8px*4);
+          display: flex;
+          width: 8px*8;
+          text-align: center;
         }
         @for $i from 1 through 10 {
           &:nth-child(#{$i}) {
@@ -167,9 +169,17 @@ body{
           align-items: center;
           gap:8px;
           padding: 6px 8px;
-          margin-bottom: 8px;
+          margin-bottom: 4px;
           border-radius: 8px*0.75;
           border: 1px solid transparent;
+          opacity: 0.7;
+          transition-duration: 0.1s;
+          &:hover{
+            border: 1px solid $dark-1;
+            background-color: $dark-2;
+            opacity: 1;
+            transition-duration: 0.1s;
+          }
           
           &.selected{
             background-color: $dark-2;
@@ -180,10 +190,6 @@ body{
             .icon{
               opacity: 0.9;
             }
-          }
-          &:hover{
-            border: 1px solid $dark-1;
-            background-color: $dark-2;
           }
           &.disabled{
             &:hover{
@@ -224,7 +230,7 @@ body{
             background-image: url('./assets/img/icons/reciept.svg');
           }
         }
-        }
+      }
     }
     .status{
       position: fixed;
@@ -318,6 +324,8 @@ body{
     }
     .add-collection{
       margin-left: 8px;
+      margin-bottom: 8px;
+      margin-top: 0;
     }
     .collections-panel{
       display: flex;
@@ -326,13 +334,14 @@ body{
       .collection-tab{
         display: flex;
         gap: 8px*1;
-        padding: 4px 8px*1.5 8px*1.5 8px*1.5;
+        padding: 4px 8px*2 8px*1.5 8px*2;
         margin-left: -1px;
         background-color: $dark-2;
         border-radius: 4px;
         @include boxed;
         @include boxShadow;
         color: $gray4-accessible-dark ;
+        font-size: 1rem;
         transition-duration: 0.2s;
         &:hover{
           border-top: 1px solid $gray4-accessible-dark;
@@ -398,7 +407,7 @@ body{
     }
     .project-collection{
       position: relative;
-      padding: 8px;
+      padding: 8px*2;
       margin: 8px;
       background-color: $dark-3;
       border-radius: $border-radius-1;
@@ -408,6 +417,8 @@ body{
       .header{
         display: grid;
         grid-template-columns: 1fr 2fr 8px*40;
+        padding-bottom: 8px*2;
+        align-items: center;
         .label{
           margin: 8px;
         }
@@ -629,7 +640,7 @@ body{
     transform: scale(0.1)  translateY(8px*5);
   }
   100% {
-    opacity: 1;
+    opacity: 0.8;
     transform: scale(1) translateY(0);
   }
 }
@@ -641,6 +652,7 @@ body{
 margin-left: 4px;
   margin-top: 8px*0;
   padding: 8px;
+  padding-top: 4px;
   max-height: calc(100vh - 8px*50);
   overflow-y: scroll;
   .photos{

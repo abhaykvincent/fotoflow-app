@@ -13,7 +13,23 @@ function Home({ projects }) {
     return (
         <main className="home">
             <div className="welcome-section">
-                <h1 className='welcome-message'>Welcome, Canbera Studio</h1>
+                <div className="welcome-content">
+                <div className='welcome-message-top user-name'>
+                <h1 className='welcome-message '>Hello,</h1>
+                    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                        {/* Define the linear gradient */}
+                        <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style={{ stopColor: '#30d158', stopOpacity: 1 }} />
+                            <stop offset="100%" style={{ stopColor: '#136a29', stopOpacity: 1 }} />
+                        </linearGradient>
+                        {/* Apply the gradient to the text */}
+                        <text x="9rem" y="3rem" fontFamily="Arial" fontSize="3rem" font-fontWeight="800" fill="url(#textGradient)" textAnchor="middle">
+                            Monalisa ✨
+                        </text>
+                    </svg>
+                </div>
+                <h1 className='welcome-message'>Let's manage your Snaps </h1>
+                </div>
                 <div className="actions">
                     <div className="button primary">Create Project</div>
                 </div>
@@ -28,38 +44,12 @@ function Home({ projects }) {
                                 recentProjects.map((project, index) => (
                                     <Link className="project" to={`/project/${project.id}`} key={index}>
                                         <div className="project-cover"
-                                            style={{ backgroundImage: `url(${project.projectCover})` }}
-                                        ></div>
-                                        <div className="project-details">
-                                            <h4 className="project-title">{project.name}</h4>
-                                            <p className="project-type">{project.type}</p>
-                                        </div>
-                                        <div className="project-options">
-                                            {
-                                                // if pin available, show pin number
-                                                project.pin? (
-                                                <div className="pin">
-                                                    <p className="pin-label">PIN</p>
-                                                    <p className="pin-number">{project.pin}</p>
-                                                </div>
-                                                ) : ''
+                                            style={
+                                                { 
+                                                    backgroundImage: project.projectCover?`url(${project.projectCover})`:'' ,
+                                                    backgroundSize:  project.projectCover?'cover':'20%',
+                                                }
                                             }
-                                            
-                                        </div>
-                                    </Link>
-                                ))) : (
-                                    <p className="message">No recent projects</p>)
-                                }
-                            </div>
-                        </div>
-                        <div className="section recent">
-                            <h3 className='section-heading'>Recent Projects</h3>
-                            <div className="projects">
-                            {recentProjects.length !== 0? (
-                                recentProjects.map((project, index) => (
-                                    <Link className="project" to={`/project/${project.id}`} key={index}>
-                                        <div className="project-cover"
-                                            style={{ backgroundImage: `url(${project.projectCover})` }}
                                         ></div>
                                         <div className="project-details">
                                             <h4 className="project-title">{project.name}</h4>

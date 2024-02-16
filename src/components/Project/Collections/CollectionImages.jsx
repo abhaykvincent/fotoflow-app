@@ -45,7 +45,11 @@ useEffect(() => {
 }, [collectionImages,page]);
 
 useEffect(() => {
-    setPage(1)
+    if(!collectionImages){
+        return
+        
+}else{
+    setPage(1 )
     if(showAllPhotos){
         let start=(page-1)*size;
         let end=page*size;
@@ -55,6 +59,7 @@ useEffect(() => {
     else{
     setImageUrls(selectedImages)
     }
+}
 }, [showAllPhotos,collectionImages]);
 
 const handleFileInputChange = (event) => {
