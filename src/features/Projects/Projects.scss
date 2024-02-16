@@ -4,14 +4,15 @@
     grid-template-columns: 1fr 1fr;
     justify-content: space-between;
 
-    padding: 8px*2;
+    padding: 8px*2 8px*3;
+    
     .actions{
         display: flex;
         justify-content: flex-end;
     }
 }
 
-.projects-list{
+/* .projects-list{
     margin: 8px;
     padding: 8px;
     background-color: $dark-3;
@@ -122,16 +123,8 @@
             transform: translateY(-8px);
             transition: opacity 0.5s, transform 0.5s;
           
-            @for $i from 1 through 10 {
-                &:nth-child(#{$i}) {
-                  $delay: 0.05s + 0.05s * ($i - 1);
-                  animation: fadeInUp 0.1s ease-out $delay;
-                  animation-fill-mode: forwards;
-                  animation-timing-function: ease-out;
-                }
-              }
     }
-}
+} */
 @keyframes delete-caution {
     0% {
         opacity: 0;
@@ -153,3 +146,37 @@
       transform: translateY(0);
     }
   }
+
+
+
+
+  .projects-list{
+    padding: 0 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 8px*3;
+    width: 100%;
+    padding: 8px*3;
+    padding-top: 8px;
+    
+    .message{
+        color: $gray4-default-dark;
+    }
+    
+    &.completed{
+        h3::after{
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin-left: 8px*1;
+            content: 'Client Approved';
+            color: $gray3-default-dark;
+        }
+        .project{
+            grid-template-columns: auto 8px*16;
+
+            .project-options{
+                align-items: center;
+            }
+        }
+    }
+}

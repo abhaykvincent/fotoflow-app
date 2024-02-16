@@ -99,26 +99,59 @@ function Storage({projects}) {
         </div>
       </section>
       <section className="breakdown projects">
-        <h2>Projects</h2>
-        <div className="row-group">
-            {
-                projects.map((project)=>{
-                    console.log(project)
-                    return (
-                        <div className="row">
-                            <div className="box-content">
-                                <h4>{project.name}</h4>
-                                <div className="project-info">
-                                    <p>{convertMegabytes(project.totalFileSize,1)} </p>
+
+      <div className="breakdown-class">
+            <h2>Projects</h2>
+            <div className="row-group">
+                {
+                    projects.map((project)=>{
+                        console.log(project)
+                        return (
+                            <div className="row">
+                                <div className="box-wrap">
+                                    <div className="status-signal"></div>
+                                    <div className="box-content">
+                                        <h4>{project.name}</h4>
+                                        <div className="project-info">
+                                            <p>{convertMegabytes(project.totalFileSize,1)} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="action">
+                                    <div className="button secondary">Manage</div>
                                 </div>
                             </div>
-                            <div className="action">
-                                <div className="button secondary">Manage</div>
+                        )
+                    })
+                }
+            </div>
+        </div>
+        <div className="breakdown-class cold">
+            <h2>Cold Storage</h2>
+            <div className="row-group">
+                {
+                    projects.slice(0, 3).map((project) => {
+                        console.log(project)
+                        return (
+                            
+                            <div className="row">
+                                <div className="box-wrap">
+                                    <div className="status-signal"></div>
+                                    <div className="box-content">
+                                        <h4>{project.name}</h4>
+                                        <div className="project-info">
+                                            <p>{convertMegabytes(project.totalFileSize,1)} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="action">
+                                    <div className="button secondary">Manage</div>
+                                </div>
                             </div>
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </div>
         </div>
       </section>
     </main>
