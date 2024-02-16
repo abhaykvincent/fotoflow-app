@@ -112,7 +112,9 @@ $gray6-accessible-dark: #242426;
 $dark-0: #535353;
 $dark-1:#2B2B2B;
 $dark-2:#171717;
+$dark-2-5:rgb(21, 21, 21);
 $dark-3:#0d0d0d;
+$dark-4:#0b0b0b;
 
 // create curresponding light colors
 $light-0: #E5E5E5;
@@ -131,6 +133,7 @@ $border-radius-1: 8px*1;
 
 @mixin boxed{
     border: 1px solid $dark-1;
+    border-right: 1px solid rgba(0, 128, 0, 0.1);
   }
 @mixin boxShadow{
     box-shadow:  -1px 1px 6px rgba(0, 0, 0, 0.2);
