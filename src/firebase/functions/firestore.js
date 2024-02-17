@@ -206,6 +206,11 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
 
 
             await updateDoc(collectionDoc, {...collectionData,uploadedFiles:updatedImages});
+            // update status on projeect
+            const projectSnapshot = await getDoc(projectDoc);
+            const projectData = projectSnapshot.data();
+            
+            await updateDoc(projectDoc, {...projectData, status: 'selecting'});
             console.log('Selected images status updated successfully.');
 
         } else {

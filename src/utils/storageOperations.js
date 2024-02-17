@@ -211,6 +211,7 @@ export const handleUpload = async (files, id, collectionId,importFileSize, showA
                 addUploadedFilesToFirestore(id, collectionId,importFileSize, uploadedFiles)
                     .then(() => {
                         showAlert('success', 'All files uploaded successfully!')
+
                     })
                     .catch((error) => {
                         console.error('Error adding uploaded files to project:', error.message);
@@ -257,6 +258,7 @@ export const addUploadedFilesToFirestore = async (projectId, collectionId,import
                     { uploadedFilesCount: projectData.data().uploadedFilesCount + uploadedFiles.length ,
                         totalFileSize:importFileSize+projectData.data().totalFileSize,
                         projectCover:projectCover,
+                        status:"uploaded"
                 });
             })
             .then(() => {

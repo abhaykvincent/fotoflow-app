@@ -21,10 +21,9 @@ export default function Project({ projects,  addCollection, deleteCollection, de
 
   // If no projects are available, return early
   if (!projects) return;
-
   // Find the project with the given id
   const project = projects.find((p) => p.id === id);
-  console.log(!project)
+  console.log(project)
   // If the project is not found, redirect to the projects page and return
   if (!project) {
     setTimeout(()=>{
@@ -39,9 +38,7 @@ export default function Project({ projects,  addCollection, deleteCollection, de
   // Determine the collectionId to use
   const defaultCollectionId = project.collections.length > 0 ? project.collections[0].id : '';
   const targetCollectionId = collectionId || defaultCollectionId;
-  console.log(targetCollectionId)
   let collection = findCollectionById(project, targetCollectionId);
-  console.log(collection)
   // If the collection is not found, redirect to the project page and return
 
   if (collection==='Collection not found' && defaultCollectionId!=='') {
