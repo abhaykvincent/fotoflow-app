@@ -4,7 +4,7 @@
     .welcome-section{
         padding: 8px*2;    
         display: grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 1fr 8px*20;
         justify-content: space-between;
         font-family: "Product Sans";
         .welcome-message-top{
@@ -72,12 +72,12 @@
                     .project{
                         opacity: 0;
                     transform: translateY(-8px);
-                    transition: opacity 0.5s, transform 0.5s;
+                    transition: opacity 1s, transform 0.5s;
                     
                     @for $j from 1 through 10 {
                         &:nth-child(#{$j}) {
-                            $delay2: 0.1s*($i - 1) + 0.7s + 0.05s * ($j - 1);
-                            animation: fadeInUp 0.1s ease-out $delay2;
+                            $delay2: 0.1s*($i - 2) + 0.6s + 0.05s * ($j - 1);
+                            animation: fadeInUp 0.5s ease-out $delay2;
                             animation-fill-mode: forwards;
                             animation-timing-function: ease-out;
                         }
@@ -149,5 +149,91 @@
     100% {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+
+  @media only screen and (max-width: 1500px) {
+    .home .section .projects{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .home .section .projects{
+        grid-template-columns: 1fr 1fr 1fr ;
+    }
+}
+@media only screen and (max-width: 1080px) {
+    .home .section .projects{
+        grid-template-columns: 1fr 1fr 1fr ;
+        .project{
+            .project-cover{
+            }
+            .project-details{
+            }
+        }
+    }
+}
+@media only screen and (max-width: 860px) {
+    .home {
+        .section .projects{
+            grid-template-columns: 1fr 1fr  ;
+        }
+        .welcome-section{
+            grid-template-columns: 1fr;
+            .welcome-message{
+                &:last-child{
+                    margin-top: 0;
+                    line-height: 2.5rem;
+
+                }
+            }
+            .actions{
+                justify-content: flex-start;
+                margin-top: 8px*4;
+            }
+        }
+
+    }
+}
+  @media only screen and (max-width: 580px) {
+    .home .section .projects{
+        grid-template-columns: 1fr 1fr ;
+        .project{
+            .project-cover{
+                width: 80px
+            }
+            .project-details{
+                margin-left: -24px;
+                .empty-message {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+  @media only screen and (max-width: 430px) {
+
+    .home .section .projects{
+        grid-template-columns: 1fr  ;
+    }
+    .home 
+    {
+        .welcome-section{
+            grid-template-columns: 1fr;
+            .welcome-message{
+                &:last-child{
+                    margin-top: 0;
+                    line-height: 2.5rem;
+
+                }
+            }
+            .actions{
+                justify-content: flex-start;
+                margin-top: 8px*4;
+            }
+        }
+        .section .projects{
+            grid-template-columns: 1fr;
+        }
     }
   }

@@ -32,6 +32,7 @@ function Projects({ projects, addProject, showAlert, isLoading }) {
                         <ProjectCard 
                         key={project.id}
                         project={project}
+                        index={index}
                     /> 
                     ))) : (
                         <>

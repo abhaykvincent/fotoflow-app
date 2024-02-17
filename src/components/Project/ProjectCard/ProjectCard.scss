@@ -44,14 +44,39 @@
         .project-details{
             margin-left: 8px*2.5;
             transition-duration: 0.2s !important;
+            transition-timing-function: ease-out;
         }
         .project-summary{
             opacity: 1 !important;
+        }
+
+        &.draft{
+            box-shadow: 4PX -4PX 2px 0px #2c2c2c39;
+            .project-details .details-top .right .status-signal{
+                box-shadow: 0 0 8px 4px #252525a3;
+            }
+        }
+        &:nth-child(2){
+            .project-details .details-top .right .status-signal{
+                background-color: $yellow-default-dark;
+                transform: scale(1.1);
+                box-shadow: 0 1px 1px 1px #6758002e, 0 0 10px 5px #ffd70038, 0 0 4px 2px #ffd90058, 0 0 20px 10px hsla(60, 100%, 50%, 0.1) !important;
+    
+            }
+        }&:nth-child(8){
+            .project-details .details-top .right .status-signal{
+                background-color: $purple-accessible-dark;
+                transform: scale(1.1);
+                
+            box-shadow: 0 1px 1px 1px #5e2a7e2e, 0 0 10px 5px #9b59b638, 0 0 4px 2px #9c59b6a9, 0 0 20px 10px hsla(270, 96%, 53%, 0.4) !important;
+
+            }
         }
         .right{
             .status-signal{
                 transform: scale(1.1);
                 box-shadow: 0 1px 1px 1px #022002a3,0 0 10px 5px #00ff0024,0 0 4px 2px #00ff0061,0 0 20px 10px hsla(120, 100%, 50%, 0.2) !important;
+                transition-delay: 0.1s;
             }
         }
     }
@@ -78,7 +103,8 @@
         display: grid;
         align-content: space-between;
         margin: 8px*2;
-        margin-bottom: 8px;
+        margin-right: 8px*1.5;
+        margin-bottom: 8px*1.5;
         margin-top: 8px*1.5;
         gap: 8px*0.2;
         transition-duration: 0.1s;
@@ -99,12 +125,17 @@
                     height: 8px;
                     width: 8px;
                     margin-top: 8px*0.6;
+                    margin-left: -8px*0.5;
                     border-radius: 50%;
-                    background-color: $green-default-dark;
+                    background-color: $green-default-light;
                     // add a neon glow effect brop shadows
-                    box-shadow: 0 1px 1px 1px #022002a3,0 0 10px 5px #00ff0024,0 0 4px 1px #00ff008d,0 0 20px 10px #00ff000e;
+                    box-shadow: 0 1px 1px 1px #022002a3,0 0 10px 5px #00ff0024,0 0 4px 1px #00ff0021,0 0 20px 10px #00ff000e;
                     transform: scale(1);   
                     transition-duration: 0.2s; 
+                    &:hover{
+
+                        background-color: $green-default-dark;
+                    }
                 }
             }
         }
@@ -120,12 +151,37 @@
             height: 100%;
             font-size: 0.8rem;
             gap: 8px;
-            justify-content: start;
-            opacity: 0.5;
+            justify-content: space-between;
             transition-duration: 0.2s;
+            gap: 8px*2;
+            .summary-left{
+                display: flex;
+                gap: 4px;
+                font-weight: 500;
+                opacity: 0.5;
+            }
+            .summary-right{
+                display: flex;
+                gap: 8px;
+                .summary-item{
+
+                    .icon{
+                        background-size: 90% ;
+                        opacity: 0.9 !important;
+                        transition-duration: 0.1s;
+                        padding: 8px*1.1;
+                    }
+                }
+            }
             .summary-item{
                 display: flex;
                 gap: 2px;
+                &:hover{
+                    .icon{
+                        transform: scale(1.4);
+                        transition-duration: 0.2s;
+                    }
+                }
                 p{
                     font-size: 0.7rem;
                     color: $gray3-accessible-dark;
@@ -151,6 +207,16 @@
             .selected-count{
                 .icon{
                     background-image: url('../../../assets/img/icons/selected.svg');
+                }
+            }
+            .share{
+                .icon{
+                    background-image: url('../../../assets/img/icons/play-circle.svg');
+                }
+            }
+            .select{
+                .icon{
+                    background-image: url('../../../assets/img/icons/checkmark.svg');
                 }
             }
         }
@@ -193,13 +259,12 @@
     }
     opacity: 0;
     transform: scale(1) translateY(-8px);
-    transition: opacity 0.5s, transform 0.5s;
-    &:nth-child(7){
+    &:nth-child(1){
         .status-signal{
             border: 1px solid $gray3-accessible-dark;
             background-color: $dark-1 !important;
             box-shadow: 0 1px 1px 2px #252525a3,0 0 10px 5px #2c2c2cd6,0 0 4px 1px #000000,0 0 20px 20px #0000000e !important;
-            
+
         }
         .project-cover{
 
@@ -215,18 +280,107 @@
                 
             }.project-cover{
 
-transform: scale(1.05);
+                transform: scale(1.05);
                 transition-duration: 5s !important;
                 }
+        }
+    }
+    &:nth-child(2){
+        .project-details .details-top .right .status-signal{
+            background-color: $yellow-default-dark;
+            transform: scale(1.1);
+            box-shadow: 0 1px 1px 1px #362e00ef, 0 0 10px 5px #ffd70038, 0 0 4px 2px #b69b0017, 0 0 20px 10px hsla(60, 100%, 50%, 0.01);
+
+        }
+    }
+    &:nth-child(3){
+        .project-details .details-top .right .status-signal{
+            background-color: $red-default-dark;
+            transform: scale(1.1);
+            box-shadow: 0 1px 1px 1px #8700002e, 0 0 10px 5px #ff000038, 0 0 4px 2px #ff000073, 0 0 20px 10px hsla(0, 100%, 50%, 0.2);
+
+
+        }
+        &:hover{
+        }
+    }
+    &:nth-child(4){
+        .project-details .details-top .right .status-signal{
+            background-color: $orange-accessible-dark;
+            transform: scale(1.1);
+            box-shadow: 0 1px 1px 1px #d966002e, 0 0 10px 5px #a7640038, 0 0 4px 2px #b46f066a, 0 0 20px 10px hsla(30, 100%, 50%, 0.05);
+
+
+
+        }
+    }
+    &:nth-child(9){
+        .project-details .details-top .right .status-signal{
+            background-color: $yellow-default-dark;
+                transform: scale(1.1);
+                box-shadow: 0 1px 1px 1px #362e00ef, 0 0 10px 5px #ffd70038, 0 0 4px 2px #b69b0017, 0 0 20px 10px hsla(60, 100%, 50%, 0.01) !important;
+    
+            animation: upload-blinking 0.75s infinite ease-in-out;
+            animation-delay: 0.5s
+
+        }
+        &:hover{
+        }
+    }
+    &.uploading{
+        .project-details .details-top .right .status-signal{
+            background-color: $green-accessible-dark;
+            transform: scale(1.1);
+            box-shadow: 0 1px 1px 1px #022002a3,0 0 10px 5px #00ff0024,0 0 4px 2px #00ff0061,0 0 20px 10px hsla(120, 100%, 50%, 0.2) !important;
+                
+            animation: upload-blinking 0.75s infinite ease-in-out;
+            animation-delay: 0.5s
+
+        }
+        &:hover{
+        }
+    }
+    &:nth-child(8){
+        .project-details .details-top .right .status-signal{
+            background-color: $purple-accessible-dark;
+            transform: scale(1.1);
+            box-shadow: 0 1px 1px 1px #5e2a7e2e, 0 0 10px 5px #9b59b638, 0 0 4px 2px #9b59b673, 0 0 20px 10px hsla(270, 100%, 50%, 0.2);
+
+        }
+        &:hover{
         }
     }
     
     @for $i from 1 through 10 {
         &:nth-child(#{$i}) {
-            $delay: 0.4s + 0.05s * ($i - 1);
-            animation: fadeInUp 0.1s ease-out $delay;
+            $delay: 0.2s + 0.05s * ($i - 1);
+            animation: fadeInUp 0.4s ease-out $delay;
             animation-fill-mode: forwards;
             animation-timing-function: ease-out;
+
+            .status-signal{
+                opacity: 0;
+                $delay: 0.6s + 0.02s * ($i - 1);
+                animation: glowUp 0.6s ease-in-out $delay;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-out;
+            }
         }
     }
 }
+@keyframes glowUp {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes upload-blinking {
+    0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.3;
+      }
+    }

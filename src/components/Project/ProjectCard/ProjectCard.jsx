@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import './ProjectCard.scss'
 
-function ProjectCard({project, index}) {   
+function ProjectCard({project, key, index}) {   
     //Project's selected photos count
     const getProjectSelectedPhotosCount = (project) => {
         return project.collections.flatMap(collection => collection.uploadedFiles)
@@ -9,7 +9,7 @@ function ProjectCard({project, index}) {
             .length;
     }
   return (
-    <Link className="project" to={`/project/${project.id}`} key={index}>
+    <Link className={`project ${project.status?project.status:''}`} to={`/project/${project.id}`} key={key}>
         <div className="cover-wrap">
             <div
                 className="project-cover"
@@ -35,18 +35,27 @@ function ProjectCard({project, index}) {
                         Upload your snaps
                     </div> :
                     <div className="project-summary">
-                        <div className="summary-item collection-count">
-                            <p>{project.collections.length}</p>
-                            <div className="icon"></div>
+                        <div className="summary-left">
+                            <div className="summary-item collection-count">
+                                <p>{project.collections.length}</p>
+                                <div className="icon"></div>
+                            </div>
+                            <div className="summary-item photos-count">
+                                <p>{project.uploadedFilesCount}</p>
+                                <div className="icon"></div>
+                            </div>
+                            
+
                         </div>
-                        <div className="summary-item photos-count">
-                            <p>{project.uploadedFilesCount}</p>
-                            <div className="icon"></div>
+                        <div className="summary-right">
+                            <div className="summary-item share">
+                                <div className="icon"></div>
+                            </div>
+                            <div className="summary-item select">
+                                <div className="icon"></div>
+                            </div>
                         </div>
-                        <div className="summary-item selected-count">
-                            <p>{getProjectSelectedPhotosCount(project)}</p>
-                            <div className="icon"></div>
-                        </div>
+                        
                     </div>
             }
         </div>
