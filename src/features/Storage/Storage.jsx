@@ -77,7 +77,7 @@ function Storage({projects}) {
             </div>
         </div>
         <div className="storage-class">
-            <p className='storage-class-label'>Cold Storage <b>10GB</b></p>
+            <p className='storage-class-label'>+ Cold Storage <b>10GB</b></p>
             <div className="bar">
                 <div className="used"></div>
                 <div className="limited access"></div>
