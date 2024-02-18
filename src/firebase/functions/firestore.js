@@ -172,12 +172,14 @@ export const deleteCollectionFromFirestore = async (projectId, collectionId) => 
 
 // Collection Image Operations
 // add array of images to collection as selectedImages
-export const addSelectedImagesToFirestore = async (projectId, collectionId, images, page, size) => {
+export const addSelectedImagesToFirestore = async (projectId, collectionId, images, page, size,totalPages) => {
     if (!projectId || !collectionId || !images) {
         throw new Error('Project ID, Collection ID, and Images are required.');
     }
 
-
+    let status = page===totalPages? 'selected' : 'selecting';
+    console.log(page,totalPages)
+    console.log(status)
     const projectsCollection = collection(db, 'projects');
     const projectDoc = doc(projectsCollection, projectId);
     const subCollectionId = projectId + '-' + collectionId;
@@ -210,7 +212,7 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
             const projectSnapshot = await getDoc(projectDoc);
             const projectData = projectSnapshot.data();
             
-            await updateDoc(projectDoc, {...projectData, status: 'selecting'});
+            await updateDoc(projectDoc, {...projectData, status: status});
             console.log('Selected images status updated successfully.');
 
         } else {
@@ -222,7 +224,31 @@ export const addSelectedImagesToFirestore = async (projectId, collectionId, imag
         throw error;
     }
 }
+// Update project status
+export const updateProjectStatusInFirestore = async (projectId, status) => {
+    if (!projectId || !status) {
+        throw new Error('Project ID and status are required.');
+    }
+    debugger
 
+    const projectsCollection = collection(db, 'projects');
+    const projectDoc = doc(projectsCollection, projectId);
+
+    try {
+        const projectSnapshot = await getDoc(projectDoc);
+
+        if (projectSnapshot.exists()) {
+            await updateDoc(projectDoc, { status: status });
+            console.log('Project status updated successfully.');
+        } else {
+            console.log('Project document does not exist.');
+            throw new Error('Project does not exist.');
+        }
+    } catch (error) {
+        console.error('Error updating project status:', error.message);
+        throw error;
+    }
+}
 // Set cover photo
 export const setCoverPhotoInFirestore = async (projectId, image) => {
     if (!projectId || !image) {

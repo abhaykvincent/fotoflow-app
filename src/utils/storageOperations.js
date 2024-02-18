@@ -148,26 +148,23 @@ export const uploadFile = (id, collectionId, file) => {
     });
 };
 const sliceUpload = async (slice, id, collectionId) => {
-    const results = [];
+    const uploadPromises = slice.map(file => {
+        return uploadFile(id, collectionId, file);
+    });
 
-    for (const file of slice) {
-        try {
-            console.log(file.name);
-            const result = await uploadFile(id, collectionId, file);
-            results.push(result);
-        } catch (error) {
-            console.error(`Error uploading ${file.name}:`, error);
-            throw error; // Propagate the error if needed
-        }
-    }
+    // Use Promise.all to initiate all file uploads simultaneously
+    const results = await Promise.all(uploadPromises);
+    console.log("!!!! inside slice", 'color:red');
 
     return results;
 };
+
+
 export const handleUpload = async (files, id, collectionId,importFileSize, showAlert, retries = 2) => {
     let uploadPromises = [];
 
     // Slice the files array into smaller arrays of size sliceSize
-    const sliceSize = 5;
+    const sliceSize = 10;
     console.log('%c ' + files.length + ' files to upload', 'color:yellow');
     let uploadedFiles = [];
 
@@ -232,7 +229,7 @@ export const handleUpload = async (files, id, collectionId,importFileSize, showA
 
 
   
-// function to add uploadedFiles data to firestore in project of project id and collection of collection id
+// function to add uaddSelectedImagesToFirestoreploadedFiles data to firestore in project of project id and collection of collection id
 export const addUploadedFilesToFirestore = async (projectId, collectionId,importFileSize, uploadedFiles) => {
 
     // Get a reference to the project document
