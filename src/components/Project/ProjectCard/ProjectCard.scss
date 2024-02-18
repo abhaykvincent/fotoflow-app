@@ -56,14 +56,14 @@
                 box-shadow: 0 0 8px 4px #252525a3;
             }
         }
-        &:nth-child(2){
+        &.uploaded{
             .project-details .details-top .right .status-signal{
                 background-color: $yellow-default-dark;
                 transform: scale(1.1);
                 box-shadow: 0 1px 1px 1px #6758002e, 0 0 10px 5px #ffd70038, 0 0 4px 2px #ffd90058, 0 0 20px 10px hsla(60, 100%, 50%, 0.1) !important;
     
             }
-        }&:nth-child(8){
+        }.designing{
             .project-details .details-top .right .status-signal{
                 background-color: $purple-accessible-dark;
                 transform: scale(1.1);
@@ -124,8 +124,6 @@
                 .status-signal{
                     height: 8px;
                     width: 8px;
-                    margin-top: 8px*0.6;
-                    margin-left: -8px*0.5;
                     border-radius: 50%;
                     background-color: $green-default-light;
                     // add a neon glow effect brop shadows
@@ -259,7 +257,7 @@
     }
     opacity: 0;
     transform: scale(1) translateY(-8px);
-    &:nth-child(1){
+    &:nth-child(7){
         .status-signal{
             border: 1px solid $gray3-accessible-dark;
             background-color: $dark-1 !important;
@@ -285,15 +283,32 @@
                 }
         }
     }
-    &:nth-child(2){
+    &.uploaded{
         .project-details .details-top .right .status-signal{
-            background-color: $yellow-default-dark;
+            background-color: $yellow-default-dark !important;
             transform: scale(1.1);
-            box-shadow: 0 1px 1px 1px #362e00ef, 0 0 10px 5px #ffd70038, 0 0 4px 2px #b69b0017, 0 0 20px 10px hsla(60, 100%, 50%, 0.01);
+            box-shadow: 0 1px 1px 1px #362e00ef, 0 0 10px 5px #ffd70038, 0 0 4px 2px #b69b0017, 0 0 20px 10px hsla(60, 100%, 50%, 0.01) !important;
 
         }
     }
-    &:nth-child(3){
+    &.draft{
+        .project-details .details-top .right .status-signal{
+            background-color: $gray4-default-dark !important;
+            transform: scale(1.1);
+            border: 1px solid $gray-default-dark;
+            box-shadow: 0 1px 1px 1px #3c3c3cef, 0 0 10px 5px #ffffff0d, 0 0 4px 2px #b1b1b117, 0 0 20px 10px hsla(0, 0%, 100%, 0.01) !important;
+
+        }
+    }
+    &.cold{
+        .project-details .details-top .right .status-signal{
+            background-color: $gray-default-dark !important;
+            transform: scale(1.1);
+            box-shadow: 0 1px 1px 1px #3c3c3cef, 0 0 10px 5px #ffffff1f, 0 0 4px 2px #b1b1b117, 0 0 20px 10px hsla(0, 0%, 100%, 0.01) !important;
+
+        }
+    }
+    &.red{
         .project-details .details-top .right .status-signal{
             background-color: $red-default-dark;
             transform: scale(1.1);
@@ -304,15 +319,22 @@
         &:hover{
         }
     }
-    &:nth-child(4){
-        .project-details .details-top .right .status-signal{
-            background-color: $orange-accessible-dark;
+    &.selecting{
+            /* background-color: $orange-accessible-dark;
             transform: scale(1.1);
             box-shadow: 0 1px 1px 1px #d966002e, 0 0 10px 5px #a7640038, 0 0 4px 2px #b46f066a, 0 0 20px 10px hsla(30, 100%, 50%, 0.05);
 
+ */ 
+        .project-details .details-top .right .status-signal{
+        background-color: $orange-default-dark;
+        transform: scale(1.1);
+        box-shadow: 0 1px 1px 1px #d966002e, 0 0 10px 5px #a7640038, 0 0 4px 2px #b46f066a, 0 0 20px 10px hsla(30, 100%, 50%, 0.05) !important;
 
+        animation: upload-blinking 1.5s infinite ease-in-out;
+        animation-delay: 0.1s;
 
         }
+        
     }
     &:nth-child(9){
         .project-details .details-top .right .status-signal{
@@ -340,7 +362,7 @@
         &:hover{
         }
     }
-    &:nth-child(8){
+    &.designing{
         .project-details .details-top .right .status-signal{
             background-color: $purple-accessible-dark;
             transform: scale(1.1);
@@ -380,7 +402,7 @@
     0%, 100% {
         opacity: 1;
       }
-      50% {
-        opacity: 0.3;
+      50%,60% {
+        opacity: 0.2;
       }
     }

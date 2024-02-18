@@ -33,7 +33,7 @@ body{
     background-color: $dark-3;
     box-shadow:  -1px 1px 4px rgba(0, 0, 0, 0.3);
     @include boxed;
-    z-index: 10;
+    z-index: 40;
     .logo{
       width: 8px*24;
       height: 100%;
@@ -905,6 +905,9 @@ margin-left: 4px;
   }
   @media only screen and (max-width: 860px) {
     .App{
+      header .profile-options .profile .profile-name {
+        display: none;
+      }
       main {
         top: 72px;
         left: 0;
@@ -934,6 +937,13 @@ margin-left: 4px;
   }
   @media only screen and (max-width: 720px) {
   .App{
+    header{
+
+      grid-template-columns:5fr 5fr 5fr;
+      .search-bar .search-input input{
+        width: 100%
+      }
+    }
     main {
       top: 72px;
       left: 0;
@@ -980,6 +990,7 @@ margin-left: 4px;
   @media only screen and (max-width: 430px) {
   .App{
     header{
+      grid-template-columns: 1fr 1fr;
       .profile-options{
         margin: 0;
         .profile-name{
