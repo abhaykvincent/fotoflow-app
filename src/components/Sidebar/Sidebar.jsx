@@ -25,7 +25,7 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="label">Storage</div>
           </div>
         </Link>
-        <Link to={`/store`}>
+        {/* <Link to={`/store`}>
           <div className={`menu store ${location.pathname === '/store' ? 'selected' : ''} disabled`}>
             <div className="icon"></div>
             <div className="label">Store</div>
@@ -51,7 +51,7 @@ function Sidebar({isUploading,totalUploadProgress}) {
               <div className="coming-soon-tag">PRO</div>
             </div>
           </div>
-        </Link>
+        </Link> */}
         <Link to={`/settings`}>
           <div className={`menu settings ${location.pathname === '/settings' ? 'selected' : ''}`}>
             <div className="icon"></div>

@@ -4,9 +4,46 @@
     .welcome-section{
         padding: 8px*2;    
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 8px*20;
         justify-content: space-between;
+        font-family: "Product Sans";
+        .welcome-message-top{
+            display: FLEX;
+            svg{
+                opacity: 0;
+                animation: fadeInLeft 0.5s ease-out 0.03s;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-out;
+                height: 4rem;
+                text{
+                    font-weight: 600;
+                    opacity: 1;
+                    font-family: "Product Sans";
+                }
+            }
+            h1{
+
+            opacity: 0;
+            animation: fadeInLeft 0.5s ease-out 0s;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-out;
+            }
+        }
         .welcome-message{
+            font-size:3rem;
+            font-weight: 600;
+            color: $gray2-default-dark;
+                &:last-child{
+                    margin-top: -1rem;
+                    color: $gray4-default-dark;
+                    opacity: 0;
+                    animation: fadeInLeft 0.5s ease-out 0.05s;
+                    animation-fill-mode: forwards;
+                    animation-timing-function: ease-out;
+                }
+            span{
+                
+            }
             .actions{
                 display: flex;
                 justify-content: flex-end;
@@ -21,13 +58,44 @@
     }
     .section{
         padding: 8px;
+        opacity: 0;
+        transform: translateX(8px);
+        transition: opacity 0.5s, transform 0.5s;
+        
+        @for $i from 1 through 5 {
+            &:nth-child(#{$i}) {
+                $delay: 0.1*($i - 1) + 0.5s * ($i - 1);
+                animation: fadeInUp 0.1s ease-out $delay;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-out;
+                .projects{
+                    .project{
+                        opacity: 0;
+                    transform: translateY(-8px);
+                    transition: opacity 1s, transform 0.5s;
+                    
+                    @for $j from 1 through 10 {
+                        &:nth-child(#{$j}) {
+                            $delay2: 0.1s*($i - 2) + 0.6s + 0.05s * ($j - 1);
+                            animation: fadeInUp 0.5s ease-out $delay2;
+                            animation-fill-mode: forwards;
+                            animation-timing-function: ease-out;
+                        }
+                    }
+                    }
+                }
+            }
+        }
         .section-heading{
+            display: inline-block;
+            width: auto;
             font-weight: 400;
             padding: 8px*1 0;
+            padding-right: 8px*2;
             margin-left: 8px;
-            margin-top: 8px*2;
-            margin-bottom: 8px*2;
-            border-bottom: 1px solid $dark-1;
+            margin-top: 8px*1;
+            margin-bottom: 8px*3;
+            border-bottom: 2px solid $gray6-default-dark;
             color: $gray3-default-light;
             a{
                 font-size: 0.9rem;
@@ -42,61 +110,9 @@
             padding: 0 8px;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 8px*2;
+            gap: 8px*3;
             width: 100%;
-            .project{
-                width: 100%;
-                padding: 8px*1;
-                display: grid;
-                grid-template-columns: auto 8px*12;
-                background-color: $dark-3;
-                border-radius: $border-radius-1;
-                @include boxShadow;
-                @include boxed;
-                transition-duration: 0.2s;
-                &:hover{
-                    border: 1px solid $gray4-accessible-dark;
-                    transition-duration: 0.4s;
-                    box-shadow: 0 0 8px 4px #14562413;
-                }
-                .project-details{
-                    display: grid;
-                    gap: 4px;
-        
-                    margin: 8px;
-                    .project-type{
-                    line-height: 8px*2.5;
-                    font-weight: 400;
-                    font-size: 0.8rem;
-                    color: $gray3-default-dark;
-                    }
-                }
-                .project-options{
-                    display: flex;
-                    align-items: flex-end;
-                    justify-content: flex-end;
-                    .pin{
-                        opacity: 0.5;
-                        .pin-label{
-                            font-size: 0.9rem;
-                            display: inline-block;
-                            padding: 4px 0;
-                            margin: 4px;
-                            border-radius: 4px;
-                            color: $gray2-default-dark;
-                        }
-                        .pin-number{
-                            font-size: 0.9rem;
-                            display: inline-block;
-                            background-color: $dark-1;
-                            padding: 4px 8px;
-                            margin: 4px;
-                            border-radius: 4px;
-                            border: 1px solid $dark-0;
-                        }
-                    }
-                }
-            }
+            
             .message{
                 color: $gray4-default-dark;
             }
@@ -125,3 +141,99 @@
         }
     }
 }
+@keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(8px*4);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media only screen and (max-width: 1500px) {
+    .home .section .projects{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .home .section .projects{
+        grid-template-columns: 1fr 1fr 1fr ;
+    }
+}
+@media only screen and (max-width: 1080px) {
+    .home .section .projects{
+        grid-template-columns: 1fr 1fr 1fr ;
+        .project{
+            .project-cover{
+            }
+            .project-details{
+            }
+        }
+    }
+}
+@media only screen and (max-width: 860px) {
+    .home {
+        .section .projects{
+            grid-template-columns: 1fr 1fr  ;
+        }
+        .welcome-section{
+            grid-template-columns: 1fr;
+            .welcome-message{
+                &:last-child{
+                    margin-top: 0;
+                    line-height: 2.5rem;
+
+                }
+            }
+            .actions{
+                justify-content: flex-start;
+                margin-top: 8px*4;
+            }
+        }
+
+    }
+}
+  @media only screen and (max-width: 580px) {
+    .home .section .projects{
+        grid-template-columns: 1fr 1fr ;
+        .project{
+            .project-cover{
+                width: 80px
+            }
+            .project-details{
+                margin-left: -24px;
+                .empty-message {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+  @media only screen and (max-width: 430px) {
+
+    .home .section .projects{
+        grid-template-columns: 1fr  ;
+    }
+    .home 
+    {
+        .welcome-section{
+            grid-template-columns: 1fr;
+            .welcome-message{
+                &:last-child{
+                    margin-top: 0;
+                    line-height: 2.5rem;
+
+                }
+            }
+            .actions{
+                justify-content: flex-start;
+                margin-top: 8px*4;
+            }
+        }
+        .section .projects{
+            grid-template-columns: 1fr;
+        }
+    }
+  }

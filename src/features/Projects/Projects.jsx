@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Import React Router components
 import AddProjectModal from '../../components/Modal/AddProject';
 import './Projects.scss';
+import ProjectCard from '../../components/Project/ProjectCard/ProjectCard';
 
 function Projects({ projects, addProject, showAlert, isLoading }) {
 
@@ -13,12 +14,7 @@ function Projects({ projects, addProject, showAlert, isLoading }) {
 
     const closeModal = () => setModal({ createProject: false });
 
-    //Project's selected photos count
-    const getProjectSelectedPhotosCount = (project) => {
-        return project.collections.flatMap(collection => collection.uploadedFiles)
-            .filter(image => image?.status === 'selected')
-            .length;
-    }
+ 
 
     return (
         <main className="projects">
@@ -30,49 +26,39 @@ function Projects({ projects, addProject, showAlert, isLoading }) {
                     >Create Project</div>
                 </div>
             </div>
-            {isLoading ? (
-                <div className="loader-wrap">
-                    <div className="loader"></div>
-                    <p className='loading-message'>loading projects</p>
-                </div>
-            ) : (
-                <>
-                    {projects?.length > 0 ?
-                        <div className="projects-list">
-                            {projects.map((project, index) => (
-                                <Link to={`/project/${project.id}`} className={`project ${project.id}`} key={index}>
-                                    <div className="project-details">
-                                        <h4 className="project-title">{project.name}</h4>
-                                        <p className="project-type">{project.type}</p>
-                                    </div>
-                                    {
-                                        project.collections.length === 0 ?
-                                            <div className="empty-message">
-                                                <p>No collections created</p>
-                                            </div> :
-                                            <div className="project-info">
-                                                <div className="collection-count"><b>{project.collections.length}</b> Collections</div>
-                                                <div className="photos-count"><b>{project.uploadedFilesCount}</b> Photos</div>
-                                                <div className="selected-count"><b>{getProjectSelectedPhotosCount(project)} </b> Selected</div>
-                                            </div>
-                                    }
-                                    <div className="project-options">
-                                        {
-                                            project.pin ?
-                                                <div className="pin">
-                                                    <p className='pin-label'>PIN</p>
-                                                    <p className='pin-number'> {project.pin}</p>
-                                                </div> : ''
-                                        }
-                                    </div>
-                                </Link>
-
-                            ))}
+            <div className="projects-list">
+                {projects.length !== 0? (
+                    projects.map((project, index) => (
+                        <ProjectCard 
+                        key={project.id}
+                        project={project}
+                        index={index}
+                    /> 
+                    ))) : (
+                        <>
+                        <div className="section recent">
+                <h3 className='section-heading'>Recent Projects</h3>
                         </div>
-                        : <div className="no-items">Create a project</div>}
-                </>
-            )}
 
+                        <Link className="project new"  >
+                            <div className="project-cover"
+                            ></div>
+                            <div className="project-details">
+                                <div className="details-top">
+
+                                    <h4 className="project-title">Create Your First Project</h4>
+                                    <p className="project-type"></p>
+                                </div>
+                            </div>
+                            <div className="project-options">
+                                
+                            </div>
+                        </Link>
+                        </>
+                    )
+                    }
+                </div>
+            
             <AddProjectModal visible={modal.createProject} onClose={closeModal} onSubmit={addProject} showAlert={showAlert} />
         </main>
     );

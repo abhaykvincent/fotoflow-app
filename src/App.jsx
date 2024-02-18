@@ -120,7 +120,8 @@ function App() {
           <Alert {...alert} setAlert={setAlert} />
         </>
       ) : (
-        <>{!shareOrSelection && <LoginModal {...{ setAuthenticated }} />}</>
+        <></>
+        //<>{!shareOrSelection && <LoginModal {...{ setAuthenticated }} />}</>
       )}
       {isLoading ? (
                 <div className="loader-wrap">

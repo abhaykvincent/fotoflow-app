@@ -3,133 +3,16 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-content: space-between;
+    padding: 8px*2 8px*3;
+    h1{
 
-    padding: 8px*2;
+    animation: fadeInLeft 0.5s ease-out 0s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+    }
     .actions{
         display: flex;
         justify-content: flex-end;
-    }
-}
-
-.projects-list{
-    margin: 8px;
-    padding: 8px;
-    background-color: $dark-3;
-    border-radius: $border-radius-1;
-    height: auto;
-    @include boxed;
-    @include boxShadow;
-    .project{
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
-        border-radius: 2px;
-        opacity: 0.8;
-        padding: 8px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        border-bottom: 1px solid $dark-2;
-        transition-duration: 0.3s;
-        &:hover{
-            border-radius: 4px;
-            background-color: $dark-2;
-            opacity: 1;
-            transition-duration: 0.1s;
-            .pin{
-                display: block;
-            }
-        }
-        &:last-child{
-            border-bottom: 1px solid transparent;
-        }
-        .project-details{
-            display: flex;
-            gap: 8px;
-
-            margin: 8px;
-            .project-type{
-            line-height: 8px*2.5;
-            font-weight: 400;
-            font-size: 0.8rem;
-            color: $gray2-default-dark;
-            }
-        }
-        .project-info{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px*2;
-            font-size: 0.8rem;
-            padding: 0;
-            div{
-                color: $gray4-accessible-dark;
-            }
-            b{
-            font-weight: 600;
-                color: $gray3-accessible-dark !important;
-            }
-        }
-        .project-options{
-            display: flex;
-            justify-content: flex-end;
-            .pin{
-                opacity: 0.5;
-                padding: 0 2px;
-                .pin-label{
-                    font-size: 0.9rem;
-                    display: inline-block;
-                    padding: 4px 0;
-                    margin: 4px;
-                    border-radius: 4px;
-                    color: $gray2-default-dark;
-                }
-                .pin-number{
-                    font-size: 0.9rem;
-                    display: inline-block;
-                    background-color: $dark-1;
-                    padding: 4px 8px;
-                    margin: 4px;
-                    border-radius: 4px;
-                    border: 1px solid $dark-0;
-                }
-            }
-        }
-        &:hover{
-            background-color: $dark-2;
-            border: 1px solid $dark-1;
-            .pin{
-                opacity: 1;
-                padding: 0 1px;
-                .pin-number{
-                    font-weight: 500;
-                }
-            }
-            .project-info{
-                div{
-                    color: $gray2-accessible-dark;
-                }
-                b{
-                    font-weight: 600;
-                    color: $gray-accessible-dark !important;
-                }
-            }
-        }
-        &.delete-caution{
-            border: 1px solid $red-default-dark;
-            background-color:$dark-1;
-            animation: delete-caution 0.6s ease-in forwards;
-        }
-            opacity: 0;
-            transform: translateY(-8px);
-            transition: opacity 0.5s, transform 0.5s;
-          
-            @for $i from 1 through 10 {
-                &:nth-child(#{$i}) {
-                  $delay: 0.05s + 0.05s * ($i - 1);
-                  animation: fadeInUp 0.1s ease-out $delay;
-                  animation-fill-mode: forwards;
-                  animation-timing-function: ease-out;
-                }
-              }
     }
 }
 @keyframes delete-caution {
@@ -153,3 +36,81 @@
       transform: translateY(0);
     }
   }
+
+
+
+
+  .projects-list{
+    padding: 0 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 8px*3;
+    width: 100%;
+    padding: 8px*3;
+    padding-top: 8px;
+    
+    .message{
+        color: $gray4-default-dark;
+    }
+    
+    &.completed{
+        h3::after{
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin-left: 8px*1;
+            content: 'Client Approved';
+            color: $gray3-default-dark;
+        }
+        .project{
+            grid-template-columns: auto 8px*16;
+
+            .project-options{
+                align-items: center;
+            }
+        }
+    }
+}
+
+//write a media quer for divces less than 1200px
+@media only screen and (max-width: 1500px) {
+    .projects-list{
+        gap: 8PX*4;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .projects-list{
+        gap: 8PX*4;
+        grid-template-columns: 1fr 1fr 1fr ;
+    }
+}
+@media only screen and (max-width: 1080px) {
+    .projects-list{
+        grid-template-columns: 1fr 1fr 1fr ;
+    }
+}
+@media only screen and (max-width: 960px) {
+    .projects-list{
+        grid-template-columns: 1fr 1fr  ;
+    }
+}
+@media only screen and (max-width: 860px) {
+    .projects-list{
+        grid-template-columns: 1fr 1fr  ;
+    }
+}
+@media only screen and (max-width: 580px) {
+    .projects-list{
+        grid-template-columns: 1fr 1fr  ;
+    }
+}
+@media only screen and (max-width: 640px) {
+    .projects-list{
+        grid-template-columns: 1fr  ;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .projects-list{
+        grid-template-columns: 1fr  ;
+    }
+}

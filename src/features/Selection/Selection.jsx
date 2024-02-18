@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { fetchProject, addSelectedImagesToFirestore } from '../../firebase/functions/firestore';
+import { fetchProject, addSelectedImagesToFirestore, updateProjectStatusInFirestore } from '../../firebase/functions/firestore';
 import SelectionGallery from '../../components/ImageGallery/SelectionGallery';
 import PaginationControl from '../../components/PaginationControl/PaginationControl';
 import './Selection.scss';
@@ -75,12 +75,25 @@ useEffect(() => {
     try {
       console.log('selectedImagesInCollection',selectedImagesInCollection)
       console.log('selectedImages',selectedImages)
-      await addSelectedImagesToFirestore(projectId, collectionId, selectedImages,page,size);
+      await addSelectedImagesToFirestore(projectId, collectionId, selectedImages,page,size,totalPages);
       // handle success (e.g. show a success message)
     } catch (error) {
       console.error('Failed to add selected images:', error);
       // handle error (e.g. show an error message)
     }
+  };
+
+  // handle selection completed
+  const handleSelectionCompleted = async () => {
+    try {
+      await updateProjectStatusInFirestore(projectId, 'selected');
+      // handle success (e.g. show a success message)
+    }
+    catch (error) {
+      console.error('Failed to update project status:', error);
+      // handle error (e.g. show an error message)
+    }
+      
   };
 
   // Collections panel
@@ -118,6 +131,7 @@ useEffect(() => {
             saveSelectedImages()
             setPage(newPage)
           }}
+          handleSelectionCompleted={handleSelectionCompleted}
         />
       </div>
     </div>
