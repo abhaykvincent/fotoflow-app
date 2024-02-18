@@ -15,6 +15,7 @@ function AddProjectModal({ showAlert,visible, onClose, onSubmit }) {
       selectedFilesCount:0,
       totalFileSize:0,
       lastOpened: new Date(),
+      projectCover:''
   });
   const handleInputChange = (event) => {
       const {name,value} = event.target;

@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import { provider,auth,signInWithPopup } from '../../firebase/app';
 import {GoogleAuthProvider} from 'firebase/auth';
 
@@ -58,3 +58,4 @@ const LoginModal = ({setAuthenticated}) => {
 }
 
 export default LoginModal;
+ */

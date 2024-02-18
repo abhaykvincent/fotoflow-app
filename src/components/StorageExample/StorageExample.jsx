@@ -34,7 +34,7 @@ initializeApp(firebaseConfig);
   
     const uploadFileWithProgress = async (file, onProgress) => {
       const storage = getStorage();
-      connectStorageEmulator(storage, "127.0.0.1", 9199);
+      connectStorageEmulator(storage, "172.20.10.3", 9199);
       const storageRef = ref(storage, `uploads/${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
   

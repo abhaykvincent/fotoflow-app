@@ -2,10 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Preview from '../../features/Preview/Preview';
 import { shortenFileName } from '../../utils/stringUtils';
 
-const ImageGallery = React.memo(({ imageUrls }) => {
+const ImageGallery = React.memo(({ imageUrls,projectId }) => {
   let importedImages=[]
   // Preview
   // is preview open
+  console.log(imageUrls)
   const [isPreviewOpen,setIsPreviewOpen] = useState(false);
   const [previewIndex,setPreviewIndex] = useState(0);
   const openPreview = (index) => {
@@ -24,6 +25,14 @@ const ImageGallery = React.memo(({ imageUrls }) => {
           onClick={()=>openPreview(index)}>
             <div className="hover-options-wrap">
             <div className="hover-options">
+              {
+                fileUrl.status&&
+                <div className="favorite-wrap">
+                  <div className={`favorite ${fileUrl?.status==='selected'? 'selected' : ''}`}>
+                    <div className="icon"></div>
+                  </div>
+                </div>
+              }
               <div className="top">
                 <div className="menu-icon"></div>
                 <div className="option-menu">
@@ -49,7 +58,7 @@ const ImageGallery = React.memo(({ imageUrls }) => {
         ))}
       </div>
         {
-            isPreviewOpen && <Preview image={imageUrls[previewIndex] } {...{setPreviewIndex,closePreview}}/>
+            isPreviewOpen && <Preview image={imageUrls[previewIndex] } {...{previewIndex,setPreviewIndex,imagesLength:imageUrls.length,closePreview,projectId}}/>
         }
     </div>
   );

@@ -1,11 +1,23 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import Preview from '../../features/Preview/Preview';
 
-const ShareGallery = ({ images }) => {
-  const [page, setPage] = useState(1);
+const ShareGallery = ({ images,projectId }) => {
   const [size, setSize] = useState(12);
   const[loadedImages, setLoadedImages] = useState(images.slice(0, size));
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
+  //Preview
+  const [isPreviewOpen,setIsPreviewOpen] = useState(false);
+  const [previewIndex,setPreviewIndex] = useState(0);
+  const openPreview = (index) => {
+    console.log(index)
+    setIsPreviewOpen(true)
+    setPreviewIndex(index)
+  }
+  const closePreview = () => {
+    setIsPreviewOpen(false)
+  }
+
   console.log(images)
   useEffect(() => {
     setLoadedImages(images.slice(0, size));
@@ -40,12 +52,17 @@ const ShareGallery = ({ images }) => {
             index + 1 === loadedImages.length ?
             <div className="photo" key={index} style={{ backgroundImage: `url(${file.url})` }} alt={`File ${index}`} 
             ref={lastPhotoElementRef}
-            ></div>
+            onClick={()=>openPreview(index)}>
+            </div>
             : 
-            <div className="photo" key={index} style={{ backgroundImage: `url(${file.url})` }} alt={`File ${index}`} ></div>
+            <div className="photo" key={index} style={{ backgroundImage: `url(${file.url})` }} alt={`File ${index}`} 
+            onClick={()=>openPreview(index)}></div>
           ))
         }
       </div>
+        {
+            isPreviewOpen && <Preview image={images[previewIndex] } {...{previewIndex,setPreviewIndex,imagesLength:images.length,closePreview,projectId}}/>
+        }
     </div>
   );
 };

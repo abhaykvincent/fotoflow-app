@@ -99,7 +99,7 @@ export default function ShareProject() {
         </div>
       </div>
         <div className="shared-collection">
-          <ShareGallery images={imageUrls} />
+          <ShareGallery images={imageUrls} projectId={projectId}/>
 
         <div className="pagination">
           <div className={`button ${page===1?'disabled':'primary'} previous`}
