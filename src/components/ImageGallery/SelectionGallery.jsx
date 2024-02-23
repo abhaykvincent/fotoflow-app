@@ -25,10 +25,11 @@ const SelectionGallery = ({ images, selectedImages, setSelectedImages, setSelect
     <div
       className="photo"
       key={index}
-      style={{ backgroundImage: `url(${fileUrl.url})` }}
       aria-label={`File ${index}`}
       onClick={() => handleImageClick(fileUrl.url)}
     >
+      <img className="photo"  src={fileUrl.url} alt={`File ${index}`} 
+            ></img>
       <input
         type="checkbox"
         checked={selectedImages.includes(fileUrl.url)}
