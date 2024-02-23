@@ -103,7 +103,6 @@
       .photo{
         position: relative;
         width: 100%;
-        padding-top: 75%;
         background-color: $light-0;
         border-radius: 2px;
         background-size: cover;
@@ -152,8 +151,17 @@
   }
 }
 
-@media (max-width: 600px) {
-  .photos {
-    grid-template-columns: 1fr; // This will make it a single column grid on smaller screens
+@media only screen and (max-width: 830px) {
+  .select-project{
+    .shared-collection{
+      padding: 8px;
+    }
+    .gallary{
+      .photos{
+        grid-template-columns: 1fr;
+        .photo{
+        }
+      }
+    }
   }
 }
