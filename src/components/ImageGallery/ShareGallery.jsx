@@ -50,13 +50,13 @@ const ShareGallery = ({ images,projectId }) => {
         {
           loadedImages.map((file, index) => (
             index + 1 === loadedImages.length ?
-            <div className="photo" key={index} style={{ backgroundImage: `url(${file.url})` }} alt={`File ${index}`} 
+            <img className="photo" key={index} src={file.url} alt={`File ${index}`} 
             ref={lastPhotoElementRef}
             onClick={()=>openPreview(index)}>
-            </div>
+            </img>
             : 
-            <div className="photo" key={index} style={{ backgroundImage: `url(${file.url})` }} alt={`File ${index}`} 
-            onClick={()=>openPreview(index)}></div>
+            <img className="photo" key={index} src={file.url} alt={`File ${index}`} 
+            onClick={()=>openPreview(index)}></img>
           ))
         }
       </div>
