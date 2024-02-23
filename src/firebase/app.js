@@ -30,7 +30,7 @@ const storage = getStorage(app);
 const db = getFirestore(app); 
 //const auth = getAuth(app);
 
-/* if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
     const EMULATOR_HOST = process.env.REACT_APP_EMULATOR_HOST;
     const EMULATOR_PORT = process.env.REACT_APP_EMULATOR_PORT;
     const EMULATOR_FIRESTORE_PORT = process.env.REACT_APP_EMULATOR_FIRESTORE_PORT;
@@ -40,7 +40,7 @@ const db = getFirestore(app);
     connectStorageEmulator(storage, EMULATOR_HOST, EMULATOR_PORT);
     connectFirestoreEmulator(db, EMULATOR_HOST, EMULATOR_FIRESTORE_PORT);
     //connectAuthEmulator(auth, `http://${EMULATOR_HOST}:${EMULATOR_AUTH_PORT}`);
-} */
+}
 
 const provider = new GoogleAuthProvider();
 
