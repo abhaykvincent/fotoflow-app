@@ -8,6 +8,7 @@ export default function CollectionsPanel({ project, collectionId, deleteCollecti
   
     return (
       <div className="collections-panel">
+        <div className="collections-list">
         {
           project.collections.map((collection, index) => (
             <div
@@ -21,6 +22,8 @@ export default function CollectionsPanel({ project, collectionId, deleteCollecti
             </div>
           ))
         }
+        </div>
+        
   
         <div className="button secondary add-collection"
           onClick={openModal}
