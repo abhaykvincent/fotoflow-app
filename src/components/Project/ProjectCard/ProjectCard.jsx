@@ -24,6 +24,7 @@ function ProjectCard({project, key, index}) {
                 <div className="left">
                     <h4 className="project-title">{project.name}</h4>
                     <p className="project-type">{project.type}</p>
+            
                 </div>
                 <div className="right">
                     <div className="status-signal"></div>
@@ -47,29 +48,31 @@ function ProjectCard({project, key, index}) {
                             
 
                         </div>
-                        <div className="summary-right">
+                        <div className="summary-right">   
+                        <div className="quick-actions">
                             <div className="summary-item share">
                                 <div className="icon"></div>
                             </div>
                             <div className="summary-item select">
                                 <div className="icon"></div>
                             </div>
+                        </div>     
+                        {
+                            // if pin available, show pin number  
+                            project.pin ?
+                            <div className="pin">
+                                <p className="pin-label">PIN</p>
+                                <p className="pin-number">{project.pin}</p>
+                            </div>
+                            : ''
+                        }
+                            
                         </div>
                         
                     </div>
             }
         </div>
-        <div className="project-options">
-            {
-                // if pin available, show pin number  
-                project.pin ?
-                    <div className="pin">
-                        <p className="pin-label">PIN</p>
-                        <p className="pin-number">{project.pin}</p>
-                    </div>
-                    : ''
-            }
-        </div>
+        
     </Link>
     );
 }
