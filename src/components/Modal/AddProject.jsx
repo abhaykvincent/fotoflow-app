@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { addProject } from '../../firebase/functions/firestore';
+import { analytics } from '../../firebase/app';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 function AddProjectModal({ showAlert,visible, onClose, onSubmit }) {
 
@@ -31,6 +33,8 @@ function AddProjectModal({ showAlert,visible, onClose, onSubmit }) {
               onSubmit(addedProject);
               onClose();
               showAlert('success', 'New Project created!')
+              logEvent(analytics,'project_created');
+
           })
           .catch((error) => {
               console.error('Error creating project:', error);

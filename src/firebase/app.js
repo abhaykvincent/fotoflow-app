@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, connectStorageEmulator } from "firebase/storage";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getAnalytics,isSupported,logEvent } from "firebase/analytics";
 import { getAuth, connectAuthEmulator, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 if(process.env.NODE_ENV === 'development'){
@@ -28,6 +29,7 @@ const app = initializeApp(firebaseConfig);
 
 const storage = getStorage(app);
 const db = getFirestore(app); 
+const analytics = getAnalytics(app);
 //const auth = getAuth(app);
 
 if (process.env.NODE_ENV === 'development') {
@@ -44,4 +46,4 @@ if (process.env.NODE_ENV === 'development') {
 
 const provider = new GoogleAuthProvider();
 
-export { storage, db/* , auth, provider, signInWithPopup */};
+export { storage, db, analytics/* , auth, provider, signInWithPopup */};

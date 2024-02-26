@@ -154,13 +154,20 @@
             gap: 8px*2;
             .summary-left{
                 display: flex;
+                align-items: end;
                 gap: 4px;
                 font-weight: 500;
                 opacity: 0.5;
             }
             .summary-right{
+                display: grid;
+                justify-items: end;
+                gap: 4px;
+                .quick-actions{
+
                 display: flex;
-                gap: 8px;
+                gap: 4px;
+                }
                 .summary-item{
 
                     .icon{
@@ -219,29 +226,27 @@
             }
         }
     }
-    .project-options{
-        display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;
-        .pin{
-            opacity: 0.5;
-            .pin-label{
-                font-size: 0.9rem;
-                display: inline-block;
-                padding: 4px 0;
-                margin: 4px;
-                border-radius: 4px;
-                color: $gray2-default-dark;
-            }
-            .pin-number{
-                font-size: 0.9rem;
-                display: inline-block;
-                background-color: $dark-1;
-                padding: 4px 8px;
-                margin: 4px;
-                border-radius: 4px;
-                border: 1px solid $dark-0;
-            }
+    .pin{
+        opacity: 0.5;
+        .pin-label{
+            font-size: 0.7rem;
+            display: inline-block;
+            padding: 0;
+            border-radius: 4px;
+            color: $gray2-default-dark;
+        }
+        .pin-number{
+            font-size: 0.7rem;
+            text-align: center;
+            display: inline-block;
+            background-color: $dark-1;
+            padding: 2px 4px;
+            margin: 0;
+            margin-left: 4px;
+            margin-top: 4px;
+            width: 8px*5;
+            border-radius: 4px;
+            border: 1px solid $dark-0;
         }
     }
     &.new{

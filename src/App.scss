@@ -6,7 +6,6 @@
   padding: 0;
   background-repeat: no-repeat;
   box-sizing: border-box;
-  color: $light-1;
 }
 h1,h2{
   font-family: 'Product Sans';
@@ -330,11 +329,16 @@ body{
       margin-left: 8px;
       margin-bottom: 8px;
       margin-top: 0;
+      margin-right: 8px*4;
     }
     .collections-panel{
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 8px*22;
       transform: translate(8px*3, 8px*2);
       z-index: 1;
+      .collections-list{
+        display: flex;
+      }
       .collection-tab{
         display: flex;
         gap: 8px*1;
@@ -755,6 +759,7 @@ margin-left: 4px;
             }
           }
           .option-menu{
+            display: none;
             position: absolute;
             right: -8px*15;
             top: 8px*4;
@@ -777,6 +782,7 @@ margin-left: 4px;
               border-bottom: none;
               }
               &:hover{
+                display: block;
                 color: $gray6-accessible-dark;
                 background-color: $gray6-accessible-light;
               }
