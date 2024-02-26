@@ -25,7 +25,11 @@ export function generateMemorablePIN(limit) {
   }
 
   // Convert array to string
-  const pinStr = pin.join('');
+  let  pinStr = pin.join('');
+  // Truncate the PIN if its length exceeds the limit
+  if (limit && pinStr.length > limit) {
+    pinStr = pinStr.slice(0, limit);
+  }
 
   return pinStr
 }
