@@ -17,7 +17,7 @@
             text-align: center;
             padding: 8px*2 8px;
             border-radius: 8px;
-            border: none;
+            border: 1px solid transparent;
             background-color: $gray6-accessible-light;
             font-family: 'Menlo', 'Courier New';
             &::-webkit-inner-spin-button {
@@ -30,6 +30,22 @@
             background-color: $gray5-accessible-light;
                 caret-color: $gray2-accessible-light
             }
+            &.error{
+                border: 1px solid $red-accessible-light;
+                animation: shake 0.4s ease-in-out;
+            }
         }
     }
 }
+
+@keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    20%, 60% {
+      transform: translateX(-8px);
+    }
+    40%, 80% {
+      transform: translateX(8px);
+    }
+  }
