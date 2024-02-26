@@ -138,7 +138,7 @@ useEffect(() => {
           handleSelectionCompleted={handleSelectionCompleted}
         />
       </div>:
-      <GalleryPIN/>
+      <GalleryPIN{...{setAuthenticated,projectPin:project.pin}}/>
       }
     </div>
   );
