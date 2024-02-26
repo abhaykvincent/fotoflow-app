@@ -1,0 +1,35 @@
+@import '../../style/_variables.scss';
+.gallery-pin-container{
+    display: grid;
+    justify-items: center;
+    color: black;
+    gap:8px;
+    margin-top: 8px*2;
+    .pin-inputs-container{
+        display: grid;
+        grid-template-columns: 8px*7 8px*7 8px*7 8px*7;
+        justify-content: center;
+        gap: 8px;
+        input{
+            font-size: 2rem;
+            font-weight: 800;
+            color: $gray5-accessible-dark;
+            text-align: center;
+            padding: 8px*2 8px;
+            border-radius: 8px;
+            border: none;
+            background-color: $gray6-accessible-light;
+            font-family: 'Menlo', 'Courier New';
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+            &:focus{
+                outline: none;
+                // hide cursor
+            background-color: $gray5-accessible-light;
+                caret-color: $gray2-accessible-light
+            }
+        }
+    }
+}
