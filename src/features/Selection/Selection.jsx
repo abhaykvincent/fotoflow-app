@@ -4,9 +4,11 @@ import { fetchProject, addSelectedImagesToFirestore, updateProjectStatusInFirest
 import SelectionGallery from '../../components/ImageGallery/SelectionGallery';
 import PaginationControl from '../../components/PaginationControl/PaginationControl';
 import './Selection.scss';
+import GalleryPIN from '../../components/GalleryPIN/GalleryPIN';
 export default function Selection() {
   let { projectId, collectionId } = useParams();
   const [project, setProject] = useState();
+  const [authenticated, setAuthenticated] = useState(false)
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImagesInCollection, setSelectedImagesInCollection] = useState([]);
@@ -122,6 +124,8 @@ useEffect(() => {
         </div>
         <div className="banner" />
       </div>
+      {
+        authenticated?
       <div className="shared-collection">
         <SelectionGallery images={paginatedImages} {...{selectedImages,setSelectedImages,setSelectedImagesInCollection}} />
         <PaginationControl
@@ -133,7 +137,9 @@ useEffect(() => {
           }}
           handleSelectionCompleted={handleSelectionCompleted}
         />
-      </div>
+      </div>:
+      <GalleryPIN/>
+      }
     </div>
   );
 
