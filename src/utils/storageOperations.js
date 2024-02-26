@@ -9,6 +9,7 @@ import { getDoc, getDocs, setDoc } from "firebase/firestore";
 import { db, storage } from '../firebase/app';
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { delay } from "./generalUtils";
+import { generateMemorablePIN } from "./stringUtils";
 
 
 export const fetchImageUrls = async (id, collectionId, setImageUrls, page, pageSize) => {
@@ -255,7 +256,10 @@ export const addUploadedFilesToFirestore = async (projectId, collectionId,import
                     { uploadedFilesCount: projectData.data().uploadedFilesCount + uploadedFiles.length ,
                         totalFileSize:importFileSize+projectData.data().totalFileSize,
                         projectCover:projectCover,
-                        status:"uploaded"
+                        status:"uploaded",
+                        //pin:generateMemorablePIN(4)
+                        //add pin if not exist
+                        pin: projectData.data().pin ? projectData.data().pin : generateMemorablePIN(4)
                 });
             })
             .then(() => {
