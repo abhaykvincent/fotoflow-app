@@ -20,8 +20,10 @@ body{
 
 }
 .App{
+*{
 
   color: white;
+}
   header{
     position: fixed;
     display:grid;
