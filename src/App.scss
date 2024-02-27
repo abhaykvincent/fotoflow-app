@@ -234,6 +234,14 @@ body{
             background-size: 80%;
             background-image: url('./assets/img/icons/reciept.svg');
           }
+          &.financials .icon{
+            background-size: 80%;
+            background-image: url('./assets/img/icons/bank.svg');
+          }
+          &.team .icon{
+            background-size: 120%;
+            background-image: url('./assets/img/icons/team.svg');
+          }
         }
       }
     }

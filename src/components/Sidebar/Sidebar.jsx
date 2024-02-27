@@ -54,18 +54,18 @@ function Sidebar({isUploading,totalUploadProgress}) {
         </Link>
         {/* Admin */}
         <Link to={`/financials`}>
-          <div className={`menu invoices ${location.pathname === '/invoices' ? 'selected' : ''} disabled`}>
+          <div className={`menu financials ${location.pathname === '/financials' ? 'selected' : ''} disabled`}>
             <div className="icon"></div>
-            <div className="label">Team</div>
+            <div className="label">Financials</div>
             <div className="coming-soon">
               <div className="coming-soon-tag">PRO</div>
             </div>
           </div>
         </Link>
         <Link to={`/team`}>
-          <div className={`menu settings ${location.pathname === '/settings' ? 'selected' : ''} disabled`}>
+          <div className={`menu team ${location.pathname === '/team' ? 'selected' : ''} disabled`}>
             <div className="icon"></div>
-            <div className="label">Financials</div>
+            <div className="label">Team</div>
             <div className="coming-soon">
               <div className="coming-soon-tag">PRO</div>
             </div>
