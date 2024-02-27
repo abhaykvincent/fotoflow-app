@@ -2,190 +2,191 @@
 .sidebar{
     position: fixed;
     top:  0px;
+    left: 0%;
     width: $sidebar-width;
     height: 100vh;
     background-color: $dark-3;
     @include boxed;
-    z-index: 9;
+    z-index: 11;
     padding-top: $header-height ;
     box-shadow:  -1px 1px 4px rgba(0, 0, 0, 0.3);
     .menu-list{
-      padding: 8px*2;
+        padding: 8px*2;
 
-      a{
+        a{
         .label{
-          opacity: 0.0;
-          transform: translateX(8px*4);
-          display: flex;
-          width: 8px*8;
-          text-align: center;
+            opacity: 0.0;
+            transform: translateX(8px*4);
+            display: flex;
+            width: 8px*8;
+            text-align: center;
         }
         @for $i from 1 through 10 {
-          &:nth-child(#{$i}) {
+            &:nth-child(#{$i}) {
             .label{
-              $delay: 0.1s + 0.05s * ($i - 1);
-              animation: fadeInLeft 0.15s ease-out $delay;
-              animation-fill-mode: forwards;
+                $delay: 0.1s + 0.05s * ($i - 1);
+                animation: fadeInLeft 0.15s ease-out $delay;
+                animation-fill-mode: forwards;
             }
-          }
+            }
         }
         
         .icon{
-          width: 8px*3;
-          height: 8px*3;
-          padding: 8px;
-          background-size:75%;
-          background-position: center center;
-          opacity: 0;
-          transform: scale(0.1)  translateY(8px*5);
+            width: 8px*3;
+            height: 8px*3;
+            padding: 8px;
+            background-size:75%;
+            background-position: center center;
+            opacity: 0;
+            transform: scale(0.1)  translateY(8px*5);
         }
         @for $i from 1 through 10 {
-          &:nth-child(#{$i}) {
+            &:nth-child(#{$i}) {
             .icon{
-              $delay: 0s + 0.05s * ($i - 1);
-              animation: menu-icon-reveal 0.2s ease-out $delay;
-              animation-fill-mode: forwards;
+                $delay: 0s + 0.05s * ($i - 1);
+                animation: menu-icon-reveal 0.2s ease-out $delay;
+                animation-fill-mode: forwards;
             }
-          }
+            }
         }
         .menu{
-          display: grid;
-          grid-template-columns: 8px*3 auto auto;
-          align-items: center;
-          font-size: 0.95rem;
-          gap:8px;
-          padding: 6px 8px;
-          margin-bottom: 4px;
-          border-radius: 8px*0.75;
-          border: 1px solid transparent;
-          opacity: 0.7;
-          transition-duration: 0.1s;
-          &:hover{
+            display: grid;
+            grid-template-columns: 8px*3 auto auto;
+            align-items: center;
+            font-size: 0.95rem;
+            gap:8px;
+            padding: 6px 8px;
+            margin-bottom: 4px;
+            border-radius: 8px*0.75;
+            border: 1px solid transparent;
+            opacity: 0.7;
+            transition-duration: 0.1s;
+            &:hover{
             border: 1px solid $dark-1;
             background-color: $dark-2;
             opacity: 1;
             transition-duration: 0.1s;
-          }
-          
-          &.selected{
+            }
+            
+            &.selected{
             background-color: $dark-2;
             border: 1px solid $dark-1;
             box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
             opacity: 1;
             .icon{
-              opacity: 0.9;
+                opacity: 0.9;
             }
-          }
-          &.disabled{
+            }
+            &.disabled{
             &:hover{
-              border: 1px solid $dark-2;
+                border: 1px solid $dark-2;
             }
             .label,.icon{
-              opacity: 0.5 !important;
+                opacity: 0.5 !important;
             }
             cursor: not-allowed;
-          }
-          &.home .icon{
+            }
+            &.home .icon{
             background-size: 90%;
             background-image: url('../../assets/img/icons/home.svg');
-          }
-          &.events .icon{
+            }
+            &.events .icon{
             background-image: url('../../assets/img/icons/event.png');
-          }
-          &.projects .icon{
+            }
+            &.projects .icon{
             background-image: url('../../assets/img/icons/folder.svg');
-          }
-          &.storage .icon{
+            }
+            &.storage .icon{
             background-size: 85%;
             background-image: url('../../assets/img/icons/storage-drive.svg');
-          }
-          &.store .icon{
+            }
+            &.store .icon{
             background-size: 80%;
             background-image: url('../../assets/img/icons/store.svg');
-          }
-          &.settings .icon{
+            }
+            &.settings .icon{
             background-size: 100%;
             background-image: url('../../assets/img/icons/settings.svg');
-          }
-          &.calendar .icon{
+            }
+            &.calendar .icon{
             background-size: 80%;
             background-image: url('../../assets/img/icons/calendar.svg');
-          }
-          &.invoices .icon{
+            }
+            &.invoices .icon{
             background-size: 75%;
             background-image: url('../../assets/img/icons/reciept.svg');
-          }
-          &.accounts .icon{
+            }
+            &.accounts .icon{
             background-size: 60%;
             background-image: url('../../assets/img/icons/bank.svg');
-          }
-          &.team .icon{
+            }
+            &.team .icon{
             background-size: 100%;
             background-image: url('../../assets/img/icons/team.svg');
-          }
+            }
         }
-      }
+        }
 
-      p.label{
+        p.label{
         font-size: 0.8rem;
         color: $gray4-default-dark;
         margin: 8px*2;
-      }
+        }
     }
     .status{
-      display: grid;
-      justify-items: center;
-      position: fixed;
-      bottom: 8px*9;
-      padding: 8px;
-      margin: 8px*1;
-      width: $sidebar-width -  8px*2.5;
-      background-color: $dark-2;
-      border: 1px solid $dark-1;
-      border-radius: 4px;
-      .icon{
+        display: grid;
+        justify-items: center;
+        position: fixed;
+        bottom: 8px*9;
+        padding: 8px;
+        margin: 8px*1;
+        width: $sidebar-width -  8px*2.5;
+        background-color: $dark-2;
+        border: 1px solid $dark-1;
+        border-radius: 4px;
+        .icon{
         opacity: 0.5;
-      }
-      .message{
+        }
+        .message{
         font-size: 0.8rem;
         color: $gray-accessible-dark;
         margin: 8px;
         margin-top: 4px;
-      }
-      .botton{
+        }
+        .botton{
         margin: 0;
-      }
+        }
     }
     .profile-options{
-      width: 100%;
-      display: grid;
-      justify-content: start;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 8px;
-      position: fixed;
-      bottom: 0px;
-      padding: 8px*2;
-      width: $sidebar-width - 8px;
-      .profile{
+        width: 100%;
+        display: grid;
+        justify-content: start;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 8px;
+        position: fixed;
+        bottom: 0px;
+        padding: 8px*2;
+        width: $sidebar-width - 8px;
+        .profile{
         width: 100%;
         display: flex;
         gap: 8px;
         align-items: center;
         .account-name{
-          display: grid;
-          gap: 4px;
+            display: grid;
+            gap: 4px;
         }
         .studio-name{
-          font-weight: 600;
-          font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
         .profile-name{
-          font-weight: 500;
-          font-size: 0.7rem;
-          color: $gray3-accessible-dark;
-          &::after{
+            font-weight: 500;
+            font-size: 0.7rem;
+            color: $gray3-accessible-dark;
+            &::after{
             content: 'Admin';
             display: inline-block;
             color: $green-default-light;
@@ -199,17 +200,17 @@
             box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9), inset 1px 1px 2px rgba(0, 0, 0, 0.9);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
             opacity: 0.6;
-          }
+            }
         }
         .profile-image{
-          padding: 8px*2.5;
-          background-color: $dark-1;
-          border: 1px solid $dark-0;
-          border-radius: $border-radius-1 ;
+            padding: 8px*2.5;
+            background-color: $dark-1;
+            border: 1px solid $dark-0;
+            border-radius: $border-radius-1 ;
 
         }
-      }
-      .option-icon{
+        }
+        .option-icon{
         width: 8px*1.5;
         height: 8px*2;
         background-image: url('../../assets/img/icons/arrow-dropdown.png');
@@ -217,13 +218,25 @@
         background-position: center center;
         transform: rotate(180deg);
         opacity: 0.5;
-      }
+        }
     }
-  }
+    &.hide{
+        left: -100%;
+    }
+}
+@keyframes menu-icon-reveal {
+0% {
+    opacity: 0;
+    transform: scale(0.1)  translateY(8px*5);
+}
+100% {
+    opacity: 0.8;
+    transform: scale(1) translateY(0);
+}
+}
   @media only screen and (max-width: 1080px) {
     .App{
       .sidebar{
-          left: -100%;
       }
     }
       
