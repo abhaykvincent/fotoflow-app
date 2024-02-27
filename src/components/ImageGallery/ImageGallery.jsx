@@ -16,6 +16,14 @@ const ImageGallery = React.memo(({ imageUrls,projectId }) => {
   const closePreview = () => {
     setIsPreviewOpen(false)
   }
+  //preview on hide header
+  useEffect(() => {
+    if(isPreviewOpen){
+      document.getElementsByClassName('header')[0].style.display = 'none';
+    }else{
+      document.getElementsByClassName('header')[0].style.display = 'grid';
+    }
+  }, [isPreviewOpen]);
 
   return (
     <div className="gallary">
