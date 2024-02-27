@@ -1,6 +1,16 @@
 @import './style/variables';
 @import './style/components';
-
+//import fonts
+@font-face {
+  font-family: 'Product Sans';
+  src: url('./assets/fonts/Product\ Sans\ Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Product Sans';
+  src: url('./assets/fonts/Product\ Sans\ Bold.ttf') format('truetype');
+  font-weight: bold;
+}
 *{
   margin: 0;
   padding: 0;
@@ -487,8 +497,6 @@ margin-left: 4px;
   margin-top: 8px*0;
   padding: 8px;
   padding-top: 4px;
-  max-height: calc(100vh - 8px*50);
-  overflow-y: scroll;
   .photos{
     width: 100%;
     display:grid;
