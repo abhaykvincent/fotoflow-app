@@ -31,8 +31,11 @@
     .controls{
       border-radius: $border-radius-1+1;
       transition-duration: 0.15s;
-      background-color: $dark-3;
+      background: linear-gradient(120deg, $dark-1 -80%, $dark-2 20%,$dark-2 60%, $dark-3 100%);
       border: 1px solid $gray6-accessible-dark;
+      border-top: 1px solid $gray5-accessible-dark;
+      border-bottom: 1px solid $dark-2;
+      box-shadow: 2px 2px 4px black;;
       &:hover{
         transition-duration: 0.1s;
       }
@@ -56,9 +59,13 @@
         }
         &.active{
           color: $light-0;
-          background-color: $dark-1;
-          border: 1px solid $gray2-accessible-dark;
+          background-color: $dark-4;
+          border: 1px solid $gray6-accessible-dark;
+          border-top: 1px solid $gray3-accessible-dark;
+          border-left: 1px solid $gray5-accessible-dark;
           border-radius: 8px !important;
+          box-shadow: 1px 1px 2px black;;
+          transform: scale(1.1);
           &:hover{
             background-color: $dark-1;
             border: 1px solid $gray3-accessible-dark;

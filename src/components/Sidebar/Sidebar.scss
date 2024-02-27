@@ -5,7 +5,8 @@
     left: 0%;
     width: $sidebar-width;
     height: 100vh;
-    background-color: $dark-3;
+    background: linear-gradient(160deg, $dark-3 0%, $dark-2 50%, $dark-3 80%, $dark-3 100%);
+        
     @include boxed;
     z-index: 11;
     padding-top: $header-height ;
@@ -206,7 +207,8 @@
         }
         .profile-image{
             padding: 8px*2.5;
-            background-color: $dark-1;
+            background-image: url('https://professions.ng/wp-content/uploads/2023/09/Tips-for-Aspiring-Photographers-Building-a-Portfolio-in-Nigeria.jpeg');
+            background-size: 100%;
             border: 1px solid $dark-0;
             border-radius: $border-radius-1 ;
 
