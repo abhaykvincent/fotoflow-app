@@ -24,7 +24,7 @@ function Home({ projects }) {
                                 <stop offset="100%" style={{ stopColor: '#136a29', stopOpacity: 1 }} />
                             </linearGradient>
                             {/* Apply the gradient to the text */}
-                            <text x="9rem" y="3rem" fontFamily="Arial" fontSize="3rem" font-fontWeight="800" fill="url(#textGradient)" textAnchor="middle">
+                            <text x="128px" y="46px" fontFamily="Arial" fontSize="3rem" font-fontWeight="800" fill="url(#textGradient)" textAnchor="middle">
                                 Monalisa ✨
                             </text>
                         </svg>

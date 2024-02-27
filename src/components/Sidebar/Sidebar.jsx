@@ -4,7 +4,7 @@ import './Sidebar.scss'
 import { GrUpgrade } from "react-icons/gr";
 function Sidebar({isUploading,totalUploadProgress}) {
   const location = useLocation();
-
+  
   return (
     <div className="sidebar">
       <div className="menu-list">
