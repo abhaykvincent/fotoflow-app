@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { MdOutlineMenu } from "react-icons/md";
 import { MdClose } from "react-icons/md";
+import { useLocation } from 'react-router';
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   // hamburger state
-  const [hamburgerActive, setHamburgerActive] = useState(true);
+  const [hamburgerActive, setHamburgerActive] = useState(false);
   //handle hamburger active
   const handleHamburger = ()=>{
     setHamburgerActive(!hamburgerActive)
@@ -18,7 +19,10 @@ const Header = () => {
   }, [hamburgerActive]);
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
-  };
+  };  const location = useLocation();
+  useEffect(() => {
+    setHamburgerActive(false)
+  }, [location]);
 
   return (
     <header className='header'>
