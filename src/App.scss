@@ -38,9 +38,9 @@ body{
     .logo{
       width: 8px*24;
       height: 100%;
-      background-image: url('./assets/img/fotoflow-pro-logo.png');
+      background-image: url('./assets/img/fotoflow-pro-logo.svg');
       background-position: 8px*2 center;
-      background-size: 70%;
+      background-size: auto 60%;
     }
     .search-bar{
       .search-input{
