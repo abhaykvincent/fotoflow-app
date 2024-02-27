@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { RxHamburgerMenu } from "react-icons/rx";
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -9,6 +9,9 @@ const Header = () => {
 
   return (
     <header className='header'>
+      <div className="hamburger">
+        <RxHamburgerMenu />
+      </div>
       <div className="logo"></div>
       <div className="search-bar">
         <div className="search-input">
