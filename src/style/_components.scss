@@ -17,6 +17,12 @@
     &.primary{
         background: linear-gradient(330deg, $green-dark-accessible-light, $green-accessible-light);
         border: 1px solid $green-default-light;
+        &.outline {
+            background: none;
+            border: 1px solid $green-default-light;
+            color: $green-default-light;
+            font-weight: 500;
+        }
 
     }
     &.secondary{

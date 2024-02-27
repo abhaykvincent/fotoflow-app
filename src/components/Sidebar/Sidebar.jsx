@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
+import { GrUpgrade } from "react-icons/gr";
 function Sidebar({isUploading,totalUploadProgress}) {
   const location = useLocation();
 
@@ -73,22 +73,23 @@ function Sidebar({isUploading,totalUploadProgress}) {
           </div>
         </Link>
       </div>
-      
-      <div className="status">
-          {isUploading ? (
-            <div className="panel uploading">
-              <div className="status-label">
-                <p>Uploading...</p>
-                <p>50%</p>
-              </div>
-              <progress value={totalUploadProgress} max="100"></progress>
-            </div>
-          ) : (
-            <div className="panel">
-              {/* Add your other content here when not uploading */}
-            </div>
-          )}
+      <div className="profile-options">
+        <div className="profile">
+          <div className="profile-image"></div>
+          <div className="account-name">
+            <div className="studio-name">Canbera </div>
+            <div className="profile-name">John</div>
+          </div>
         </div>
+        <div className="option-icon"></div>
+      </div>
+      <div className="status">
+        <div className="icon">
+        <GrUpgrade />
+        </div>
+        <div className="message">You have 126MB left</div>
+        <div className="button primary outline">Upgrade</div>
+      </div>
     </div>
   );
 }
