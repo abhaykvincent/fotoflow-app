@@ -37,26 +37,18 @@ function ProjectCard({project, key, index}) {
                     </div> :
                     <div className="project-summary">
                         <div className="summary-left">
-                            <div className="summary-item collection-count">
-                                <p>{project.collections.length}</p>
-                                <div className="icon"></div>
-                            </div>
                             <div className="summary-item photos-count">
                                 <p>{project.uploadedFilesCount}</p>
+                                <div className="icon"></div>
+                            </div>
+                            <div className="summary-item collection-count">
+                                <p>{project.collections.length}</p>
                                 <div className="icon"></div>
                             </div>
                             
 
                         </div>
-                        <div className="summary-right">   
-                        <div className="quick-actions">
-                            <div className="summary-item share">
-                                <div className="icon"></div>
-                            </div>
-                            <div className="summary-item select">
-                                <div className="icon"></div>
-                            </div>
-                        </div>     
+                        <div className="summary-right">     
                         {
                             // if pin available, show pin number  
                             project.pin ?

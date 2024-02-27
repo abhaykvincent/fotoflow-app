@@ -17,6 +17,12 @@
     &.primary{
         background: linear-gradient(330deg, $green-dark-accessible-light, $green-accessible-light);
         border: 1px solid $green-default-light;
+        &.outline {
+            background: none;
+            border: 1px solid $green-accessible-light;
+            color: $green-accessible-light;
+            font-weight: 500;
+        }
 
     }
     &.secondary{
@@ -59,7 +65,7 @@
 .coming-soon-tag{
     display: inline-block;
     color: $green-default-dark;
-    font-size: 0.6rem;
+    font-size: 0.5rem;
     font-weight: 700;
     padding: 2px 4px;
     //background-color: $green-accessible-light;

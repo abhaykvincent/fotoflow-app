@@ -20,13 +20,7 @@ const Header = () => {
           />
         </div>
       </div>
-      <div className="profile-options">
-        <div className="profile">
-          <div className="profile-name">Canbera Studio</div>
-          <div className="profile-image"></div>
-        </div>
-        <div className="option-icon"></div>
-      </div>
+      
     </header>
   );
 };

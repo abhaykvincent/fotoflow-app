@@ -62,39 +62,7 @@ body{
         }
       }
     }
-    .profile-options{
-      height: 100%;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-right: 8px*2;
-      .profile{
-        height: 100%;
-        display: flex;
-        justify-content: flex-end;
-        gap: 8px;
-        align-items: center;
-        .profile-name{
-          font-weight: 600;
-        }
-        .profile-image{
-          padding: 8px*2;
-          margin:  8px*1 8px*1;
-          background-color: $dark-1;
-          border: 1px solid $dark-0;
-          border-radius: $border-radius-1 ;
-
-        }
-      }
-      .option-icon{
-        width: 8px*1.5;
-        height: 8px*2;
-        background-image: url('../src/assets/img/icons/arrow-dropdown.png');
-        background-size: 100%;
-        background-position: center center;
-        opacity: 0.5;
-      }
-    }
+    
   }
   .breadcrumbs{
     display: flex;
@@ -170,8 +138,10 @@ body{
           }
         }
         .menu{
-          display: flex;
+          display: grid;
+          grid-template-columns: 8px*3 auto auto;
           align-items: center;
+          font-size: 0.95rem;
           gap:8px;
           padding: 6px 8px;
           margin-bottom: 4px;
@@ -201,7 +171,7 @@ body{
               border: 1px solid $dark-2;
             }
             .label,.icon{
-              opacity: 0.2 !important;
+              opacity: 0.5 !important;
             }
             cursor: not-allowed;
           }
@@ -216,10 +186,11 @@ body{
             background-image: url('./assets/img/icons/folder.svg');
           }
           &.storage .icon{
+            background-size: 85%;
             background-image: url('./assets/img/icons/storage-drive.svg');
           }
           &.store .icon{
-            background-size: 90%;
+            background-size: 80%;
             background-image: url('./assets/img/icons/store.svg');
           }
           &.settings .icon{
@@ -227,39 +198,114 @@ body{
             background-image: url('./assets/img/icons/settings.svg');
           }
           &.calendar .icon{
-            background-size: 90%;
+            background-size: 80%;
             background-image: url('./assets/img/icons/calendar.svg');
           }
           &.invoices .icon{
-            background-size: 80%;
+            background-size: 75%;
             background-image: url('./assets/img/icons/reciept.svg');
+          }
+          &.accounts .icon{
+            background-size: 60%;
+            background-image: url('./assets/img/icons/bank.svg');
+          }
+          &.team .icon{
+            background-size: 100%;
+            background-image: url('./assets/img/icons/team.svg');
           }
         }
       }
+
+      p.label{
+        font-size: 0.8rem;
+        color: $gray4-default-dark;
+        margin: 8px*2;
+      }
     }
     .status{
+      display: grid;
+      justify-items: center;
       position: fixed;
-      bottom: -4px;
+      bottom: 8px*9;
       padding: 8px;
-      padding-bottom: 0;
-      width: $sidebar-width - 4px;
-      .panel{
-        padding:8px;
-        border-radius: 8px*1 8px*1 8px*0 8px*0;
-        border: 1px solid $dark-0;
-        @include boxShadow;
-        .status-label{
-          display:flex;
-          justify-content: space-between;
-          p{
-            font-size: 0.8rem;
-            color: $gray2-default-dark;
+      margin: 8px*1;
+      width: $sidebar-width -  8px*2.5;
+      background-color: $dark-2;
+      border: 1px solid $dark-1;
+      border-radius: 4px;
+      .icon{
+        opacity: 0.5;
+      }
+      .message{
+        font-size: 0.8rem;
+        color: $gray-accessible-dark;
+        margin: 8px;
+        margin-top: 4px;
+      }
+      .botton{
+        margin: 0;
+      }
+    }
+    .profile-options{
+      width: 100%;
+      display: grid;
+      justify-content: start;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 8px;
+      position: fixed;
+      bottom: 0px;
+      padding: 8px*2;
+      width: $sidebar-width - 8px;
+      .profile{
+        width: 100%;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        .account-name{
+          display: grid;
+          gap: 4px;
+        }
+        .studio-name{
+          font-weight: 600;
+          font-size: 0.9rem;
+        }
+        .profile-name{
+          font-weight: 500;
+          font-size: 0.7rem;
+          color: $gray3-accessible-dark;
+          &::after{
+            content: 'Admin';
+            display: inline-block;
+            color: $green-default-light;
+            font-size: 0.5rem;
+            margin-left: 4px;
+            font-weight: 700;
+            padding: 2px 4px;
+            //background-color: $green-accessible-light;
+            border: 1px solid $green-accessible-light;
+            border-radius: 4px;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9), inset 1px 1px 2px rgba(0, 0, 0, 0.9);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+            opacity: 0.6;
           }
         }
-        progress{
-          width: 100%;
-          height: 12px;
+        .profile-image{
+          padding: 8px*2.5;
+          background-color: $dark-1;
+          border: 1px solid $dark-0;
+          border-radius: $border-radius-1 ;
+
         }
+      }
+      .option-icon{
+        width: 8px*1.5;
+        height: 8px*2;
+        background-image: url('../src/assets/img/icons/arrow-dropdown.png');
+        background-size: 100%;
+        background-position: center center;
+        transform: rotate(180deg);
+        opacity: 0.5;
       }
     }
   }

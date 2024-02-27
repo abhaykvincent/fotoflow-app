@@ -26,6 +26,18 @@ function Projects({ projects, addProject, showAlert, isLoading }) {
                     >Create Project</div>
                 </div>
             </div>
+            <div className="view-control">
+                <div className="control-wrap">
+                    <div className="controls">
+                        <div className={`control active`} >All</div>
+                        <div className={`control `} >Active</div>
+                        <div className={`control `} >Starred</div>
+                        <div className={`control `} >This Week</div>
+                        <div className={`control `} >Today</div>
+                    </div>
+                    <div className={`active`}></div>
+                </div>
+            </div>
             <div className="projects-list">
                 {projects.length !== 0? (
                     projects.map((project, index) => (
