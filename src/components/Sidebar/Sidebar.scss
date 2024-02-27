@@ -10,6 +10,7 @@
     z-index: 11;
     padding-top: $header-height ;
     box-shadow:  -1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition-duration: 0.2s;
     .menu-list{
         padding: 8px*2;
 
@@ -137,7 +138,7 @@
     .status{
         display: grid;
         justify-items: center;
-        position: fixed;
+        position: absolute;
         bottom: 8px*9;
         padding: 8px;
         margin: 8px*1;
@@ -165,10 +166,11 @@
         grid-template-columns: 1fr auto;
         align-items: center;
         gap: 8px;
-        position: fixed;
-        bottom: 0px;
+        position: absolute;
+        top: 100vh;
         padding: 8px*2;
         width: $sidebar-width - 8px;
+        transform: translateY(-100%);
         .profile{
         width: 100%;
         display: flex;
@@ -221,7 +223,8 @@
         }
     }
     &.hide{
-        left: -100%;
+        left: 0%;
+        transition-duration: 0.1s;
     }
 }
 @keyframes menu-icon-reveal {
@@ -237,6 +240,25 @@
   @media only screen and (max-width: 1080px) {
     .App{
       .sidebar{
+        width: $sidebar-width + 8px*2;
+        &.hide{
+            left: -100%;
+            transition-duration: 0.1s;
+        }
+        .menu-list 
+        {
+            max-height: calc(100vh - 8px*34);
+            overflow-y: scroll;
+            a{
+                .icon {
+                    width: 8px*4;
+                    height: 8px*4;
+                }.menu{
+                    grid-template-columns: 8px*4 auto  auto;
+                    font-size: 1rem;
+                }
+            }
+        }
       }
     }
       
