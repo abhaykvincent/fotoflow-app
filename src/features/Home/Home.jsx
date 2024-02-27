@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Home.scss';
 import { getProjectsByStatus, getRecentProjects } from '../../utils/projectFilters';
 import ProjectCard from '../../components/Project/ProjectCard/ProjectCard';
-function Home({ projects }) {
+function Home({ projects,loadProjects}) {
 
     document.title = `FotoFlow | Home`;
     const recentProjects = getRecentProjects(projects, 5);
@@ -93,11 +93,10 @@ function Home({ projects }) {
                             </div>
                         </div>
                     </>
-                )
-                : (
-                    <>
+                ):
+                (<>
                     <div className="section recent">
-            <h3 className='section-heading'>You dont have any projects cerated</h3>
+                        <h3 className='section-heading'>You dont have any projects cerated</h3>
                     </div>
                     <div className="projects-list">
 
@@ -116,9 +115,17 @@ function Home({ projects }) {
                         </div>
                     </Link>
                     </div>
-                    </>
-                )
+                </>)
             }
+            <div className="refresh">
+                <p>
+                    Refresh your projects to see the latest updates
+                </p>
+                <div className="button secondary"
+
+                onClick={loadProjects}
+                >Refresh</div>
+            </div>
         </main>
     );
 }

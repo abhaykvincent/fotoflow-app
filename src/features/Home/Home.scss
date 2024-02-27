@@ -140,6 +140,20 @@
             }
         }
     }
+    .refresh{
+        display: grid;
+        justify-items: center;
+        p{
+            color: $gray4-default-dark;
+
+            margin: 8px;
+        }
+        .button{
+            color: $gray-default-dark;
+            font-weight: 400;
+        }
+
+    }
 }
 @keyframes fadeInLeft {
     0% {
