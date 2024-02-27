@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import './Sidebar.scss'
 import { GrUpgrade } from "react-icons/gr";
 function Sidebar({isUploading,totalUploadProgress}) {
   const location = useLocation();

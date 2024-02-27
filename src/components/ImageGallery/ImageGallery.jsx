@@ -21,7 +21,7 @@ const ImageGallery = React.memo(({ imageUrls,projectId }) => {
     if(isPreviewOpen){
       document.getElementsByClassName('header')[0].style.display = 'none';
     }else{
-      document.getElementsByClassName('header')[0].style.display = 'block';
+      document.getElementsByClassName('header')[0].style.display = 'grid';
     }
   }, [isPreviewOpen]);
 
