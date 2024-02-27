@@ -20,6 +20,7 @@ import {
 } from './firebase/functions/firestore';
 import Selection from './features/Selection/Selection';
 import Storage from './features/Storage/Storage';
+import UploadProgress from './components/UploadProgress/UploadProgress';
 
 function App() {
   
@@ -30,19 +31,24 @@ function App() {
   const showAlert = (type, message) => setAlert({ type, message, show: true });
   // Core Data
   const [projects, setProjects] = useState([]);
-
+ // Upload progress
+ const [uploadList, setUploadList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch Projects
   useEffect(() => {
     document.title = `FotoFlow`;
+    loadProjects()
+  }, []);
+
+  const loadProjects = () => {
     setIsLoading(true);
     fetchProjects()
     .then((fetchedProjects) => {
       setProjects(fetchedProjects)
       setIsLoading(false);
     });
-  }, []);
+  };
 
   // Project/Collection Data Logic
   const addProject = (newProject) => {
@@ -118,6 +124,7 @@ function App() {
           <Header />
           <Sidebar />
           <Alert {...alert} setAlert={setAlert} />
+          <UploadProgress {...{uploadList}}/>
         </>
       ) : (
         <></>
@@ -132,10 +139,11 @@ function App() {
       <Routes>
         { authenticated ? 
           <>
-            <Route exact path="/" element={<Home {...{projects}} />}/>
-            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,showAlert }} />}/>
+            <Route exact path="/" element={<Home {...{projects,loadProjects}} />}/>
+            <Route path="/project/:id/:collectionId?" element={<Project {...{ projects, addCollection, deleteCollection, deleteProject,setUploadList,showAlert }} />}/>
             <Route path="/projects" element={<Projects {...{ projects, addProject, showAlert, isLoading }} />}/>
             <Route path="/storage" element={<Storage {...{projects}}/>}/>
+            
           </> 
           
           : ''

@@ -65,12 +65,13 @@ export const fetchImageInfo = async (id, collectionId) => {
 };
 
 // File upload function
-export const uploadFile = (id, collectionId, file) => {
+export const uploadFile = (id, collectionId, file,setUploadList) => {
     const MAX_RETRIES = 5;
     const INITIAL_RETRY_DELAY = 500; // 1 second initial delay
     let retries = 0;
 
     return new Promise((resolve, reject) => {
+        
         const storageRef = ref(storage, `${id}/${collectionId}/${file.name}`);
         let uploadTask;
 
@@ -81,6 +82,23 @@ export const uploadFile = (id, collectionId, file) => {
             uploadTask.on('state_changed',
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    //setUploadList aarraay of filee object  matches file.name with the progress of the upload
+                    setUploadList((prevState) => {
+                        return prevState.map((fileProgress) => {
+                            if (fileProgress.name === file.name) {
+                                return {
+                                    name: file.name,
+                                    size: file.size,
+                                    type: file.type,
+                                    status: 'uploading',
+                                    // NO DEECIMAL POINTS
+                                    progress: Math.round(progress)
+                                }
+                            }
+                            return fileProgress;
+                        })
+                    })
+                    
                 },
                 (error) => {
                     console.error(`Error during initial upload for ${file.name}:`, error);
@@ -98,6 +116,20 @@ export const uploadFile = (id, collectionId, file) => {
                     console.log(`%c ${file.name} File uploaded successfully in the first try`, 'color:green');
                     let url = await getDownloadURL(uploadTask.snapshot.ref);
                     console.log(`Download URL for ${file.name}: ${url}`);
+                    await setUploadList((prevState) => {
+                        return prevState.map((fileProgress) => {
+                            if (fileProgress.name === file.name) {
+                                return {
+                                    name: file.name,
+                                    size: file.size,
+                                    type: file.type,
+                                    status:'uploaded',
+                                    url
+                                }
+                            }
+                            return fileProgress;
+                        })
+                    })
                     resolve({
                         name: file.name,
                         url
@@ -148,9 +180,27 @@ export const uploadFile = (id, collectionId, file) => {
         
     });
 };
-const sliceUpload = async (slice, id, collectionId) => {
+const sliceUpload = async (slice, id, collectionId,setUploadList) => {
+    //update uploadList files that maatches current slice eaach files status as initializing
+    setUploadList(prevState => {
+        return prevState.map((file, index) => {
+            console.log(file)
+            console.log(slice)
+            if (slice[index] && file.name === slice[index].name) {
+                console.log('%c ' + file.name + ' file status changed to initializing', 'color:yellow');
+                console.log(file)
+                return {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    status: 'initializing'
+                }
+            }
+            return file;
+        })
+    })
     const uploadPromises = slice.map(file => {
-        return uploadFile(id, collectionId, file);
+        return uploadFile(id, collectionId, file,setUploadList);
     });
 
     // Use Promise.all to initiate all file uploads simultaneously
@@ -161,11 +211,11 @@ const sliceUpload = async (slice, id, collectionId) => {
 };
 
 
-export const handleUpload = async (files, id, collectionId,importFileSize, showAlert, retries = 2) => {
+export const handleUpload = async (files, id, collectionId,importFileSize, setUploadList, showAlert, retries = 2) => {
     let uploadPromises = [];
-
+    setUploadList(files)
     // Slice the files array into smaller arrays of size sliceSize
-    const sliceSize = 10;
+    const sliceSize = 5;
     console.log('%c ' + files.length + ' files to upload', 'color:yellow');
     let uploadedFiles = [];
 
@@ -174,7 +224,10 @@ export const handleUpload = async (files, id, collectionId,importFileSize, showA
         const slice = files.slice(i, i + sliceSize);
 
         try {
-            const results = await sliceUpload(slice, id, collectionId);
+
+            
+
+            const results = await sliceUpload(slice, id, collectionId,setUploadList);
             uploadedFiles.push(...results);
         } catch (error) {
             console.error("Error uploading files:", error);

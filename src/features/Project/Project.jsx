@@ -6,7 +6,8 @@ import DeleteConfirmationModal from '../../components/Modal/DeleteProject';
 import CollectionsPanel from '../../components/Project/Collections/CollectionsPanel';
 import CollectionImages from '../../components/Project/Collections/CollectionImages';
 
-export default function Project({ projects,  addCollection, deleteCollection, deleteProject,showAlert}) {
+import './Project.scss';
+export default function Project({ projects,  addCollection, deleteCollection, deleteProject,setUploadList,showAlert}) {
   const navigate = useNavigate();
   // Route Params
   let { id,collectionId } = useParams();
@@ -85,9 +86,13 @@ export default function Project({ projects,  addCollection, deleteCollection, de
       ) : (
         <div className="project-collections">
           <CollectionsPanel {...{project, collectionId:targetCollectionId, deleteCollection, openModal}}/>
-          <CollectionImages  {...{ id, collectionId:targetCollectionId,collection,showAlert}} />
+          <CollectionImages  {...{ id, collectionId:targetCollectionId,collection,setUploadList,showAlert}} />
         </div>
       )}
+
+      
+
+
       <AddCollectionModal project={project} visible={modal.createCollection} onClose={closeModal} onSubmit={addCollection}  />
       {confirmDeleteProject ? <DeleteConfirmationModal onDeleteConfirm={onDeleteConfirm} onClose={onDeleteConfirmClose}/>:''}
     </main>

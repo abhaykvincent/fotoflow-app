@@ -4,7 +4,7 @@ import ImageGallery from '../../ImageGallery/ImageGallery';
 import { fetchImages } from '../../../firebase/functions/firestore';
 import { addAllFileSizesToMB } from '../../../utils/fileUtils';
 
-const CollectionImages = ({ id, collectionId,collection,showAlert }) => {
+const CollectionImages = ({ id, collectionId,collection,setUploadList,showAlert }) => {
 // Files
 const [files, setFiles] = useState([]);
 const [collectionImages, setCollectionImages] = useState([]);
@@ -74,38 +74,38 @@ return (
         <div className="header">
             <div className="label"><h3>{collection.name}</h3></div>
 
-                {
-                    collectionImages?.length>0?
-                    <div className="view-control">
-                        <div className="control-label label-all-photos">{collectionImages.length} Photos</div>
-                        <div className="control-wrap">
-                            <div className="controls">
-                                <div className={`control ${showAllPhotos ? 'active' : ''}`} onClick={() => setShowAllPhotos(true)}>All photos</div>
-                                <div className={`control ${!showAllPhotos ? 'active' : ''}`} onClick={() => setShowAllPhotos(false)}>Selected</div>
-                            </div>
-                            <div className={`active`}></div>
+            {
+                collectionImages?.length>0?
+                <div className="view-control">
+                    <div className="control-label label-all-photos">{collectionImages.length} Photos</div>
+                    <div className="control-wrap">
+                        <div className="controls">
+                            <div className={`control ${showAllPhotos ? 'active' : ''}`} onClick={() => setShowAllPhotos(true)}>All photos</div>
+                            <div className={`control ${!showAllPhotos ? 'active' : ''}`} onClick={() => setShowAllPhotos(false)}>Selected</div>
                         </div>
-                        <div className="control-label label-selected-photos">{selectedImages.length} Photos</div>
-                    </div>:
-                    <div className="empty-message">
-                        <p>Import shoot photos to upload </p>
+                        <div className={`active`}></div>
                     </div>
-                }
-
-                <div className="options">
-                    <label htmlFor="fileInput" className={`button ${isPhotosImported ? 'secondary' : 'primary'}`} 
-
-                    >Import Images</label>
-                    <input id='fileInput' type="file" multiple onChange={handleFileInputChange} />
-                    <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
-                        onClick={async()=>{
-                            setIsPhotosImported(false);
-                            let uploadedImages=await handleUpload(files, id, collectionId,importFileSize,showAlert)
-                            console.log(uploadedImages)
-                            setImageUrls(uploadedImages)
-                        }}
-                        >Upload Images</div>
+                    <div className="control-label label-selected-photos">{selectedImages.length} Photos</div>
+                </div>:
+                <div className="empty-message">
+                    <p>Import shoot photos to upload </p>
                 </div>
+            }
+
+            <div className="options">
+                <label htmlFor="fileInput" className={`button ${isPhotosImported ? 'secondary' : 'primary'}`} 
+
+                >Import Images</label>
+                <input id='fileInput' type="file" multiple onChange={handleFileInputChange} />
+                <div className={`button ${isPhotosImported ? 'primary' : 'secondary disabled'}`} 
+                    onClick={async()=>{
+                        setIsPhotosImported(false);
+                        let uploadedImages=await handleUpload(files, id, collectionId,importFileSize,setUploadList,showAlert)
+                        console.log(uploadedImages)
+                        setImageUrls(uploadedImages)
+                    }}
+                    >Upload Images</div>
+            </div>
 
         </div>
         {
@@ -113,21 +113,12 @@ return (
             <ImageGallery {...{isPhotosImported, imageUrls, projectId:id}}/>:''
         }
         <div className="pagination">
-            <div className={`button ${page===1?'disabled':'primary'} previous`}
+            <div className="button secondary"
                 onClick={
                     ()=>{
-                        if(page>1)
-                            setPage(page-1)
                     }
                 }
-            >Previous</div>
-            <div className="button primary next"
-                onClick={
-                    ()=>{
-                        setPage(page+1)
-                    }
-                }
-            >Next</div>
+            >Load Images</div>
 
         </div>
     </div>
