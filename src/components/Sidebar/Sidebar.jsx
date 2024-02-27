@@ -19,18 +19,12 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="label">Projects</div>
           </div>
         </Link>
-        <Link to={`/storage`}>
-          <div className={`menu storage ${location.pathname === '/storage' ? 'selected' : ''}`}>
-            <div className="icon"></div>
-            <div className="label">Storage</div>
-          </div>
-        </Link>
         <Link to={`/store`}>
           <div className={`menu store ${location.pathname === '/store' ? 'selected' : ''} disabled`}>
             <div className="icon"></div>
             <div className="label">Store</div>
             <div className="coming-soon">
-              <div className="coming-soon-tag">PRO</div>
+              <div className="coming-soon-tag">SOON</div>
             </div>
           </div>
         </Link>
@@ -39,7 +33,7 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="icon"></div>
             <div className="label">Calendar</div>
             <div className="coming-soon">
-              <div className="coming-soon-tag">PRO</div>
+              <div className="coming-soon-tag">SOON</div>
             </div>
           </div>
         </Link>
@@ -48,17 +42,24 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="icon"></div>
             <div className="label">Invoices</div>
             <div className="coming-soon">
-              <div className="coming-soon-tag">PRO</div>
+              <div className="coming-soon-tag">SOON</div>
             </div>
           </div>
         </Link>
         {/* Admin */}
-        <Link to={`/financials`}>
-          <div className={`menu financials ${location.pathname === '/financials' ? 'selected' : ''} disabled`}>
+        <p className="label">ADMIN</p>
+        <Link to={`/storage`}>
+          <div className={`menu storage ${location.pathname === '/storage' ? 'selected' : ''}`}>
             <div className="icon"></div>
-            <div className="label">Financials</div>
+            <div className="label">Storage</div>
+          </div>
+        </Link>
+        <Link to={`/financials`}>
+          <div className={`menu accounts ${location.pathname === '/accounts' ? 'selected' : ''} disabled`}>
+            <div className="icon"></div>
+            <div className="label">Accounts</div>
             <div className="coming-soon">
-              <div className="coming-soon-tag">PRO</div>
+              <div className="coming-soon-tag">SOON</div>
             </div>
           </div>
         </Link>
@@ -67,7 +68,7 @@ function Sidebar({isUploading,totalUploadProgress}) {
             <div className="icon"></div>
             <div className="label">Team</div>
             <div className="coming-soon">
-              <div className="coming-soon-tag">PRO</div>
+              <div className="coming-soon-tag">SOON</div>
             </div>
           </div>
         </Link>

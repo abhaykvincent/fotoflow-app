@@ -170,8 +170,10 @@ body{
           }
         }
         .menu{
-          display: flex;
+          display: grid;
+          grid-template-columns: 8px*3 auto auto;
           align-items: center;
+          font-size: 0.95rem;
           gap:8px;
           padding: 6px 8px;
           margin-bottom: 4px;
@@ -201,7 +203,7 @@ body{
               border: 1px solid $dark-2;
             }
             .label,.icon{
-              opacity: 0.2 !important;
+              opacity: 0.5 !important;
             }
             cursor: not-allowed;
           }
@@ -216,10 +218,11 @@ body{
             background-image: url('./assets/img/icons/folder.svg');
           }
           &.storage .icon{
+            background-size: 85%;
             background-image: url('./assets/img/icons/storage-drive.svg');
           }
           &.store .icon{
-            background-size: 90%;
+            background-size: 80%;
             background-image: url('./assets/img/icons/store.svg');
           }
           &.settings .icon{
@@ -227,22 +230,28 @@ body{
             background-image: url('./assets/img/icons/settings.svg');
           }
           &.calendar .icon{
-            background-size: 90%;
+            background-size: 80%;
             background-image: url('./assets/img/icons/calendar.svg');
           }
           &.invoices .icon{
-            background-size: 80%;
+            background-size: 75%;
             background-image: url('./assets/img/icons/reciept.svg');
           }
-          &.financials .icon{
-            background-size: 80%;
+          &.accounts .icon{
+            background-size: 60%;
             background-image: url('./assets/img/icons/bank.svg');
           }
           &.team .icon{
-            background-size: 120%;
+            background-size: 100%;
             background-image: url('./assets/img/icons/team.svg');
           }
         }
+      }
+
+      p.label{
+        font-size: 0.8rem;
+        color: $gray4-default-dark;
+        margin: 8px*2;
       }
     }
     .status{
