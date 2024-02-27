@@ -8,7 +8,7 @@ const Header = () => {
   };
 
   return (
-    <header>
+    <header className='header'>
       <div className="logo"></div>
       <div className="search-bar">
         <div className="search-input">
